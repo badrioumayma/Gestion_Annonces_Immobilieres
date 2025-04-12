@@ -1,0 +1,39 @@
+<div class="card mb-4">
+    <div class="card-header">
+      <h5>{{ title }}</h5>
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th *ngFor="let column of columns">{{ column.header }}</th>
+            <th *ngIf="actions.length > 0">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of data">
+            <td *ngFor="let column of columns">
+              <!-- Handle date formatting if the column specifies a date -->
+              <span *ngIf="column.isDate; else regularField">
+                {{ row[column.field] | date }}
+              </span>
+              <ng-template #regularField>
+                {{ row[column.field] }}
+              </ng-template>
+            </td>
+            <td *ngIf="actions.length > 0">
+              <button
+                *ngFor="let action of actions"
+                class="btn btn-sm me-1"
+                [ngClass]="action.class"
+                (click)="action.handler(row)"
+              >
+                {{ action.label }}
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <a [routerLink]="link" *ngIf="link">{{ linkText }}</a>
+    </div>
+  </div>

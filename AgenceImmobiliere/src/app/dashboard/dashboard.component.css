@@ -1,5 +1,4 @@
 .main-content {
-    margin-top: 60px; /* Match the header's height */
     margin-left: 260px; /* Match the sidebar's width */
     padding: 20px; /* Add some padding for spacing */
     min-height: calc(100vh - 60px); /* Ensure it takes the full height minus the header */

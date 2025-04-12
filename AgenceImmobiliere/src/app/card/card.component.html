@@ -1,1 +1,9 @@
-<p>card works!</p>
+<div class="stat-card card d-flex flex-row align-items-center p-3">
+    <div class="icon-circle me-3">
+      <i [class]="icon"></i>
+    </div>
+    <div class="text-content">
+      <h6 class="card-title mb-1">{{ title }}</h6>
+      <h4 class="card-value mb-0">{{ value }}</h4>
+    </div>
+  </div>

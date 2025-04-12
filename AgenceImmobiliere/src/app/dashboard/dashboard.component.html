@@ -1,1 +1,101 @@
-<p>dashboard works!</p>
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<div class="main-content">
+  <!-- Statistiques Clés -->
+  <div class="container-fluid">
+    <div class="row mb-4">
+      <div class="col-md-3">
+        <app-card
+          icon="bi bi-house"
+          title="Total Properties"
+          value="462"
+        ></app-card>
+      </div>
+      <div class="col-md-3">
+        <app-card
+          icon="bi bi-key"
+          title="Properties for Rent"
+          value="294"
+        ></app-card>
+      </div>
+      <div class="col-md-3">
+        <app-card
+          icon="bi bi-tag"
+          title="Properties for Sale"
+          value="168"
+        ></app-card>
+      </div>
+      <div class="col-md-3">
+        <app-card
+          icon="bi bi-currency-dollar"
+          title="Total Revenue"
+          value="$142,800.50"
+        ></app-card>
+      </div>
+    </div>
+    <!-- Annonces Non Publiées -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5>Annonces Non Publiées</h5>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Titre</th>
+              <th>Date de Création</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let listing of unpublishedListings | slice:0:5">
+              <td>{{ listing.title }}</td>
+              <td>{{ listing.creationDate | date }}</td>
+              <td>{{ listing.status }}</td>
+              <td>
+                <button class="btn btn-sm btn-success me-1" (click)="publishListing(listing.id)">Publier</button>
+                <button class="btn btn-sm btn-primary me-1" (click)="editListing(listing.id)">Modifier</button>
+                <button class="btn btn-sm btn-danger" (click)="deleteListing(listing.id)">Supprimer</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <a routerLink="/admin/listings">Voir toutes les annonces</a>
+      </div>
+    </div>
+
+    <!-- Utilisateurs Récents -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5>Utilisateurs Récents</h5>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Rôle</th>
+              <th>Date d'Inscription</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of recentUsers | slice:0:5">
+              <td>{{ user.name }}</td>
+              <td>{{ user.role }}</td>
+              <td>{{ user.registrationDate | date }}</td>
+              <td>
+                <button class="btn btn-sm btn-info me-1" (click)="viewUser(user.id)">Voir</button>
+                <button class="btn btn-sm btn-warning" (click)="suspendUser(user.id)">Suspendre</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <a routerLink="/admin/users">Voir tous les utilisateurs</a>
+      </div>
+    </div>
+
+    
+  </div>
+</div>

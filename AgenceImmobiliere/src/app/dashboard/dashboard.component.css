@@ -1,0 +1,26 @@
+.main-content {
+    margin-top: 60px; /* Match the header's height */
+    margin-left: 260px; /* Match the sidebar's width */
+    padding: 20px; /* Add some padding for spacing */
+    min-height: calc(100vh - 60px); /* Ensure it takes the full height minus the header */
+    background-color: #f8f9fa; /* Light background for contrast */
+  }
+  
+  .card {
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .table th, .table td {
+    vertical-align: middle;
+  }
+  
+  .btn-sm {
+    font-size: 0.875rem;
+  }
+  
+  @media (max-width: 768px) {
+    .main-content {
+      margin-left: 0; /* No sidebar margin on small screens */
+    }
+  }

@@ -1,0 +1,122 @@
+<div class="modal-body">
+    <form (ngSubmit)="onSubmit()" #propertyForm="ngForm">
+      <div class="row">
+        <!-- Superficie -->
+        <div class="col-md-6 mb-3">
+          <label for="superficie" class="form-label">Superficie (m²)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="superficie"
+            name="superficie"
+            [(ngModel)]="newProperty.superficie"
+            required
+          />
+        </div>
+  
+        <!-- Nombre de pièces -->
+        <div class="col-md-6 mb-3">
+          <label for="nombrePieces" class="form-label">Nombre de pièces</label>
+          <input
+            type="number"
+            class="form-control"
+            id="nombrePieces"
+            name="nombrePieces"
+            [(ngModel)]="newProperty.nombrePieces"
+            required
+          />
+        </div>
+      </div>
+  
+      <div class="row">
+        <!-- Localisation -->
+        <div class="col-md-6 mb-3">
+          <label for="localisation" class="form-label">Localisation</label>
+          <input
+            type="text"
+            class="form-control"
+            id="localisation"
+            name="localisation"
+            [(ngModel)]="newProperty.localisation"
+            required
+          />
+        </div>
+  
+        <!-- Prix -->
+        <div class="col-md-6 mb-3">
+          <label for="prix" class="form-label">Prix (€)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="prix"
+            name="prix"
+            [(ngModel)]="newProperty.prix"
+            required
+          />
+        </div>
+      </div>
+  
+      <!-- Photos -->
+      <div class="mb-3">
+        <label for="photos" class="form-label">Photos</label>
+        <input
+          type="file"
+          class="form-control"
+          id="photos"
+          name="photos"
+          (change)="onFileChange($event)"
+          multiple
+          accept="image/*"
+        />
+      </div>
+  
+      <!-- Description -->
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea
+          class="form-control"
+          id="description"
+          name="description"
+          [(ngModel)]="newProperty.description"
+          rows="3"
+          required
+        ></textarea>
+      </div>
+  
+      <!-- Contact -->
+      <div class="mb-3">
+        <label for="contact" class="form-label">Contact</label>
+        <input
+          type="text"
+          class="form-control"
+          id="contact"
+          name="contact"
+          [(ngModel)]="newProperty.contact"
+          required
+        />
+      </div>
+  
+      <!-- Type (Location ou Achat) -->
+      <div class="mb-3">
+        <label for="type" class="form-label">Type</label>
+        <select
+          class="form-control"
+          id="type"
+          name="type"
+          [(ngModel)]="newProperty.type"
+          required
+        >
+          <option value="Location">Location</option>
+          <option value="Achat">Achat</option>
+        </select>
+      </div>
+  
+      <!-- Boutons du modal -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">Annuler</button>
+        <button type="submit" class="btn btn-success" [disabled]="!propertyForm.valid">
+          Ajouter la Propriété
+        </button>
+      </div>
+    </form>
+  </div>

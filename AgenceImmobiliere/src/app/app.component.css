@@ -1,0 +1,12 @@
+.main-content {
+        margin-left: 260px; /* Match the sidebar's width */
+    padding: 20px; /* Add some padding for spacing */
+    min-height: calc(100vh - 60px); /* Ensure it takes the full height minus the header */
+    background-color: #f8f9fa; /* Light background for contrast */
+  }
+  
+  @media (max-width: 768px) {
+    .main-content {
+      margin-left: 0; /* No sidebar margin on small screens */
+    }
+  }

@@ -39,3 +39,14 @@ z-index: 1100; /* Ensure the hamburger icon is above the sidebar */
     transform: translateX(-100%);
 }
 }
+.sidebar-image {
+  width: 100%;
+  max-width: 200px; /* Limits the image size to fit within the sidebar */
+  margin: 0 auto; /* Centers the image horizontally */
+}
+
+.sidebar-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover; /* Ensures the image maintains aspect ratio */
+}

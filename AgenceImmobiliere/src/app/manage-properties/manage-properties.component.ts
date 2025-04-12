@@ -41,9 +41,9 @@ export class ManagePropertiesComponent {
   ];
 
   propertyActions = [
-    { label: 'Publier', class: 'btn-success', handler: (row: any) => this.deleteProperty(row.id) },
+    { label: 'Publier', class: 'btn-success', handler: (row: any) => this.publishListing(row.id) },
     { label: 'Modifier', class: 'btn-primary', handler: (row: any) => this.editProperty(row.id) },
-    { label: 'Supprimer', class: 'btn-danger', handler: (row: any) => this.deleteProperty(row.id) },
+    { label: 'Supprimer', class: 'btn-danger', handler: (row: any) => this.deleteProperty(row.id) }
     
   ];
 
@@ -75,6 +75,10 @@ export class ManagePropertiesComponent {
     };
     this.properties.push(propertyToAdd);
     this.toggleForm();
+  }
+
+  publishListing(id: number) {
+    console.log(`Publier l'annonce ${id}`);
   }
 
   editProperty(id: number) {

@@ -1,37 +1,90 @@
 .card {
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .table th,
-  .table td {
-    vertical-align: middle;
-  }
-  
-  .btn-sm {
-    font-size: 0.875rem;
-  }
-  
-  /* Enable horizontal scrolling on small screens */
-  .table-responsive {
-    overflow-x: auto; /* Enable horizontal scrolling */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
-  }
-  
-  /* Optional: Ensure the table doesn't shrink too much */
-  .table {
-    min-width: 700px; /* Adjust this value based on your table's content */
-  }
-  
-  /* Optional: Ensure columns don't wrap and have a minimum width */
-  .table th,
-  .table td {
-    white-space: nowrap; /* Prevent text wrapping */
-    min-width: 100px; /* Minimum width for columns, adjust as needed */
-  }
-  
-  /* Ensure the Actions column doesn't shrink too much */
-  .table th:last-child,
-  .table td:last-child {
-    min-width: 150px; /* Adjust as needed for the Actions column */
-  }
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table th,
+.table td {
+  white-space: nowrap;
+  min-width: 100px;
+}
+
+.table th:last-child,
+.table td:last-child {
+  min-width: 150px;
+}
+
+/* Base styles for action buttons */
+.action-btn {
+  border-radius: 12px; /* Rounded corners for the buttons */
+  font-size: 0.875rem; /* Same as btn-sm */
+  padding: 0.25rem 0.75rem; /* Adjust padding for a compact look */
+  border: none; /* Remove default border */
+  transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+/* Pastel color classes with darker text shades */
+.action-btn.action-blue {
+  background-color: #A3BFFA; /* Pastel Blue */
+  color: #112fab; /* Darker shade of the same blue */
+}
+
+.action-btn.action-blue:hover {
+  background-color: #8DAFF5; /* Slightly darker on hover */
+}
+
+.action-btn.action-pink {
+  background-color: #fbb6ce; /* Pastel Pink */
+  color: #c11e57; /* Darker shade of the same pink */
+}
+
+.action-btn.action-pink:hover {
+  background-color: #F89EBB; /* Slightly darker on hover */
+}
+
+.action-btn.action-green {
+  background-color: #B5EAD7; /* Pastel Green */
+  color: #2b966f; /* Darker shade of the same green */
+}
+
+.action-btn.action-green:hover {
+  background-color: #9FE2C5; /* Slightly darker on hover */
+}
+
+.action-btn.action-yellow {
+  background-color: rgba(255, 248, 177, 0.878); /* Pastel Yellow */
+  color: #baa113; /* Darker shade of the same yellow */
+}
+
+.action-btn.action-yellow:hover {
+  background-color: #FFF59B; /* Slightly darker on hover */
+}
+
+.action-btn.action-purple {
+  background-color: #D6BCFA; /* Pastel Purple */
+  color: #7a44cc; /* Darker shade of the same purple */
+}
+
+.action-btn.action-purple:hover {
+  background-color: #C5A7F7; /* Slightly darker on hover */
+}
+
+/* Default color for unknown labels */
+.action-btn.action-default {
+  background-color: #E2E8F0; /* Neutral light gray (Slate-200) */
+  color: #7A8A99; /* Darker shade of the same gray */
+}
+
+.action-btn.action-default:hover {
+  background-color: #CBD5E0; /* Slightly darker on hover */
+}

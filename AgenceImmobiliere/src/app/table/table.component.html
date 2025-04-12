@@ -25,8 +25,15 @@
             <td *ngIf="actions.length > 0">
               <button
                 *ngFor="let action of actions"
-                class="btn btn-sm me-1"
-                [ngClass]="action.class"
+                class="btn btn-sm me-1 action-btn"
+                [ngClass]="{
+                  'action-green': action.label === 'Publier',
+                  'action-blue': action.label === 'Modifier',
+                  'action-pink': action.label === 'Supprimer',
+                  'action-yellow': action.label === 'Voir',
+                  'action-purple': action.label === 'Suspendre',
+                  'action-default': !['Publier', 'Modifier', 'Supprimer', 'Voir', 'Suspendre'].includes(action.label)
+                }"
                 (click)="action.handler(row)"
               >
                 {{ action.label }}

@@ -1,25 +1,32 @@
 <!-- Hamburger Icon for Small Screens -->
 <button class="hamburger btn btn-light d-block d-md-none p-2 m-2" (click)="toggleSidebar()">
-    <i class="bi bi-list fs-3"></i>
-  </button>
-  
-  <!-- Sidebar -->
-  <div class="sidebar d-flex flex-column p-3 text-white vh-100" [ngClass]="{'sidebar-hidden': !isSidebarOpen}" id="sidebar" (click)="closeSidebar()">
-    <ul class="nav nav-pills flex-column" style="width: 100%;">
-      <li class="nav-item mb-3">
-        <a href="#" class="nav-link text-white">
-          <i class="bi bi-speedometer2 me-2"></i> Tableau de bord
-        </a>
-      </li>
-      <li class="mb-3">
-        <a routerLink="/admin/manage-properties" class="nav-link text-white">
-          <i class="bi bi-people me-2"></i> Gestion des biens
-        </a>
-      </li>
-      <li class="mb-3">
-        <a href="#" class="nav-link text-white">
-          <i class="bi bi-journal-text me-2"></i> Gestion des demandes
-        </a>
-      </li>
-    </ul>
+  <i class="bi bi-list fs-3"></i>
+</button>
+
+<!-- Sidebar -->
+<div class="sidebar d-flex flex-column p-3 text-white vh-100" [ngClass]="{'sidebar-hidden': !isSidebarOpen}" id="sidebar" (click)="closeSidebar()">
+  <!-- Sidebar Image -->
+  <div class="sidebar-image mb-3 text-center">
+    <img src="assets/logo.png" alt="Sidebar Image" class="img-fluid rounded-circle">
   </div>
+
+  <!-- Navigation Links -->
+  <ul class="nav nav-pills flex-column" style="width: 100%;">
+    <li class="nav-item mb-3">
+      <a href="#" class="nav-link text-white">
+        <i class="bi bi-speedometer2 me-2"></i> Tableau de bord
+      </a>
+    </li>
+    <li class="mb-3">
+      <a routerLink="/admin/manage-properties" class="nav-link text-white">
+        <i class="bi bi-people me-2"></i> Gestion des biens
+      </a>
+    </li>
+    <li class="mb-3">
+      <a href="#" class="nav-link text-white">
+        <i class="bi bi-journal-text me-2"></i> Gestion des demandes
+      </a>
+    </li>
+  </ul>
+</div>
+

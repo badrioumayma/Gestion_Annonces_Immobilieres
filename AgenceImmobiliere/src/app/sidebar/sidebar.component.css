@@ -1,0 +1,41 @@
+a.nav-link:hover {
+    background-color: #4B3F72; /* Changer cette couleur selon ton choix */
+  }
+
+.sidebar {
+width: 260px;
+background-color: #0C0950;
+transition: transform 0.3s ease-in-out;
+position: fixed;
+top: 50px; /* Adjust this based on your header's height */
+left: 0;
+height: calc(100vh - 60px); /* Subtract header height from viewport height */
+z-index: 1000;
+}
+
+.sidebar-hidden {
+transform: translateX(-100%);
+}
+
+.hamburger {
+z-index: 1100; /* Ensure the hamburger icon is above the sidebar */
+}
+
+.nav {
+    padding-top: 70px; /* Adjust this value to control how much lower the content goes */
+  }
+
+@media (min-width: 769px) {
+.hamburger {
+    display: none;
+}
+.sidebar {
+    transform: translateX(0) !important;
+}
+}
+
+@media (max-width: 768px) {
+.sidebar-hidden {
+    transform: translateX(-100%);
+}
+}

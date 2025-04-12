@@ -10,6 +10,8 @@ import { CardComponent } from './card/card.component';
 import { TableComponent } from './table/table.component';
 import { ManagePropertiesComponent } from './manage-properties/manage-properties.component';
 import { FormComponent } from './form/form.component';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { FormComponent } from './form/form.component';
     CardComponent,
     TableComponent,
     ManagePropertiesComponent,
-    FormComponent
+    FormComponent,
+    WelcomePageComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

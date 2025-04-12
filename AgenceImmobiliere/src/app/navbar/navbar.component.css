@@ -1,0 +1,39 @@
+/* Navbar styles */
+.custom-navbar {
+    background-color: #0C0950 ; /* Dark blue background matching the previous design */
+    padding: 0.75rem 1.5rem; /* Adjust padding for a compact look */
+  }
+  
+  /* Logo image styles */
+  .navbar-logo {
+    width: 200px; /* Smaller width */
+    height: 60px; /* Smaller height */
+    object-fit: cover; /* Ensures the image maintains aspect ratio */
+  }
+  
+  /* Social media icons */
+  .social-icons i {
+    font-size: 1.2rem; /* Size of the icons */
+    transition: color 0.3s ease; /* Smooth hover transition */
+  }
+  
+  .social-icons a:hover i {
+    color: #ff4d4f; /* Red hover effect */
+  }
+  
+  /* Navigation links */
+  .nav-link {
+    font-size: 1rem;
+    padding: 0.5rem 1rem; /* Adjust padding for spacing */
+    transition: background-color 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    background-color: #2C3E50; /* Slightly lighter background on hover */
+    border-radius: 5px;
+  }
+  
+  /* Ensure the toggler icon is visible */
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  }

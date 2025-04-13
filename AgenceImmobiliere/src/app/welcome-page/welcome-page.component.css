@@ -1,0 +1,136 @@
+.banner {
+background-image: url('/assets/home.jpg');
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+height: 640px;
+position: relative;
+z-index: 0;
+}
+
+.banner::before {
+content: "";
+position: absolute;
+top: 0; left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.4); /* ✅ Couche sombre */
+z-index: 1;
+}
+
+/* Pour que le contenu passe au-dessus de l'overlay */
+.banner-content {
+height: 100%;
+color: #ffffff;
+font-family: 'Roboto', sans-serif;
+position: relative;
+z-index: 2;
+}
+
+/* Main title */
+.banner-title {
+font-size: 3rem; /* Large font size for the main title */
+font-weight: 700; /* Bold text */
+margin-bottom: 0.5rem; /* Space below the title */
+text-transform: uppercase; /* Matches the uppercase text in the image */
+}
+
+/* Subtitle */
+.banner-subtitle {
+font-size: 1.5rem; /* Smaller font size for the subtitle */
+font-weight: 600; /* Slightly less bold than the title */
+margin-bottom: 1.5rem; /* Space below the subtitle */
+text-transform: uppercase; /* Matches the uppercase text in the image */
+}
+
+/* Explorer button */
+.btn-explorer {
+background-color: #1790c9; /* Rouge vif comme dans ton image */
+color: #ffffff;
+padding: 0.75rem 1.5rem;
+font-size: 1rem;
+font-weight: 800;
+border: none;
+border-radius: 1px;
+transition: background-color 0.3s ease;
+width: 250px;
+font-family: 'Roboto', sans-serif; /* ✅ Police comme sur l’image */
+}
+
+
+.btn-explorer:hover {
+background-color: #86d6fb; /* Slightly darker red on hover */
+}
+
+/* Section styles */
+.search-options {
+background-color: #f8f9fa; /* Light gray background for the section */
+}
+
+/* Heading */
+h2 {
+font-size: 1.5rem;
+font-weight: 400;
+color: #6c757d; /* Gray color matching the image */
+text-transform: uppercase;
+font-family: 'Roboto', sans-serif; 
+}
+
+/* Card base styles */
+.search-card {
+height: 350px; /* Fixed height for the cards */
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+position: relative;
+border-radius: 1px; /* Rounded corners */
+overflow: hidden; /* Ensure the overlay doesn’t bleed outside */
+transition: transform 0.3s ease; /* Smooth hover effect */
+text-decoration: none; /* Remove underline from the link */
+}
+
+/* Overlay for the cards */
+.search-card::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: 1;
+opacity: 0.7; /* Semi-transparent overlay */
+}
+
+/* Achat card */
+.achat-card {
+background-image: url('/assets/achat.png');
+}
+
+.achat-card::before {
+background-color: #0C0950; /* Dark blue overlay */
+
+}
+
+/* Location card */
+.location-card {
+background-image: url('/assets/location.png');
+}
+
+.location-card::before {
+background-color: #1790c9; /* Pink overlay */
+}
+
+/* Card title */
+.search-card-title {
+position: relative;
+z-index: 2; /* Ensure the title is above the overlay */
+color: #ffffff; /* White text */
+font-size: 2.5rem;
+font-weight: 700;
+text-transform: uppercase;
+}
+
+/* Hover effect */
+.search-card:hover {
+transform: scale(1.05); /* Slight zoom on hover */
+}

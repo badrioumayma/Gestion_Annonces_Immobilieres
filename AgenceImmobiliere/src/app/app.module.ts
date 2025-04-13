@@ -12,6 +12,7 @@ import { ManagePropertiesComponent } from './manage-properties/manage-properties
 import { FormComponent } from './form/form.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { PropertyCardComponent } from './property-card/property-card.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     ManagePropertiesComponent,
     FormComponent,
     WelcomePageComponent,
-    NavbarComponent
+    NavbarComponent,
+    PropertyCardComponent
   ],
   imports: [
     BrowserModule,

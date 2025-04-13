@@ -1,0 +1,39 @@
+<div class="property-card">
+    <a [routerLink]="['/property', property.id]" class="text-decoration-none">
+      <!-- Image with Label -->
+      <div class="property-image position-relative">
+        <img [src]="property.image" alt="Property Image" class="img-fluid">
+        <span class="property-label position-absolute">{{ property.type }}</span>
+      </div>
+  
+      <!-- Property Details -->
+      <div class="property-details p-3">
+        <h3 class="property-address">{{ property.address }}</h3>
+        <p class="property-price">{{ property.price | currency:'EUR':'symbol' }}</p>
+  
+        <!-- Property Features -->
+        <div class="property-features d-flex justify-content-between">
+          <div class="feature text-center">
+            <i class="bi bi-door-open"></i>
+            <p>Chambres</p>
+            <p>{{ property.bedrooms }}</p>
+          </div>
+          <div class="feature text-center">
+            <i class="bi bi-droplet"></i>
+            <p>SdB</p>
+            <p>{{ property.bathrooms }}</p>
+          </div>
+          <div class="feature text-center">
+            <i class="bi bi-layers"></i>
+            <p>étages</p>
+            <p>{{ property.floors }}</p>
+          </div>
+          <div class="feature text-center">
+            <i class="bi bi-rulers"></i>
+            <p>m²</p>
+            <p>{{ property.area }}</p>
+          </div>
+        </div>
+      </div>
+    </a>
+</div>

@@ -1,0 +1,57 @@
+<app-navbar></app-navbar>
+<section class="property-details-section">
+    <!-- Property Image -->
+    <div class="property-image-container">
+      <img [src]="property.image" alt="Property Image" class="property-image">
+    </div>
+  
+    <!-- Property Info -->
+    <div class="property-info">
+      <!-- Address and Price -->
+      <div class="property-header">
+        <h2 class="property-address">{{ property.address }}</h2>
+        <div class="property-price-container">
+          <span class="property-price">{{ property.price | number }} €</span>
+          <span class="property-type">{{ property.type }}</span>
+        </div>
+      </div>
+  
+      <!-- Description -->
+      <div class="property-description">
+        <h3 class="description-title">Description de la propriété</h3>
+        <p class="description-text">{{ property.description }}</p>
+      </div>
+  
+      <!-- Details -->
+      <div class="property-details">
+        <h3 class="details-title">Détails</h3>
+        <div class="details-grid">
+          <div class="detail-item">
+            <span class="detail-label">Chambres</span>
+            <span class="detail-value">{{ property.details.chambres }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Salles de bain</span>
+            <span class="detail-value">{{ property.details.sallesDeBain }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">m²</span>
+            <span class="detail-value">{{ property.details.area }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Étages</span>
+            <span class="detail-value">{{ property.details.etages }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Année</span>
+            <span class="detail-value">{{ property.details.annee }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Adresse</span>
+            <span class="detail-value">{{ property.details.adresse }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <app-contact></app-contact>

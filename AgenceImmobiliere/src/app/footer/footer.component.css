@@ -1,0 +1,52 @@
+/* Footer styles */
+.footer {
+background-color: #0C0950; /* Dark blue background matching the navbar */
+color: #ffffff; /* White text */
+}
+
+/* Brand text styles */
+.brand-text {
+font-size: 1.25rem;
+font-weight: 600;
+color: #ffffff;
+}
+
+/* Footer links */
+.footer-link {
+color: #ffffff;
+text-decoration: none;
+font-size: 0.875rem;
+transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+color: #86d6fb; /* Red hover effect matching the "PROPRIÉTÉS" color */
+}
+
+/* Links list */
+.list-unstyled li {
+margin-bottom: 0.5rem;
+}
+
+/* Copyright text */
+.copyright {
+font-size: 0.875rem;
+color: #b0b0b0; /* Light gray for contrast */
+}
+
+/* Address */
+.address {
+font-size: 0.875rem;
+color: #b0b0b0;
+}
+
+/* Email */
+.email {
+font-size: 0.875rem;
+}
+
+/* Social media icons */
+.social-icons i {
+font-size: 1.2rem;
+transition: color 0.3s ease;
+}

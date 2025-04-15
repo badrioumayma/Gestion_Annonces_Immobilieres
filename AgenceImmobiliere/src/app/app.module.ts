@@ -13,6 +13,11 @@ import { FormComponent } from './form/form.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PropertyCardComponent } from './property-card/property-card.component';
+import { FooterComponent } from './footer/footer.component';
+import { ContactComponent } from './contact/contact.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ContactInfoComponent } from './contact-info/contact-info.component';
+import { PropertyDetailsComponent } from './property-details/property-details.component';
 
 @NgModule({
   declarations: [
@@ -26,12 +31,17 @@ import { PropertyCardComponent } from './property-card/property-card.component';
     FormComponent,
     WelcomePageComponent,
     NavbarComponent,
-    PropertyCardComponent
+    PropertyCardComponent,
+    FooterComponent,
+    ContactComponent,
+    ContactInfoComponent,
+    PropertyDetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

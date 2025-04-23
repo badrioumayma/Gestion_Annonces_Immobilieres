@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,89 +6,39 @@ import { Chart } from 'chart.js';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  unpublishedListings = [
-    { id: 1, title: 'Appartement 3 pièces à Paris', creationDate: new Date(), status: 'Brouillon' },
-    { id: 2, title: 'Maison à Lyon', creationDate: new Date(), status: 'Brouillon' }
-  ];
+  stats: { total: number, available: number, sold: number, rented: number } = { total: 0, available: 0, sold: 0, rented: 0 };
+  recentProperties: any[] = [];  // Adjust type as needed
+  properties: any[] = [];  // Adjust type as needed
 
-  recentUsers = [
-    { id: 1, name: 'Jean Dupont', role: 'Agent', registrationDate: new Date() },
-    { id: 2, name: 'Marie Curie', role: 'Propriétaire', registrationDate: new Date() }
-  ];
+  constructor() {}
 
-  // Columns for the unpublished listings table
-  listingColumns = [
-    { header: 'Titre', field: 'title' },
-    { header: 'Date de Création', field: 'creationDate', isDate: true },
-    { header: 'Statut', field: 'status' }
-  ];
+  ngOnInit(): void {
+    // Simulate fetching data
+    this.stats = {
+      total: 100,
+      available: 50,
+      sold: 30,
+      rented: 20
+    };
 
-  // Actions for the unpublished listings table
-  listingActions = [
-    { label: 'Publier', class: 'btn-success', handler: (row: any) => this.publishListing(row.id) },
-    { label: 'Modifier', class: 'btn-primary', handler: (row: any) => this.editListing(row.id) },
-    { label: 'Supprimer', class: 'btn-danger', handler: (row: any) => this.deleteListing(row.id) }
-  ];
+    this.recentProperties = [
+      { id: 1, name: 'Property 1' },  // Example data
+      { id: 2, name: 'Property 2' }
+    ];
 
-  // Columns for the recent users table
-  userColumns = [
-    { header: 'Nom', field: 'name' },
-    { header: 'Rôle', field: 'role' },
-    { header: 'Date d\'Inscription', field: 'registrationDate', isDate: true }
-  ];
-
-  // Actions for the recent users table
-  userActions = [
-    { label: 'Voir', class: 'btn-info', handler: (row: any) => this.viewUser(row.id) },
-    { label: 'Suspendre', class: 'btn-warning', handler: (row: any) => this.suspendUser(row.id) }
-  ];
-
-  ngOnInit() {
-    const ctx = document.getElementById('activityChart') as HTMLCanvasElement;
-    if (ctx) {
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ['Jour 1', 'Jour 2', 'Jour 3', '...', 'Jour 30'],
-          datasets: [{
-            label: 'Annonces Publiées',
-            data: [5, 10, 8, 12, 15],
-            borderColor: '#007bff',
-            fill: false
-          }, {
-            label: 'Demandes Envoyées',
-            data: [3, 7, 5, 9, 10],
-            borderColor: '#28a745',
-            fill: false
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: { beginAtZero: true }
-          }
-        }
-      });
-    }
+    this.properties = [
+      { id: 1, name: 'Property A' },
+      { id: 2, name: 'Property B' }
+    ];
   }
 
-  publishListing(id: number) {
-    console.log(`Publier l'annonce ${id}`);
+  editProperty(property: any): void {
+    console.log('Editing property:', property);
+    // Add your edit logic here
   }
 
-  editListing(id: number) {
-    console.log(`Modifier l'annonce ${id}`);
-  }
-
-  deleteListing(id: number) {
-    console.log(`Supprimer l'annonce ${id}`);
-  }
-
-  viewUser(id: number) {
-    console.log(`Voir l'utilisateur ${id}`);
-  }
-
-  suspendUser(id: number) {
-    console.log(`Suspendre l'utilisateur ${id}`);
+  deleteProperty(propertyId: number): void {
+    console.log('Deleting property with ID:', propertyId);
+    // Add your delete logic here
   }
 }

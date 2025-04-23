@@ -31,15 +31,31 @@
   
     <!-- Right Side: Navigation Links -->
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
+      <ul class="navbar-nav ms-auto align-items-center">
         <li class="nav-item">
-          <a class="nav-link text-white" routerLink="/">Accueil</a>
+          <a class="nav-link text-white" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Accueil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" routerLink="/properties">Propriétés</a>
+          <a class="nav-link text-white" routerLink="/properties" routerLinkActive="active">Propriétés</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" routerLink="/contact">Contact</a>
+          <a class="nav-link text-white" routerLink="/contact" routerLinkActive="active">Contact</a>
+        </li>
+        
+        <!-- Authentication Buttons -->
+        <li class="nav-item ms-lg-3">
+          <ng-container *ngIf="!isLoggedIn; else loggedInTemplate">
+            <button class="btn btn-outline-light" (click)="onLogin()">
+              <i class="bi bi-person-circle me-2"></i>Connexion
+            </button>
+          </ng-container>
+          <ng-template #loggedInTemplate>
+            <div class="d-flex align-items-center">
+              <button class="btn btn-outline-light" (click)="onLogout()">
+                <i class="bi bi-box-arrow-right me-2"></i>Déconnexion
+              </button>
+            </div>
+          </ng-template>
         </li>
       </ul>
     </div>

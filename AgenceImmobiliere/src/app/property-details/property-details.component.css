@@ -1,4 +1,3 @@
-
 .property-details-section {
 padding: 3rem 0;
 max-width: 1200px;
@@ -133,4 +132,244 @@ font-size: 1.25rem;
 .details-grid {
 grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }
+}
+
+.property-details-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Loading and Error States */
+.loading-container,
+.error-container {
+  text-align: center;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+/* Image Gallery */
+.image-gallery {
+  margin-bottom: 2rem;
+}
+
+.main-image-container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.prev {
+  left: 1rem;
+}
+
+.next {
+  right: 1rem;
+}
+
+.thumbnail-container {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
+.thumbnail {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.thumbnail.active {
+  opacity: 1;
+  border: 2px solid #1790c9;
+}
+
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Property Information */
+.property-info {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.price {
+  font-size: 1.5rem;
+  color: #1790c9;
+  font-weight: 600;
+}
+
+.location {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+/* Key Features */
+.key-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.feature i {
+  color: #1790c9;
+  font-size: 1.2rem;
+}
+
+/* Description and Features */
+.description,
+.features-list {
+  margin-bottom: 2rem;
+}
+
+h2 {
+  color: #2c3e50;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.features-list ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.features-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.features-list i {
+  color: #1790c9;
+}
+
+/* Agent Information */
+.agent-info {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.agent-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.agent-details h3 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.agent-details p {
+  margin: 0.25rem 0;
+  color: #666;
+}
+
+.contact-button {
+  background-color: #1790c9;
+  border: none;
+  padding: 0.75rem 2rem;
+  transition: all 0.3s ease;
+}
+
+.contact-button:hover {
+  background-color: #1576a9;
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main-image-container {
+    height: 300px;
+  }
+
+  .property-info {
+    padding: 1rem;
+  }
+
+  .key-features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .agent-card {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .key-features {
+    grid-template-columns: 1fr;
+  }
+
+  .features-list ul {
+    grid-template-columns: 1fr;
+  }
 }

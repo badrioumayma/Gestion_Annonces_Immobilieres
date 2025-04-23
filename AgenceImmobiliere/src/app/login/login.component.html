@@ -1,0 +1,76 @@
+<div class="login-container">
+  <div class="login-box">
+    <div class="login-header">
+      <h2>Connexion Admin</h2>
+      <p>Connectez-vous pour accéder au tableau de bord</p>
+    </div>
+
+    <form  (ngSubmit)="onSubmit()" class="login-form" >
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="bi bi-envelope"></i>
+          </span>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control"
+            [class.is-invalid]="email?.invalid && email?.touched"
+            placeholder="Entrez votre email"
+          />
+        </div>
+        <div class="invalid-feedback" *ngIf="email?.invalid && email?.touched">
+          <span *ngIf="email?.errors?.['required']">L'email est requis</span>
+          <span *ngIf="email?.errors?.['email']">Veuillez entrer un email valide</span>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="bi bi-lock"></i>
+          </span>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            class="form-control"
+            [class.is-invalid]="password?.invalid && password?.touched"
+            placeholder="Entrez votre mot de passe"
+          />
+        </div>
+        <div class="invalid-feedback" *ngIf="password?.invalid && password?.touched">
+          <span *ngIf="password?.errors?.['required']">Le mot de passe est requis</span>
+          <span *ngIf="password?.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères</span>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button 
+        type="submit" 
+        class="btn btn-primary w-100"
+        [disabled]="loginForm.invalid || loading"
+      >
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+        Se connecter
+      </button>
+
+      <!-- Back to Home -->
+      <div class="text-center mt-3">
+        <a routerLink="/" class="text-decoration-none">
+          <i class="bi bi-arrow-left"></i> Retour à l'accueil
+        </a>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,57 +1,56 @@
-<app-navbar></app-navbar>
-<section class="property-details-section">
-    <!-- Property Image -->
-    <div class="property-image-container">
-      <img [src]="property.image" alt="Property Image" class="property-image">
+<div class="property-details-container">
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
     </div>
-  
-    <!-- Property Info -->
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <!-- Content -->
+  <div *ngIf="property && !loading" class="property-content">
+    <!-- Images -->
+    <div class="image-gallery">
+      <div class="main-image-container">
+        <button class="nav-button" (click)="previousImage()"><i class="bi bi-chevron-left"></i></button>
+        <img [src]="property.images[activeImageIndex]" [alt]="property.title" class="main-image">
+        <button class="nav-button" (click)="nextImage()"><i class="bi bi-chevron-right"></i></button>
+      </div>
+      <div class="thumbnail-container">
+        <div *ngFor="let img of property.images; let i = index" 
+             class="thumbnail" 
+             [class.active]="i === activeImageIndex"
+             (click)="setActiveImage(i)">
+          <img [src]="img" [alt]="property.title + ' image ' + (i + 1)">
+        </div>
+      </div>
+    </div>
+
+    <!-- Info -->
     <div class="property-info">
-      <!-- Address and Price -->
-      <div class="property-header">
-        <h2 class="property-address">{{ property.address }}</h2>
-        <div class="property-price-container">
-          <span class="property-price">{{ property.price | number }} €</span>
-          <span class="property-type">{{ property.type }}</span>
-        </div>
+      <h1 class="title">{{ property.title }}</h1>
+      <div class="price">{{ property.price | currency:'EUR':'symbol':'1.0-0' }}</div>
+      <div class="location"><i class="bi bi-geo-alt"></i> {{ property.location }}</div>
+
+      <!-- Key Features -->
+      <div class="key-features">
+        <div><i class="bi bi-house-door"></i> {{ property.surface }} m²</div>
+        <div><i class="bi bi-door-open"></i> {{ property.rooms }} pièces</div>
+        <div><i class="bi bi-person-sleep"></i> {{ property.bedrooms }} chambres</div>
+        <div><i class="bi bi-water"></i> {{ property.bathrooms }} salle(s) de bain</div>
       </div>
-  
+
       <!-- Description -->
-      <div class="property-description">
-        <h3 class="description-title">Description de la propriété</h3>
-        <p class="description-text">{{ property.description }}</p>
-      </div>
-  
-      <!-- Details -->
-      <div class="property-details">
-        <h3 class="details-title">Détails</h3>
-        <div class="details-grid">
-          <div class="detail-item">
-            <span class="detail-label">Chambres</span>
-            <span class="detail-value">{{ property.details.chambres }}</span>
-          </div>
-          <div class="detail-item">
-            <span class="detail-label">Salles de bain</span>
-            <span class="detail-value">{{ property.details.sallesDeBain }}</span>
-          </div>
-          <div class="detail-item">
-            <span class="detail-label">m²</span>
-            <span class="detail-value">{{ property.details.area }}</span>
-          </div>
-          <div class="detail-item">
-            <span class="detail-label">Étages</span>
-            <span class="detail-value">{{ property.details.etages }}</span>
-          </div>
-          <div class="detail-item">
-            <span class="detail-label">Année</span>
-            <span class="detail-value">{{ property.details.annee }}</span>
-          </div>
-          <div class="detail-item">
-            <span class="detail-label">Adresse</span>
-            <span class="detail-value">{{ property.details.adresse }}</span>
-          </div>
-        </div>
-      </div>
+      <h2>Description</h2>
+      <p>{{ property.description }}</p>
+
+      <!-- Features List -->
+      <h2>Caractéristiques</h2>
+      <ul>
+        <li *ngFor="let f of property.features"><i class="bi bi-check2"></i> {{ f }}</li>
+      </ul>
     </div>
-  </section>
-  <app-contact></app-contact>
+  </div>
+</div>

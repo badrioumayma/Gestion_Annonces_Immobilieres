@@ -1,25 +1,69 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { PropertyService } from '../services/property.service';
+import { Property } from '../models/property.model';
 
 @Component({
   selector: 'app-property-details',
   templateUrl: './property-details.component.html',
   styleUrls: ['./property-details.component.css']
 })
-export class PropertyDetailsComponent {
-  // Static data for the property (you can replace this with dynamic data via a service or input)
-  property = {
-    image: '/assets/achat.png',
-    address: '47 rue des Couronnes',
-    price: 850000,
-    type: 'Achat',
-    description: `Cet appartement est idéal pour un couple ou une petite famille. Vous serez séduit par son agencement optimisé, ses grandes fenêtres et sa luminosité exceptionnelle. Il est situé dans un quartier calme, à proximité des commerces, des écoles et des transports en commun. Parfait pour un premier achat ou un investissement locatif !`,
-    details: {
-      chambres: 4,
-      sallesDeBain: 2,
-      area: 1234,
-      etages: 3,
-      annee: 2023,
-      adresse: 'Paris, France'
+export class PropertyDetailsComponent implements OnInit {
+  property: Property | null = null;
+  loading = false;
+  error: string | null = null;
+  activeImageIndex = 0;
+
+  constructor(
+    private route: ActivatedRoute,
+    private propertyService: PropertyService
+  ) {}
+
+  ngOnInit(): void {
+    this.loadPropertyDetails();
+  }
+
+  private loadPropertyDetails(): void {
+    this.loading = true;
+    const id = this.route.snapshot.paramMap.get('id');
+
+    if (!id) {
+      this.error = 'Identifiant de propriété non trouvé';
+      this.loading = false;
+      return;
     }
-  };
+
+    this.propertyService.getPropertyById(Number(id)).subscribe({
+      next: (property) => {
+        this.property = property;
+        this.loading = false;
+      },
+      error: (error) => {
+        this.error = 'Erreur lors du chargement de la propriété';
+        this.loading = false;
+        console.error('Erreur chargement propriété :', error);
+      }
+    });
+  }
+
+  previousImage(): void {
+    if (this.activeImageIndex > 0) {
+      this.activeImageIndex--;
+    }
+  }
+
+  nextImage(): void {
+    if (this.property && this.activeImageIndex < this.property.images.length - 1) {
+      this.activeImageIndex++;
+    }
+  }
+
+  setActiveImage(index: number): void {
+    this.activeImageIndex = index;
+  }
+
+  retryLoading(): void {
+    this.error = null;
+    this.loadPropertyDetails();
+  }
 }

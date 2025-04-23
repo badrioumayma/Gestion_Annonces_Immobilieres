@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { PropertyCardComponent } from '../property-card/property-card.component';
+import { ContactInfoComponent } from "../contact-info/contact-info.component";
 
 @Component({
   selector: 'app-welcome-page',
   templateUrl: './welcome-page.component.html',
-  styleUrls: ['./welcome-page.component.css']
+  styleUrls: ['./welcome-page.component.css'],
 })
 export class WelcomePageComponent {
   achatProperties = [

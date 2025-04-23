@@ -15,9 +15,10 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { PropertyCardComponent } from './property-card/property-card.component';
 import { FooterComponent } from './footer/footer.component';
 import { ContactComponent } from './contact/contact.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms'; 
 import { ContactInfoComponent } from './contact-info/contact-info.component';
 import { PropertyDetailsComponent } from './property-details/property-details.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -40,8 +41,8 @@ import { PropertyDetailsComponent } from './property-details/property-details.co
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
     ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

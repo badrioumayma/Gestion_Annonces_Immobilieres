@@ -1,5 +1,3 @@
-<app-navbar></app-navbar>
-
 <section class="banner">
   <div class="banner-content d-flex flex-column align-items-center justify-content-center text-center">
     <h1 class="banner-title">Nouveautés immobilières</h1>
@@ -48,7 +46,16 @@
     <!-- Property Cards -->
     <div class="row g-4">
       <div class="col-md-4" *ngFor="let property of achatProperties">
-        <app-property-card [property]="property"></app-property-card>
+        <div class="card h-100">
+          <img [src]="property.image" class="card-img-top" [alt]="property.type">
+          <div class="card-body">
+            <h5 class="card-title">{{property.type}} - {{property.address}}</h5>
+            <p class="card-text">
+              {{property.bedrooms}} chambres • {{property.bathrooms}} sdb • {{property.floors}} étages • {{property.area}}m²
+            </p>
+            <p class="card-text"><strong>Prix: </strong>{{property.price}} €</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -74,7 +81,16 @@
     <!-- Property Cards -->
     <div class="row g-4">
       <div class="col-md-4" *ngFor="let property of locationProperties">
-        <app-property-card [property]="property"></app-property-card>
+        <div class="card h-100">
+          <img [src]="property.image" class="card-img-top" [alt]="property.type">
+          <div class="card-body">
+            <h5 class="card-title">{{property.type}} - {{property.address}}</h5>
+            <p class="card-text">
+              {{property.bedrooms}} chambres • {{property.bathrooms}} sdb • {{property.floors}} étages • {{property.area}}m²
+            </p>
+            <p class="card-text"><strong>Prix: </strong>{{property.price}} €</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -91,5 +107,4 @@
   </div>
 </section>
 
-<app-contact-info></app-contact-info>
-<app-footer></app-footer>
+

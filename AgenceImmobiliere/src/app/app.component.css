@@ -1,12 +1,25 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .main-content {
-        margin-left: 260px; /* Match the sidebar's width */
-    padding: 20px; /* Add some padding for spacing */
-    min-height: calc(100vh - 60px); /* Ensure it takes the full height minus the header */
-    background-color: #f8f9fa; /* Light background for contrast */
+  flex: 1;
+  width: 100%;
+  padding-top: 0; /* Removed padding since navbar is fixed */
+  position: relative;
+  background-color: #ffffff;
+}
+
+/* Ensure router-outlet content takes full width */
+:host {
+  display: block;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0; /* No sidebar margin on small screens */
   }
-  
-  @media (max-width: 768px) {
-    .main-content {
-      margin-left: 0; /* No sidebar margin on small screens */
-    }
-  }
+}

@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { PropertyService } from '../services/property.service';
+import { Property } from '../models/property.model';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { PropertyCardComponent } from '../property-card/property-card.component';
 import { ContactInfoComponent } from "../contact-info/contact-info.component";
@@ -9,76 +11,125 @@ import { ContactInfoComponent } from "../contact-info/contact-info.component";
   templateUrl: './welcome-page.component.html',
   styleUrls: ['./welcome-page.component.css'],
 })
-export class WelcomePageComponent {
-  achatProperties = [
-    {
-      id: 1,
-      image: '/assets/home.jpg',
-      type: 'Achat',
-      address: '47 rue des Couronnes, Paris, France',
-      price: 850000,
-      bedrooms: 4,
-      bathrooms: 2,
-      floors: 3,
-      area: 1234
-    },
-    {
-      id: 2,
-      image: '/assets/home.jpg',
-      type: 'Achat',
-      address: '12 avenue des Champs-Élysées, Paris, France',
-      price: 1200000,
-      bedrooms: 5,
-      bathrooms: 3,
-      floors: 2,
-      area: 1500
-    },
-    {
-      id: 3,
-      image: '/assets/home.jpg',
-      type: 'Achat',
-      address: '25 rue de Rivoli, Paris, France',
-      price: 950000,
-      bedrooms: 3,
-      bathrooms: 2,
-      floors: 2,
-      area: 1100
-    }
-  ];
+export class WelcomePageComponent implements OnInit {
+  properties: Property[] = [];
+  displayedProperties: Property[] = [];
+  loading = false;
 
-  locationProperties = [
-    {
-      id: 4,
-      image: '/assets/home.jpg',
-      type: 'Location',
-      address: '30 rue de la Paix, Paris, France',
-      price: 3000,
-      bedrooms: 2,
-      bathrooms: 1,
-      floors: 1,
-      area: 80
-    },
-    {
-      id: 5,
-      image: '/assets/home.jpg',
-      type: 'Location',
-      address: '15 boulevard Saint-Germain, Paris, France',
-      price: 2500,
-      bedrooms: 1,
-      bathrooms: 1,
-      floors: 1,
-      area: 60
-    },
-    {
-      id: 6,
-      image: '/assets/home.jpg',
-      type: 'Location',
-      address: '8 rue Montmartre, Paris, France',
-      price: 3500,
-      bedrooms: 3,
-      bathrooms: 2,
-      floors: 1,
-      area: 100
+  // Filtres
+  filters = {
+    type: '',
+    propertyType: '', // studio, villa, etc.
+    bedrooms: '',
+    minSurface: '',
+    maxSurface: '',
+    location: ''
+  };
+
+  // Options pour les filtres
+  propertyTypes = ['Studio', 'Appartement', 'Villa', 'Maison'];
+  bedroomOptions = ['1', '2', '3', '4', '5+'];
+  locations = ['Paris', 'Lyon', 'Marseille', 'Bordeaux', 'Nice']; // À adapter selon vos données
+
+  constructor(
+    private propertyService: PropertyService,
+    private router: Router
+  ) {}
+
+  ngOnInit() {
+    this.loadProperties();
+  }
+
+  loadProperties() {
+    this.loading = true;
+    this.propertyService.getAllProperties().subscribe({
+      next: (properties) => {
+        this.properties = properties;
+        this.displayedProperties = properties;
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des propriétés:', error);
+        this.loading = false;
+      }
+    });
+  }
+
+  showPropertiesByType(type: 'vente' | 'location') {
+    this.loading = true;
+    setTimeout(() => {
+      this.displayedProperties = this.properties.filter(property => property.type === type);
+      this.loading = false;
+    }, 500);
+  }
+
+  navigateToDetails(propertyId: number) {
+    this.router.navigate(['/property', propertyId]);
+  }
+
+  applyFilters() {
+    this.loading = true;
+    let filteredProperties = [...this.properties];
+
+    // Filtre par type (vente/location)
+    if (this.filters.type) {
+      filteredProperties = filteredProperties.filter(p => p.type === this.filters.type);
     }
-  ];
+
+    // Filtre par type de propriété
+    if (this.filters.propertyType) {
+      filteredProperties = filteredProperties.filter(p => 
+        p.title.toLowerCase().includes(this.filters.propertyType.toLowerCase())
+      );
+    }
+
+    // Filtre par nombre de chambres
+    if (this.filters.bedrooms) {
+      const bedrooms = this.filters.bedrooms === '5+' 
+        ? 5 
+        : parseInt(this.filters.bedrooms);
+      
+      filteredProperties = filteredProperties.filter(p => 
+        this.filters.bedrooms === '5+' 
+          ? p.bedrooms >= 5 
+          : p.bedrooms === bedrooms
+      );
+    }
+
+    // Filtre par surface
+    if (this.filters.minSurface) {
+      filteredProperties = filteredProperties.filter(p => 
+        p.surface >= parseInt(this.filters.minSurface)
+      );
+    }
+    if (this.filters.maxSurface) {
+      filteredProperties = filteredProperties.filter(p => 
+        p.surface <= parseInt(this.filters.maxSurface)
+      );
+    }
+
+    // Filtre par localisation
+    if (this.filters.location) {
+      filteredProperties = filteredProperties.filter(p => 
+        p.location.toLowerCase().includes(this.filters.location.toLowerCase())
+      );
+    }
+
+    setTimeout(() => {
+      this.displayedProperties = filteredProperties;
+      this.loading = false;
+    }, 500);
+  }
+
+  resetFilters() {
+    this.filters = {
+      type: '',
+      propertyType: '',
+      bedrooms: '',
+      minSurface: '',
+      maxSurface: '',
+      location: ''
+    };
+    this.displayedProperties = this.properties;
+  }
 }

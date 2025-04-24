@@ -136,39 +136,44 @@ grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 
 .property-details-container {
   max-width: 1200px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+  margin: 0 auto;
+  padding: 20px;
+  padding-top: 80px;
 }
 
-/* Loading and Error States */
-.loading-container,
-.error-container {
-  text-align: center;
-  padding: 2rem;
-  margin: 2rem 0;
+.property-header {
+  margin-bottom: 20px;
 }
 
-/* Image Gallery */
-.image-gallery {
-  margin-bottom: 2rem;
+.property-header h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #2c3e50;
 }
 
-.main-image-container {
+.price {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  font-weight: bold;
+}
+
+.property-images {
   position: relative;
-  width: 100%;
-  height: 500px;
-  overflow: hidden;
+  margin-bottom: 30px;
   border-radius: 8px;
-  margin-bottom: 1rem;
+  overflow: hidden;
+  max-height: 500px;
+  background-color: #f8f9fa;
 }
 
 .main-image {
   width: 100%;
-  height: 100%;
+  height: 500px;
   object-fit: cover;
+  display: block;
 }
 
-.nav-button {
+.nav-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -177,199 +182,172 @@ grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   border-radius: 50%;
   width: 40px;
   height: 40px;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s;
+  z-index: 2;
 }
 
-.nav-button:hover {
-  background: rgba(255, 255, 255, 0.9);
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.95);
 }
 
 .prev {
-  left: 1rem;
+  left: 20px;
 }
 
 .next {
-  right: 1rem;
+  right: 20px;
 }
 
-.thumbnail-container {
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  padding-bottom: 1rem;
-}
-
-.thumbnail {
-  width: 100px;
-  height: 100px;
-  flex-shrink: 0;
-  cursor: pointer;
-  border-radius: 4px;
-  overflow: hidden;
-  opacity: 0.7;
-  transition: all 0.3s ease;
-}
-
-.thumbnail.active {
-  opacity: 1;
-  border: 2px solid #1790c9;
-}
-
-.thumbnail img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Property Information */
-.property-info {
+.property-description {
+  margin-bottom: 30px;
   background: white;
-  padding: 2rem;
+  padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.header {
-  margin-bottom: 1.5rem;
-}
-
-.title {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #2c3e50;
-  margin-bottom: 0.5rem;
-}
-
-.price {
+.property-description h2 {
   font-size: 1.5rem;
-  color: #1790c9;
-  font-weight: 600;
+  margin-bottom: 15px;
+  color: #2c3e50;
 }
 
-.location {
-  color: #666;
-  margin-bottom: 2rem;
-}
-
-/* Key Features */
-.key-features {
+.property-features {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  background: #f8f9fa;
+  gap: 20px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: white;
   border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .feature {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  text-align: center;
 }
 
 .feature i {
-  color: #1790c9;
-  font-size: 1.2rem;
-}
-
-/* Description and Features */
-.description,
-.features-list {
-  margin-bottom: 2rem;
-}
-
-h2 {
-  color: #2c3e50;
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
+  color: #3498db;
 }
 
-.features-list ul {
-  list-style: none;
-  padding: 0;
+.feature-value {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.feature-label {
+  color: #6c757d;
+}
+
+.property-info {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-}
-
-.features-list li {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.features-list i {
-  color: #1790c9;
-}
-
-/* Agent Information */
-.agent-info {
-  background: #f8f9fa;
-  padding: 1.5rem;
+  gap: 20px;
+  padding: 20px;
+  background: white;
   border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.agent-card {
+.info-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
+  gap: 10px;
 }
 
-.agent-details h3 {
-  color: #2c3e50;
-  margin-bottom: 0.5rem;
+.info-item i {
+  color: #3498db;
 }
 
-.agent-details p {
-  margin: 0.25rem 0;
-  color: #666;
+/* Loading et Error states */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  margin-top: 80px;
 }
 
-.contact-button {
-  background-color: #1790c9;
-  border: none;
-  padding: 0.75rem 2rem;
-  transition: all 0.3s ease;
+.error-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 80px auto 0;
 }
 
-.contact-button:hover {
-  background-color: #1576a9;
-  transform: translateY(-2px);
-}
-
-/* Responsive Design */
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .main-image-container {
+  .property-details-container {
+    padding: 15px;
+    padding-top: 60px;
+  }
+
+  .main-image {
     height: 300px;
   }
 
-  .property-info {
-    padding: 1rem;
+  .property-header h1 {
+    font-size: 1.5rem;
   }
 
-  .key-features {
+  .price {
+    font-size: 1.2rem;
+  }
+
+  .property-features {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .agent-card {
-    flex-direction: column;
-    text-align: center;
+  .nav-btn {
+    width: 35px;
+    height: 35px;
   }
 }
 
-@media (max-width: 480px) {
-  .key-features {
-    grid-template-columns: 1fr;
-  }
+/* Image counter */
+.image-counter {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  z-index: 2;
+}
 
-  .features-list ul {
-    grid-template-columns: 1fr;
-  }
+/* Status badge */
+.status-badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+.status-disponible {
+  background-color: #28a745;
+  color: white;
+}
+
+.status-vendu {
+  background-color: #dc3545;
+  color: white;
+}
+
+.status-loue {
+  background-color: #ffc107;
+  color: black;
 }

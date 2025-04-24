@@ -1,12 +1,12 @@
 <div class="app-container">
-  <!-- Navbar visible seulement si on n'est pas sur le dashboard -->
-  <app-navbar *ngIf="!isDashboardRoute"></app-navbar>
+  <!-- Navbar et Footer uniquement pour les routes publiques -->
+  <app-navbar *ngIf="showNavAndFooter"></app-navbar>
 
   <!-- Contenu principal -->
   <main class="main-content">
     <router-outlet></router-outlet>
   </main>
 
-  <!-- Footer visible seulement si on n'est pas sur le dashboard -->
-  <app-footer *ngIf="!isDashboardRoute"></app-footer>
+  <!-- Footer uniquement pour les routes publiques -->
+  <app-footer *ngIf="showNavAndFooter"></app-footer>
 </div>

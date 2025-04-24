@@ -9,10 +9,8 @@ export interface Property {
   rooms: number;
   bedrooms: number;
   bathrooms: number;
-  features: string[];
   images: string[];
   createdAt: Date;
-  updatedAt: Date;
   status: 'disponible' | 'vendu' | 'loué';
  
 } 

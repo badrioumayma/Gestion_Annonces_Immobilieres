@@ -19,9 +19,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModalComponent } from './shared/modal/modal.component';
 import { AddpropertyComponent } from './addproperty/addproperty.component';
 import { LoginComponent } from './login/login.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
+import { ProfileComponent } from './profile/profile.component';
+import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
+    AdminLayoutComponent,
+    PublicLayoutComponent,
     AddpropertyComponent,
     DashboardComponent,
     HeaderComponent,
@@ -36,7 +43,8 @@ import { LoginComponent } from './login/login.component';
     ContactInfoComponent,
     PropertyDetailsComponent,
     ModalComponent,
-    LoginComponent
+    LoginComponent,
+    ProfileComponent
     
   ],
   imports: [
@@ -44,7 +52,8 @@ import { LoginComponent } from './login/login.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-   
+    FormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

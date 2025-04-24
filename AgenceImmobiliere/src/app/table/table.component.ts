@@ -1,5 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Property } from '../models/property.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddpropertyComponent } from '../addproperty/addproperty.component';
 
 @Component({
   selector: 'app-table',
@@ -21,6 +23,8 @@ export class TableComponent {
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
+  constructor(private modalService: NgbModal) {}
+
   sortBy(column: string) {
     if (this.sortColumn === column) {
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
@@ -36,7 +40,16 @@ export class TableComponent {
   }
 
   onEdit(property: Property) {
-    this.edit.emit(property);
+    const modalRef = this.modalService.open(AddpropertyComponent, { 
+      size: 'lg',
+      backdrop: 'static'
+    });
+    modalRef.componentInstance.propertyToEdit = property;
+    modalRef.componentInstance.isEditMode = true;
+
+    modalRef.closed.subscribe(() => {
+      this.edit.emit(property); // Pour rafraîchir la liste après modification
+    });
   }
 
   onDelete(id: number) {

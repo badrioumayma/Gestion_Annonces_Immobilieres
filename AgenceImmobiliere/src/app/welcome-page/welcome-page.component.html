@@ -1,35 +1,22 @@
 <section class="banner">
   <div class="banner-content d-flex flex-column align-items-center justify-content-center text-center">
     <h1 class="banner-title">Nouveautés immobilières</h1>
-    <a routerLink="/properties" class="btn btn-explorer">Explorer</a>
   </div>
 </section>
 
 <section class="search-options py-5">
   <div class="container">
-    <!-- Heading -->
     <h2 class="text-center mb-5">QUE RECHERCHEZ-VOUS ?</h2>
-
-    <!-- Cards -->
-    <div class="row g-4">
-      <!-- Achat Card -->
-      <div class="col-md-6">
-        <a
-          class="search-card achat-card d-flex align-items-center justify-content-center text-center"
-          [routerLink]="['/properties']"
-          [queryParams]="{ type: 'Achat' }"
-        >
+    <div class="row">
+      <div class="col-md-5">
+        <a class="search-card achat-card d-flex align-items-center justify-content-center text-center"
+           (click)="showPropertiesByType('vente')" style="cursor: pointer;">
           <h3 class="search-card-title">Achat</h3>
         </a>
       </div>
-
-      <!-- Location Card -->
-      <div class="col-md-6">
-        <a
-          class="search-card location-card d-flex align-items-center justify-content-center text-center"
-          [routerLink]="['/properties']"
-          [queryParams]="{ type: 'Location' }"
-        >
+      <div class="col-md-5">
+        <a class="search-card location-card d-flex align-items-center justify-content-center text-center"
+           (click)="showPropertiesByType('location')" style="cursor: pointer;">
           <h3 class="search-card-title">Location</h3>
         </a>
       </div>
@@ -37,57 +24,118 @@
   </div>
 </section>
 
-<!-- Achat Properties Section -->
-<section class="achat-properties py-5">
+<!-- Après la section search-options et avant la liste des propriétés -->
+<section class="filters py-4">
   <div class="container">
-    <!-- Heading -->
-    <h2 class="text-center mb-5">NOS PROPRIÉTÉS À L'ACHAT</h2>
+    <div class="filter-card">
+      <h5 class="filter-title">Filtres</h5>
+      <div class="filter-grid">
+        <!-- Type de propriété -->
+        <div class="filter-item">
+          <label class="filter-label">Type de bien</label>
+          <select class="filter-select" [(ngModel)]="filters.propertyType" (change)="applyFilters()">
+            <option value="">Tous les types</option>
+            <option *ngFor="let type of propertyTypes" [value]="type">{{type}}</option>
+          </select>
+        </div>
 
-    <!-- Property Cards -->
-    <div class="row g-4">
-      <div class="col-md-4" *ngFor="let property of achatProperties">
-        <div class="card h-100">
-          <img [src]="property.image" class="card-img-top" [alt]="property.type">
+        <!-- Nombre de chambres -->
+        <div class="filter-item">
+          <label class="filter-label">Chambres</label>
+          <select class="filter-select" [(ngModel)]="filters.bedrooms" (change)="applyFilters()">
+            <option value="">Tous</option>
+            <option *ngFor="let option of bedroomOptions" [value]="option">{{option}}</option>
+          </select>
+        </div>
+
+        <!-- Surface -->
+        <div class="filter-item">
+          <label class="filter-label">Surface min (m²)</label>
+          <input type="number" class="filter-input" [(ngModel)]="filters.minSurface" 
+                 (input)="applyFilters()" placeholder="Min">
+        </div>
+
+        <div class="filter-item">
+          <label class="filter-label">Surface max (m²)</label>
+          <input type="number" class="filter-input" [(ngModel)]="filters.maxSurface" 
+                 (input)="applyFilters()" placeholder="Max">
+        </div>
+
+        <!-- Localisation -->
+        <div class="filter-item">
+          <label class="filter-label">Localisation</label>
+          <select class="filter-select" [(ngModel)]="filters.location" (change)="applyFilters()">
+            <option value="">Toutes les villes</option>
+            <option *ngFor="let location of locations" [value]="location">{{location}}</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Bouton réinitialiser -->
+      <div class="filter-actions">
+        <button class="reset-button" (click)="resetFilters()">
+          Réinitialiser les filtres
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Liste des propriétés avec spinner -->
+<section class="properties py-5">
+  <div class="container">
+    <!-- Spinner -->
+    <div class="text-center" *ngIf="loading">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Chargement...</span>
+      </div>
+    </div>
+
+    <!-- Liste des propriétés -->
+    <div class="row g-4" *ngIf="!loading">
+      <div class="col-md-4" *ngFor="let property of displayedProperties">
+        <div class="card h-100" (click)="navigateToDetails(property.id)" style="cursor: pointer;">
+          <img [src]="property.images[0]" class="card-img-top" [alt]="property.title">
           <div class="card-body">
-            <h5 class="card-title">{{property.type}} - {{property.address}}</h5>
+            <h5 class="card-title">{{property.title}}</h5>
             <p class="card-text">
-              {{property.bedrooms}} chambres • {{property.bathrooms}} sdb • {{property.floors}} étages • {{property.area}}m²
+              {{property.bedrooms}} chambres • {{property.bathrooms}} sdb • {{property.surface}}m²
             </p>
-            <p class="card-text"><strong>Prix: </strong>{{property.price}} €</p>
+            <p class="card-text">
+              <strong>Prix: </strong>
+              <span *ngIf="property.type === 'vente'">{{property.price | currency:'EUR':'symbol'}} €</span>
+              <span *ngIf="property.type === 'location'">{{property.price | currency:'EUR':'symbol'}} € /mois</span>
+            </p>
           </div>
         </div>
       </div>
     </div>
-
-   
   </div>
 </section>
 
-<!-- Location Properties Section -->
-<section class="location-properties py-5">
-  <div class="container">
-    <!-- Heading -->
-    <h2 class="text-center mb-5">NOS PROPRIÉTÉS À LA LOCATION</h2>
-
-    <!-- Property Cards -->
-    <div class="row g-4">
-      <div class="col-md-4" *ngFor="let property of locationProperties">
-        <div class="card h-100">
-          <img [src]="property.image" class="card-img-top" [alt]="property.type">
-          <div class="card-body">
-            <h5 class="card-title">{{property.type}} - {{property.address}}</h5>
-            <p class="card-text">
-              {{property.bedrooms}} chambres • {{property.bathrooms}} sdb • {{property.floors}} étages • {{property.area}}m²
-            </p>
-            <p class="card-text"><strong>Prix: </strong>{{property.price}} €</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  
-  </div>
-</section>
 <app-contact-info></app-contact-info>
+
+<!-- Ajoutez ces styles CSS -->
+<style>
+.filters .card {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.filters .form-label {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.filters .form-select,
+.filters .form-control {
+  border-radius: 6px;
+}
+
+.filters .btn {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+</style>
 
 

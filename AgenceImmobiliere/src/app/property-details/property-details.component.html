@@ -1,56 +1,86 @@
-<div class="property-details-container">
-  <!-- Loading -->
-  <div *ngIf="loading" class="loading-container">
+<div class="property-details-container" *ngIf="!loading && property; else loadingTemplate">
+  <!-- En-tête avec titre et prix -->
+  <div class="property-header">
+    <h1>{{property.title}}</h1>
+    <div class="price">{{property.price | currency:'EUR':'symbol'}} €</div>
+  </div>
+
+  <!-- Carousel d'images -->
+  <div class="property-images" *ngIf="property.images && property.images.length > 0">
+    <img [src]="getImageUrl(property.images[currentImageIndex])" [alt]="property.title" class="main-image">
+    <div class="image-counter">
+      {{currentImageIndex + 1}} / {{property.images.length}}
+    </div>
+    <button class="nav-btn prev" (click)="previousImage()" *ngIf="currentImageIndex > 0">
+      <i class="bi bi-chevron-left"></i>
+    </button>
+    <button class="nav-btn next" (click)="nextImage()" 
+            *ngIf="property.images && currentImageIndex < property.images.length - 1">
+      <i class="bi bi-chevron-right"></i>
+    </button>
+  </div>
+
+  <!-- Description -->
+  <div class="property-description">
+    <h2>Description de la propriété</h2>
+    <p>{{property.description}}</p>
+  </div>
+
+  <!-- Caractéristiques -->
+  <div class="property-features">
+    <div class="feature">
+      <i class="bi bi-house-door"></i>
+      <span class="feature-value">{{property.bedrooms}}</span>
+      <span class="feature-label">Chambres</span>
+    </div>
+    <div class="feature">
+      <i class="bi bi-droplet"></i>
+      <span class="feature-value">{{property.bathrooms}}</span>
+      <span class="feature-label">Salles de bain</span>
+    </div>
+    <div class="feature">
+      <i class="bi bi-rulers"></i>
+      <span class="feature-value">{{property.surface}}</span>
+      <span class="feature-label">m²</span>
+    </div>
+    <div class="feature">
+      <i class="bi bi-door-open"></i>
+      <span class="feature-value">{{property.rooms}}</span>
+      <span class="feature-label">Pièces</span>
+    </div>
+  </div>
+
+  <!-- Informations supplémentaires -->
+  <div class="property-info">
+    <div class="info-item">
+      <i class="bi bi-tag"></i>
+      <span>Type: {{property.type === 'vente' ? 'Vente' : 'Location'}}</span>
+    </div>
+    <div class="info-item">
+      <i class="bi bi-geo-alt"></i>
+      <span>{{property.location}}</span>
+    </div>
+    <div class="info-item">
+      <i class="bi bi-circle-fill" [ngClass]="{'text-success': property.status === 'disponible'}"></i>
+      <span>Statut: {{property.status | titlecase}}</span>
+    </div>
+  </div>
+</div>
+
+<!-- Template de chargement -->
+<ng-template #loadingTemplate>
+  <div class="loading-container" *ngIf="loading; else errorTemplate">
     <div class="spinner-border text-primary" role="status">
       <span class="visually-hidden">Chargement...</span>
     </div>
   </div>
+</ng-template>
 
-  <!-- Error -->
-  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
-
-  <!-- Content -->
-  <div *ngIf="property && !loading" class="property-content">
-    <!-- Images -->
-    <div class="image-gallery">
-      <div class="main-image-container">
-        <button class="nav-button" (click)="previousImage()"><i class="bi bi-chevron-left"></i></button>
-        <img [src]="property.images[activeImageIndex]" [alt]="property.title" class="main-image">
-        <button class="nav-button" (click)="nextImage()"><i class="bi bi-chevron-right"></i></button>
-      </div>
-      <div class="thumbnail-container">
-        <div *ngFor="let img of property.images; let i = index" 
-             class="thumbnail" 
-             [class.active]="i === activeImageIndex"
-             (click)="setActiveImage(i)">
-          <img [src]="img" [alt]="property.title + ' image ' + (i + 1)">
-        </div>
-      </div>
-    </div>
-
-    <!-- Info -->
-    <div class="property-info">
-      <h1 class="title">{{ property.title }}</h1>
-      <div class="price">{{ property.price | currency:'EUR':'symbol':'1.0-0' }}</div>
-      <div class="location"><i class="bi bi-geo-alt"></i> {{ property.location }}</div>
-
-      <!-- Key Features -->
-      <div class="key-features">
-        <div><i class="bi bi-house-door"></i> {{ property.surface }} m²</div>
-        <div><i class="bi bi-door-open"></i> {{ property.rooms }} pièces</div>
-        <div><i class="bi bi-person-sleep"></i> {{ property.bedrooms }} chambres</div>
-        <div><i class="bi bi-water"></i> {{ property.bathrooms }} salle(s) de bain</div>
-      </div>
-
-      <!-- Description -->
-      <h2>Description</h2>
-      <p>{{ property.description }}</p>
-
-      <!-- Features List -->
-      <h2>Caractéristiques</h2>
-      <ul>
-        <li *ngFor="let f of property.features"><i class="bi bi-check2"></i> {{ f }}</li>
-      </ul>
+<!-- Template d'erreur -->
+<ng-template #errorTemplate>
+  <div class="error-container">
+    <div class="alert alert-danger" role="alert">
+      Une erreur est survenue lors du chargement de la propriété.
     </div>
   </div>
-</div>
+</ng-template>

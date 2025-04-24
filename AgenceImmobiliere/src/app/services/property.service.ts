@@ -3,6 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Property } from '../models/property.model';
 import { environment } from '../../environments/environment';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +37,9 @@ export class PropertyService {
 
   // Get a single property by ID
   getPropertyById(id: number): Observable<Property> {
-    return this.http.get<Property>(`${this.apiUrl}/${id}`);
+    return this.http.get<Property>(`${this.apiUrl}/${id}`).pipe(
+      catchError(this.handleError)
+    );
   }
 
   // Update a property
@@ -55,10 +59,7 @@ export class PropertyService {
     });
   }
 
-  // Get featured properties
-  getFeaturedProperties(): Observable<Property[]> {
-    return this.http.get<Property[]>(`${this.apiUrl}/featured`);
-  }
+  
 
   // Search properties with multiple criteria
   searchProperties(filters: Property): Observable<Property[]> {
@@ -102,5 +103,8 @@ export class PropertyService {
     return this.http.get<any>(`${this.apiUrl}/stats`);
   }
 
-  
+  private handleError(error: any) {
+    console.error('Une erreur est survenue:', error);
+    return throwError(() => new Error('Erreur lors de la communication avec le serveur'));
+  }
 }

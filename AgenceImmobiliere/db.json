@@ -1,0 +1,100 @@
+{
+  "properties": [
+    {
+      "id": "2",
+      "title": "Appartement Haussmannien",
+      "description": "Superbe appartement haussmannien avec vue sur la Tour Eiffel. Cet appartement allie le charme de l'ancien avec des prestations modernes. Parquet d'origine, moulures et cheminées d'époque.",
+      "price": 750000,
+      "location": "Paris 16ème, France",
+      "type": "vente",
+      "surface": 120,
+      "rooms": 4,
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "images": [
+        "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267",
+        "https://images.unsplash.com/photo-1502005097973-6a7082348e28"
+      ],
+      "createdAt": "2024-01-20",
+      "status": "disponible"
+    },
+    {
+      "id": "3",
+      "title": "Loft Design",
+      "description": "Magnifique loft industriel entièrement rénové. Espace ouvert avec de grandes hauteurs sous plafond, cuisine équipée haut de gamme et matériaux nobles.",
+      "price": 2500,
+      "location": "Lyon, France",
+      "type": "location",
+      "surface": 100,
+      "rooms": 3,
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "images": [
+        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c"
+      ],
+      "createdAt": "2024-01-25",
+      "status": "disponible"
+    },
+    {
+      "id": "4",
+      "title": "Maison de Campagne",
+      "description": "Charmante maison de campagne avec grand terrain. Idéale pour les amoureux de la nature, cette propriété offre un cadre paisible tout en restant proche des commodités.",
+      "price": 450000,
+      "location": "Bordeaux, France",
+      "type": "vente",
+      "surface": 150,
+      "rooms": 5,
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "images": [
+        "https://images.unsplash.com/photo-1518780664697-55e3ad937233",
+        "https://images.unsplash.com/photo-1416331108676-a22ccb276e35"
+      ],
+      "createdAt": "2024-02-01",
+      "status": "disponible"
+    },
+    {
+      "id": "5",
+      "title": "Studio Moderne",
+      "description": "Studio moderne et fonctionnel en plein centre-ville. Parfaitement agencé avec des équipements récents et une belle luminosité.",
+      "price": 800,
+      "location": "Nice, France",
+      "type": "location",
+      "surface": 35,
+      "rooms": 1,
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "images": [
+        "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267"
+      ],
+      "createdAt": "2024-02-05",
+      "status": "disponible"
+    },
+    {
+      "id": "6",
+      "title": "Penthouse Vue Mer",
+      "description": "Luxueux penthouse avec vue panoramique sur la mer. Terrasse spacieuse, prestations haut de gamme et accès direct à la plage.",
+      "price": 1200000,
+      "location": "Cannes, France",
+      "type": "vente",
+      "surface": 200,
+      "rooms": 5,
+      "bedrooms": 3,
+      "bathrooms": 3,
+      "images": [
+        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+        "https://images.unsplash.com/photo-1502005097973-6a7082348e28"
+      ],
+      "createdAt": "2024-02-10",
+      "status": "disponible"
+    }
+  ],
+  "stats": {
+    "total": 6,
+    "available": 6,
+    "sold": 0,
+    "rented": 0,
+    "averagePrice": 542050
+  }
+}

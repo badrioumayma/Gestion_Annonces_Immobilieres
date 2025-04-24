@@ -1,121 +1,19 @@
-/* Banner Section */
+/* ======== GENERAL ======== */
+
+body {
+font-family: 'Roboto', sans-serif;
+}
+
+/* ======== BANNER SECTION ======== */
+
 .banner {
-  height: 80vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-              url('/assets/images/banner-bg.jpg');
-  background-size: cover;
-  background-position: center;
-  color: white;
-  position: relative;
-}
-
-.banner-content {
-  height: 100%;
-  padding: 2rem;
-}
-
-.banner-title {
-  font-size: 3.5rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-/* Search Options Section */
-.search-options {
-  background-color: #f8f9fa;
-}
-
-.search-card {
-  height: 200px;
-  border-radius: 15px;
-  text-decoration: none;
-  transition: transform 0.3s ease;
-  color: white;
-  background-size: cover;
-  background-position: center;
-}
-
-.search-card:hover {
-  transform: translateY(-5px);
-}
-
-.achat-card {
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-              url('/assets/images/achat-bg.jpg');
-}
-
-.location-card {
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-              url('/assets/images/location-bg.jpg');
-}
-
-.search-card-title {
-  font-size: 2rem;
-  font-weight: 600;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-/* Properties Sections */
-.achat-properties,
-.location-properties {
-  padding: 4rem 0;
-}
-
-.achat-properties {
-  background-color: white;
-}
-
-.location-properties {
-  background-color: #f8f9fa;
-}
-
-/* Buttons */
-.btn-explorer {
-  background-color: #ff385c;
-  color: white;
-  padding: 0.8rem 2rem;
-  border-radius: 25px;
-  border: none;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
-}
-
-.btn-explorer:hover {
-  background-color: #e61e4d;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .banner-title {
-    font-size: 2.5rem;
-  }
-
-  .search-card {
-    height: 150px;
-  }
-
-  .search-card-title {
-    font-size: 1.5rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .banner-title {
-    font-size: 2rem;
-  }
-
-  .search-card {
-    height: 120px;
-  }
-
-  .search-card-title {
-    font-size: 1.25rem;
-  }
+height: 80vh;
+background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url('/assets/home.jpg');
+background-size: cover;
+background-position: center;
+color: white;
+position: relative;
 }
 
 .banner::before {
@@ -124,39 +22,37 @@ position: absolute;
 top: 0; left: 0;
 width: 100%;
 height: 100%;
-background-color: rgba(0, 0, 0, 0.4); /* ✅ Couche sombre */
+background-color: rgba(0, 0, 0, 0.4);
 z-index: 1;
 }
 
-/* Main title */
-/* Pour que le contenu passe au-dessus de l'overlay */
 .banner-content {
 height: 100%;
+padding: 2rem;
 color: #ffffff;
-font-family: 'Roboto', sans-serif;
 position: relative;
 z-index: 2;
 }
 
-/* Main title */
 .banner-title {
-font-size: 3rem; /* Large font size for the main title */
-font-weight: 700; /* Bold text */
-margin-bottom: 0.5rem; /* Space below the title */
-text-transform: uppercase; /* Matches the uppercase text in the image */
+font-size: 3rem;
+font-weight: 700;
+margin-bottom: 0.5rem;
+text-transform: uppercase;
+text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Subtitle */
 .banner-subtitle {
-font-size: 1.5rem; /* Smaller font size for the subtitle */
-font-weight: 600; /* Slightly less bold than the title */
-margin-bottom: 1.5rem; /* Space below the subtitle */
-text-transform: uppercase; /* Matches the uppercase text in the image */
+font-size: 1.5rem;
+font-weight: 600;
+margin-bottom: 1.5rem;
+text-transform: uppercase;
 }
 
-/* Explorer button */
+/* ======== BUTTONS ======== */
+
 .btn-explorer {
-background-color: #1790c9; /* Rouge vif comme dans ton image */
+background-color: #1790c9;
 color: #ffffff;
 padding: 0.75rem 1.5rem;
 font-size: 1rem;
@@ -165,177 +61,283 @@ border: none;
 border-radius: 1px;
 transition: background-color 0.3s ease;
 width: 250px;
-font-family: 'Roboto', sans-serif; /* ✅ Police comme sur l'image */
+font-family: 'Roboto', sans-serif;
 }
-
 
 .btn-explorer:hover {
-background-color: #86d6fb; /* Slightly darker red on hover */
+background-color: #86d6fb;
+transform: translateY(-2px);
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Section styles */
+/* ======== SEARCH OPTIONS SECTION ======== */
+
 .search-options {
-background-color: #f8f9fa; /* Light gray background for the section */
+background-color: #f8f9fa;
 }
 
-/* Heading */
 h2 {
 font-size: 1.5rem;
 font-weight: 400;
-color: #6c757d; /* Gray color matching the image */
+color: #6c757d;
 text-transform: uppercase;
-font-family: 'Roboto', sans-serif; 
+font-family: 'Roboto', sans-serif;
+text-align: center;
+margin-bottom: 2rem;
 }
 
-/* Card base styles */
 .search-card {
-height: 350px; /* Fixed height for the cards */
+height: 350px;
 background-size: cover;
-background-position: center;
+
 background-repeat: no-repeat;
 position: relative;
-border-radius: 1px; /* Rounded corners */
-overflow: hidden; /* Ensure the overlay doesn't bleed outside */
-transition: transform 0.3s ease; /* Smooth hover effect */
-text-decoration: none; /* Remove underline from the link */
+border-radius: 1px;
+overflow: hidden;
+transition: transform 0.3s ease;
+text-decoration: none;
+color: white;
 }
 
-/* Overlay for the cards */
 .search-card::before {
 content: '';
 position: absolute;
-top: 0;
-left: 0;
+top: 0; left: 0;
 width: 100%;
 height: 100%;
 z-index: 1;
-opacity: 0.7; /* Semi-transparent overlay */
+opacity: 0.7;
 }
 
-/* Achat card */
 .achat-card {
 background-image: url('/assets/achat.png');
 }
 
 .achat-card::before {
-background-color: #0C0950; /* Dark blue overlay */
-
+background-color: #0C0950;
 }
 
-/* Location card */
 .location-card {
 background-image: url('/assets/location.png');
 }
 
 .location-card::before {
-background-color: #1790c9; /* Pink overlay */
+background-color: #1790c9;
 }
 
-/* Card title */
 .search-card-title {
 position: relative;
-z-index: 2; /* Ensure the title is above the overlay */
-color: #ffffff; /* White text */
+z-index: 2;
+color: #ffffff;
 font-size: 2.5rem;
 font-weight: 700;
 text-transform: uppercase;
 }
 
-/* Hover effect */
 .search-card:hover {
-transform: scale(1.05); /* Slight zoom on hover */
+transform: scale(1.05);
 }
 
-.welcome-container {
-  position: relative;
+/* ======== PROPERTIES SECTIONS ======== */
+
+.achat-properties,
+.location-properties {
+padding: 4rem 0;
 }
 
-.navbar {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.achat-properties {
+background-color: #ffffff;
 }
 
-.navbar-brand {
-  font-weight: 600;
-  color: #2c3e50;
+.location-properties {
+background-color: #f8f9fa;
 }
+
+.achat-properties h2,
+.location-properties h2 {
+font-size: 2rem;
+font-weight: 600;
+color: #2c3e50;
+text-transform: uppercase;
+margin-bottom: 2rem;
+text-align: center;
+letter-spacing: 1px;
+}
+
+/* ======== PROPERTY CARDS ======== */
+
+.row.g-4 {
+display: flex;
+flex-wrap: wrap;
+justify-content: center; /* Center cards horizontally */
+gap: 2rem;
+padding: 0 1rem;
+}
+
+.card {
+flex: 1 1 300px; /* Flexible basis: 300px, allows responsive resizing */
+max-width: 350px;
+min-width: 280px;
+margin: 0.5rem;
+position: relative;
+overflow: hidden;
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+background-color: #fff;
+}
+
+
+.card:hover {
+transform: translateY(-5px);
+box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+width: 100%;
+height: 200px;
+object-fit: cover;
+border-bottom: 2px solid #f1f1f1;
+}
+
+.card-body {
+padding: 1.5rem;
+}
+
+.card-title {
+font-size: 1.25rem;
+font-weight: 600;
+color: #2c3e50;
+margin-bottom: 1rem;
+}
+
+.card-text {
+font-size: 1rem;
+color: #6c757d;
+}
+
+/* ======== HERO SECTION ======== */
 
 .hero {
-  background: linear-gradient(135deg, #1a5f7a 0%, #2c3e50 100%);
-  color: white;
-  padding: 120px 0 80px;
-  margin-top: 56px;
+background: linear-gradient(135deg, #1a5f7a 0%, #2c3e50 100%);
+color: white;
+padding: 120px 0 80px;
+margin-top: 56px;
 }
 
 .hero h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
+font-size: 3rem;
+font-weight: 700;
+margin-bottom: 1rem;
 }
 
 .hero .lead {
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
+font-size: 1.5rem;
+margin-bottom: 2rem;
 }
 
+/* ======== FEATURES SECTION ======== */
+
 .features {
-  background-color: #f8f9fa;
+background-color: #f8f9fa;
 }
 
 .feature-card {
-  padding: 2rem;
-  margin-bottom: 2rem;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+padding: 2rem;
+margin-bottom: 2rem;
+background: white;
+border-radius: 10px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+transition: transform 0.3s ease;
 }
 
 .feature-card:hover {
-  transform: translateY(-5px);
+transform: translateY(-5px);
 }
 
 .feature-icon {
-  font-size: 3rem;
-  color: #1a5f7a;
-  margin-bottom: 1.5rem;
+font-size: 3rem;
+color: #1a5f7a;
+margin-bottom: 1.5rem;
 }
 
 .feature-card h3 {
-  color: #2c3e50;
-  margin-bottom: 1rem;
+color: #2c3e50;
+margin-bottom: 1rem;
 }
 
+/* ======== CTA SECTION ======== */
+
 .cta {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
 .btn-primary {
-  background-color: #1a5f7a;
-  border-color: #1a5f7a;
-  padding: 0.75rem 1.5rem;
-  transition: all 0.3s ease;
+background-color: #1a5f7a;
+border-color: #1a5f7a;
+padding: 0.75rem 1.5rem;
+transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
-  background-color: #164d63;
-  border-color: #164d63;
-  transform: translateY(-2px);
+background-color: #164d63;
+border-color: #164d63;
+transform: translateY(-2px);
 }
 
 .btn-outline-light:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* ======== NAVBAR ======== */
+
+.navbar {
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+font-weight: 600;
+color: #2c3e50;
+}
+
+/* ======== RESPONSIVE ======== */
+
 @media (max-width: 768px) {
-  .hero {
-    padding: 100px 0 60px;
-  }
+.banner-title {
+font-size: 2.5rem;
+}
 
-  .hero h1 {
-    font-size: 2.5rem;
-  }
+.search-card {
+height: 150px;
+}
 
-  .hero .lead {
-    font-size: 1.25rem;
-  }
+.search-card-title {
+font-size: 1.5rem;
+}
+
+.hero {
+padding: 100px 0 60px;
+}
+
+.hero h1 {
+font-size: 2.5rem;
+}
+
+.hero .lead {
+font-size: 1.25rem;
+}
+}
+
+@media (max-width: 576px) {
+.banner-title {
+font-size: 2rem;
+}
+
+.search-card {
+height: 120px;
+}
+
+.search-card-title {
+font-size: 1.25rem;
+}
 }

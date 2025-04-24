@@ -1,13 +1,12 @@
-<!-- Main Application Container -->
 <div class="app-container">
-  <!-- Navigation -->
-  <app-navbar></app-navbar>
+  <!-- Navbar visible seulement si on n'est pas sur le dashboard -->
+  <app-navbar *ngIf="!isDashboardRoute"></app-navbar>
 
-  <!-- Main Content Area -->
+  <!-- Contenu principal -->
   <main class="main-content">
     <router-outlet></router-outlet>
   </main>
 
-  <!-- Footer -->
-  <app-footer></app-footer>
+  <!-- Footer visible seulement si on n'est pas sur le dashboard -->
+  <app-footer *ngIf="!isDashboardRoute"></app-footer>
 </div>

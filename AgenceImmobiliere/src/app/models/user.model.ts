@@ -3,11 +3,8 @@ export interface User {
     email: string;
     firstName: string;
     lastName: string;
-    role: 'admin' | 'agent' | 'user';
-    phone?: string;
-    avatar?: string;
-    createdAt: Date;
-    updatedAt: Date;
+    role: 'admin' | 'user';
+   
 }
 
 export interface LoginResponse {

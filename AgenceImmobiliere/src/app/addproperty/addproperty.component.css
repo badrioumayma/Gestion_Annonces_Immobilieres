@@ -1,0 +1,29 @@
+.form-label {
+font-weight: 500;
+}
+
+.form-control {
+border-radius: 5px;
+}
+
+.btn {
+border-radius: 5px;
+}
+
+.img-thumbnail {
+  transition: transform 0.2s;
+}
+
+.img-thumbnail:hover {
+  transform: scale(1.05);
+}
+
+.btn-remove-image {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.img-thumbnail:hover + .btn-remove-image,
+.btn-remove-image:hover {
+  opacity: 1;
+}

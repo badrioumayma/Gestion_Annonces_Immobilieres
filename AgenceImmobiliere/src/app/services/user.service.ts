@@ -25,38 +25,8 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  // Get user profile
-  getUserProfile(userId: number): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/${userId}`);
-  }
-
-  // Update user profile
-  updateProfile(userId: number, userData: Partial<User>): Observable<User> {
-    return this.http.put<User>(`${this.apiUrl}/${userId}`, userData);
-  }
-
-  // Add property to favorites
-  addToFavorites(userId: number, propertyId: number): Observable<User> {
-    return this.http.post<User>(`${this.apiUrl}/${userId}/favorites`, { propertyId });
-  }
-
-  // Remove property from favorites
-  removeFromFavorites(userId: number, propertyId: number): Observable<User> {
-    return this.http.delete<User>(`${this.apiUrl}/${userId}/favorites/${propertyId}`);
-  }
-
-  // Get user's favorite properties
-  getFavorites(userId: number): Observable<number[]> {
-    return this.http.get<number[]>(`${this.apiUrl}/${userId}/favorites`);
-  }
-
-  // Update user settings
-  updateSettings(userId: number, settings: any): Observable<User> {
-    return this.http.put<User>(`${this.apiUrl}/${userId}/settings`, settings);
-  }
-
   // Get all users (admin only)
-  getAllUsers(): Observable<User[]> {
+  getAdmin(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl);
   }
 
@@ -65,7 +35,5 @@ export class UserService {
     return this.http.delete<void>(`${this.apiUrl}/${userId}`);
   }
 
-  suspendUser(id: number): Observable<User> {
-    return this.http.patch<User>(`${this.apiUrl}/${id}/suspend`, {});
-  }
+  
 }

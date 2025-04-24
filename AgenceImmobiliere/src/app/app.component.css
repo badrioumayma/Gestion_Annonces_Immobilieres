@@ -23,3 +23,10 @@
     margin-left: 0; /* No sidebar margin on small screens */
   }
 }
+
+/* Style spécifique quand on est sur le dashboard */
+.app-container:has(> .main-content > app-dashboard) {
+  padding: 0;
+  margin: 0;
+  max-width: 100%;
+}

@@ -4,41 +4,64 @@
   </div>
   <div class="card-body">
     <div class="table-responsive">
-      <table class="table">
+      <table class="table table-striped table-hover">
         <thead>
           <tr>
-            <th *ngFor="let column of columns">{{ column.header }}</th>
-            <th *ngIf="actions.length > 0">Actions</th>
+            <th (click)="sortBy('title')" style="cursor: pointer">
+              Titre 
+              <i *ngIf="sortColumn === 'title'" 
+                 [class]="'bi bi-arrow-' + (sortDirection === 'asc' ? 'up' : 'down')"></i>
+            </th>
+            <th (click)="sortBy('type')" style="cursor: pointer">
+              Type
+              <i *ngIf="sortColumn === 'type'" 
+                 [class]="'bi bi-arrow-' + (sortDirection === 'asc' ? 'up' : 'down')"></i>
+            </th>
+            <th (click)="sortBy('price')" style="cursor: pointer">
+              Prix
+              <i *ngIf="sortColumn === 'price'" 
+                 [class]="'bi bi-arrow-' + (sortDirection === 'asc' ? 'up' : 'down')"></i>
+            </th>
+            <th (click)="sortBy('status')" style="cursor: pointer">
+              Statut
+              <i *ngIf="sortColumn === 'status'" 
+                 [class]="'bi bi-arrow-' + (sortDirection === 'asc' ? 'up' : 'down')"></i>
+            </th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let row of data">
-            <td *ngFor="let column of columns">
-              <!-- Handle date formatting if the column specifies a date -->
-              <span *ngIf="column.isDate; else regularField">
-                {{ row[column.field] | date }}
-              </span>
-              <ng-template #regularField>
-                {{ row[column.field] }}
-              </ng-template>
+          <tr *ngIf="isLoading">
+            <td colspan="5" class="text-center">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
             </td>
-            <td *ngIf="actions.length > 0">
-              <button
-                *ngFor="let action of actions"
-                class="btn btn-sm me-1 action-btn"
-                [ngClass]="{
-                  'action-green': action.label === 'Publier',
-                  'action-blue': action.label === 'Modifier',
-                  'action-pink': action.label === 'Supprimer',
-                  'action-yellow': action.label === 'Voir',
-                  'action-purple': action.label === 'Suspendre',
-                  'action-default': !['Publier', 'Modifier', 'Supprimer', 'Voir', 'Suspendre'].includes(action.label)
-                }"
-                (click)="action.handler(row)"
-              >
-                {{ action.label }}
+          </tr>
+          <tr *ngFor="let property of properties">
+            <td>{{property.title}}</td>
+            <td>{{property.type}}</td>
+            <td>{{property.price | currency:'EUR'}}</td>
+            <td>
+              <span class="badge" [ngClass]="{
+                'bg-success': property.status === 'disponible',
+                'bg-warning': property.status === 'loué',
+                'bg-danger': property.status === 'vendu'
+              }">
+                {{property.status}}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-warning me-2" (click)="onEdit(property)">
+                <i class="bi bi-pencil"></i> Modifier
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="onDelete(property.id)">
+                <i class="bi bi-trash"></i> Supprimer
               </button>
             </td>
+          </tr>
+          <tr *ngIf="!isLoading && properties.length === 0">
+            <td colspan="5" class="text-center">Aucune propriété trouvée</td>
           </tr>
         </tbody>
       </table>

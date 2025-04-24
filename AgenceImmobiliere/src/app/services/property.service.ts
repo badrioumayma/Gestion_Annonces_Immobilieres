@@ -4,26 +4,6 @@ import { Observable } from 'rxjs';
 import { Property } from '../models/property.model';
 import { environment } from '../../environments/environment';
 
-export interface PropertyFilters {
-  type?: 'vente' | 'location';
-  minPrice?: number;
-  maxPrice?: number;
-  minSurface?: number;
-  maxSurface?: number;
-  rooms?: number;
-  bedrooms?: number;
-  bathrooms?: number;
-  location?: string;
-  status?: 'disponible' | 'vendu' | 'loué';
-}
-
-interface SimilarPropertiesParams {
-  type: string;
-  priceRange: number;
-  location: string;
-  limit: number;
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -33,17 +13,17 @@ export class PropertyService {
   constructor(private http: HttpClient) {}
 
   // Create a new property
-  createProperty(property: Partial<Property>): Observable<Property> {
+  addProperty(property: Partial<Property>): Observable<Property> {
     return this.http.post<Property>(this.apiUrl, property);
   }
 
   // Get all properties with optional filters
-  getAllProperties(filters?: PropertyFilters): Observable<Property[]> {
+  getAllProperties(filters?: Property): Observable<Property[]> {
     let params = new HttpParams();
     
     if (filters) {
       Object.keys(filters).forEach(key => {
-        const value = filters[key as keyof PropertyFilters];
+        const value = filters[key as keyof Property];
         if (value !== undefined && value !== null && value !== '') {
           params = params.set(key, value.toString());
         }
@@ -81,11 +61,11 @@ export class PropertyService {
   }
 
   // Search properties with multiple criteria
-  searchProperties(filters: PropertyFilters): Observable<Property[]> {
+  searchProperties(filters: Property): Observable<Property[]> {
     let params = new HttpParams();
     
     Object.keys(filters).forEach(key => {
-      const value = filters[key as keyof PropertyFilters];
+      const value = filters[key as keyof Property];
       if (value !== undefined && value !== null && value !== '') {
         params = params.set(key, value.toString());
       }
@@ -122,7 +102,5 @@ export class PropertyService {
     return this.http.get<any>(`${this.apiUrl}/stats`);
   }
 
-  getSimilarProperties(propertyId: number, params: SimilarPropertiesParams): Observable<Property[]> {
-    return this.http.get<Property[]>(`${this.apiUrl}/${propertyId}/similar`, { params: params as any });
-  }
+  
 }

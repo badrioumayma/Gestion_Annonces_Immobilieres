@@ -1,19 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Booking } from '../models/Booking.model';
 
-export interface Booking {
-  id?: number;
-  propertyId: number;
-  userId: number;
-  date: Date;
-  time: string;
-  status: 'pending' | 'confirmed' | 'cancelled';
-  type: 'viewing' | 'visit' | 'meeting';
-  notes?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
 
 @Injectable({
   providedIn: 'root'

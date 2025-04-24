@@ -1,0 +1,248 @@
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h3>{{ isEditMode ? 'Modifier la propriété' : 'Ajouter une nouvelle propriété' }}</h3>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+        <!-- Title -->
+        <div class="mb-3">
+          <label for="title" class="form-label">Titre</label>
+          <input type="text" class="form-control" id="title" formControlName="title">
+        </div>
+
+        <!-- Type -->
+        <div class="mb-3">
+          <label for="type" class="form-label">Type</label>
+          <select class="form-select" id="type" formControlName="type">
+            <option value="">Sélectionner un type</option>
+            <option value="Achat">Achat</option>
+            <option value="Location">Location</option>
+          </select>
+        </div>
+
+        <!-- Price -->
+        <div class="mb-3">
+          <label for="price" class="form-label">Prix</label>
+          <input type="number" class="form-control" id="price" formControlName="price">
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" id="description" rows="3" formControlName="description"></textarea>
+        </div>
+
+        <!-- Address -->
+        <div class="mb-3">
+          <label for="address" class="form-label">Adresse</label>
+          <input type="text" class="form-control" id="address" formControlName="address">
+        </div>
+
+        <div class="row">
+          <!-- City -->
+          <div class="col-md-6 mb-3">
+            <label for="city" class="form-label">Ville</label>
+            <input type="text" class="form-control" id="city" formControlName="city">
+          </div>
+
+          <!-- Postal Code -->
+          <div class="col-md-6 mb-3">
+            <label for="postalCode" class="form-label">Code Postal</label>
+            <input type="text" class="form-control" id="postalCode" formControlName="postalCode">
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Surface -->
+          <div class="col-md-6 mb-3">
+            <label for="surface" class="form-label">Surface (m²)</label>
+            <input type="number" class="form-control" id="surface" formControlName="surface">
+          </div>
+
+          <!-- Rooms -->
+          <div class="col-md-6 mb-3">
+            <label for="rooms" class="form-label">Nombre de pièces</label>
+            <input type="number" class="form-control" id="rooms" formControlName="rooms">
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Bedrooms -->
+          <div class="col-md-6 mb-3">
+            <label for="bedrooms" class="form-label">Chambres</label>
+            <input type="number" class="form-control" id="bedrooms" formControlName="bedrooms">
+          </div>
+
+          <!-- Bathrooms -->
+          <div class="col-md-6 mb-3">
+            <label for="bathrooms" class="form-label">Salles de bain</label>
+            <input type="number" class="form-control" id="bathrooms" formControlName="bathrooms">
+          </div>
+        </div>
+
+        <!-- Images Upload -->
+        <div class="mb-3">
+          <label for="images" class="form-label">Images</label>
+          <input type="file" 
+                 class="form-control" 
+                 id="images" 
+                 multiple 
+                 accept="image/*"
+                 (change)="onFileSelected($event)">
+        </div>
+
+        <!-- Image Previews -->
+        <div class="row mb-3" *ngIf="previewImages.length > 0">
+          <div class="col-md-4 mb-2" *ngFor="let preview of previewImages; let i = index">
+            <div class="position-relative">
+              <img [src]="preview" class="img-thumbnail w-100" style="height: 150px; object-fit: cover;">
+              <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0" 
+                      (click)="removeImage(i)">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button with Spinner -->
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-secondary" routerLink="/admin/dashboard">Annuler</button>
+          <button type="submit" class="btn btn-primary" [disabled]="propertyForm.invalid || isLoading">
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            {{ isEditMode ? 'Modifier' : 'Ajouter' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Loading Overlay -->
+<div *ngIf="isLoading" class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" 
+     style="background: rgba(255,255,255,0.8); z-index: 1050;">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<app-modal *ngIf="showModal" 
+           [title]="'Ajouter une nouvelle propriété'" 
+           (closed)="closeModal()">
+  <div class="modal-body">
+    <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+      <!-- Title -->
+      <div class="mb-3">
+        <label for="title" class="form-label">Titre</label>
+        <input type="text" class="form-control" id="title" formControlName="title">
+      </div>
+
+      <!-- Type -->
+      <div class="mb-3">
+        <label for="type" class="form-label">Type</label>
+        <select class="form-select" id="type" formControlName="type">
+          <option value="">Sélectionner un type</option>
+          <option value="Achat">Achat</option>
+          <option value="Location">Location</option>
+        </select>
+      </div>
+
+      <!-- Price -->
+      <div class="mb-3">
+        <label for="price" class="form-label">Prix</label>
+        <input type="number" class="form-control" id="price" formControlName="price">
+      </div>
+
+      <!-- Description -->
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" rows="3" formControlName="description"></textarea>
+      </div>
+
+      <!-- Address -->
+      <div class="mb-3">
+        <label for="address" class="form-label">Adresse</label>
+        <input type="text" class="form-control" id="address" formControlName="address">
+      </div>
+
+      <div class="row">
+        <!-- City -->
+        <div class="col-md-6 mb-3">
+          <label for="city" class="form-label">Ville</label>
+          <input type="text" class="form-control" id="city" formControlName="city">
+        </div>
+
+        <!-- Postal Code -->
+        <div class="col-md-6 mb-3">
+          <label for="postalCode" class="form-label">Code Postal</label>
+          <input type="text" class="form-control" id="postalCode" formControlName="postalCode">
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Surface -->
+        <div class="col-md-6 mb-3">
+          <label for="surface" class="form-label">Surface (m²)</label>
+          <input type="number" class="form-control" id="surface" formControlName="surface">
+        </div>
+
+        <!-- Rooms -->
+        <div class="col-md-6 mb-3">
+          <label for="rooms" class="form-label">Nombre de pièces</label>
+          <input type="number" class="form-control" id="rooms" formControlName="rooms">
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Bedrooms -->
+        <div class="col-md-6 mb-3">
+          <label for="bedrooms" class="form-label">Chambres</label>
+          <input type="number" class="form-control" id="bedrooms" formControlName="bedrooms">
+        </div>
+
+        <!-- Bathrooms -->
+        <div class="col-md-6 mb-3">
+          <label for="bathrooms" class="form-label">Salles de bain</label>
+          <input type="number" class="form-control" id="bathrooms" formControlName="bathrooms">
+        </div>
+      </div>
+
+      <!-- Images Upload -->
+      <div class="mb-3">
+        <label for="images" class="form-label">Images</label>
+        <input type="file" 
+               class="form-control" 
+               id="images" 
+               multiple 
+               accept="image/*"
+               (change)="onFileSelected($event)">
+      </div>
+
+      <!-- Image Previews -->
+      <div class="row mb-3" *ngIf="previewImages.length > 0">
+        <div class="col-md-4 mb-2" *ngFor="let preview of previewImages; let i = index">
+          <div class="position-relative">
+            <img [src]="preview" class="img-thumbnail w-100" style="height: 150px; object-fit: cover;">
+            <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0" 
+                    (click)="removeImage(i)">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Annuler</button>
+    <button type="submit" class="btn btn-primary" 
+            [disabled]="propertyForm.invalid || isLoading"
+            (click)="onSubmit()">
+      <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+      Ajouter
+    </button>
+  </div>
+</app-modal>

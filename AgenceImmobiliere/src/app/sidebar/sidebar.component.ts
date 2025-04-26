@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,7 +10,10 @@ import { Router } from '@angular/router';
 export class SidebarComponent {
   isSidebarOpen = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
@@ -23,8 +27,6 @@ export class SidebarComponent {
   }
 
   logout() {
-    // Ajoutez ici la logique de déconnexion
-    localStorage.removeItem('token'); // ou toute autre logique de déconnexion
-    this.router.navigate(['/login']);
+    this.authService.logout();
   }
 }

@@ -96,6 +96,8 @@
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  margin: 1rem 0;
+  overflow-x: auto;
 }
 
 .table-header {
@@ -165,7 +167,89 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .main-content {
+    padding: 0.5rem;
+  }
+
+  .table-container {
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+  }
+
+  .table-header {
+    padding: 0.5rem 0;
+  }
+
+  .table-header h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .search-box {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .search-box input {
+    padding: 0.4rem 0.8rem 0.4rem 2rem;
+    font-size: 0.9rem;
+  }
+
+  .table {
+    font-size: 0.9rem;
+  }
+
+  .table th, .table td {
+    padding: 0.5rem;
+    white-space: nowrap;
+  }
+
+  .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .stat-card {
     padding: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
+  .stat-details h3 {
+    font-size: 0.8rem;
+  }
+
+  .stat-number {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 0.25rem;
+  }
+
+  .table-container {
+    padding: 0.5rem;
+    margin: 0.25rem 0;
+  }
+
+  .table-header {
+    padding: 0.25rem 0;
+  }
+
+  .table th, .table td {
+    padding: 0.4rem;
+  }
+
+  .btn-sm {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.75rem;
   }
 }
 
@@ -219,8 +303,29 @@
     align-items: flex-start;
     gap: 1rem;
   }
+  
   .stats-container {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .search-box {
+    width: 100%;
+  }
+  
+  .table-container {
+    padding: 1rem;
+    overflow-x: auto;
+  }
+  
+  .table {
+    min-width: 800px;
   }
 }
 
@@ -228,31 +333,40 @@
   .dashboard-container {
     flex-direction: column;
   }
+  
   .main-content {
     padding: 1rem;
     width: 100%;
   }
+  
   .stats-container {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
+  
   .stat-card {
     flex-direction: column;
     align-items: flex-start;
     padding: 1rem;
   }
+  
+  .stat-icon {
+    margin-bottom: 0.5rem;
+  }
+  
   .table-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
+  
   .search-box {
     width: 100%;
-    margin-top: 0.5rem;
   }
-  .table-container {
-    padding: 0.5rem;
-    overflow-x: auto;
+  
+  .btn {
+    width: 100%;
+    justify-content: center;
   }
 }
 
@@ -260,17 +374,21 @@
   .main-content {
     padding: 0.5rem;
   }
+  
   .stat-card {
-    padding: 0.5rem;
+    padding: 0.75rem;
   }
+  
   .table-header h3 {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
+  
   .stat-details h3, .stat-number {
     font-size: 0.9rem;
   }
+  
   .btn {
+    padding: 0.4rem 0.8rem;
     font-size: 0.9rem;
-    padding: 0.4rem 0.7rem;
   }
 }

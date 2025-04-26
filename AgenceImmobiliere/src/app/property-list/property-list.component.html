@@ -1,7 +1,11 @@
 <div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Liste des Propriétés</h1>
-   
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+    <h1 class="mb-2 mb-md-0">Liste des Propriétés</h1>
+    <div class="d-flex gap-2">
+      <button class="btn btn-primary" (click)="openModal()">
+        <i class="fas fa-plus"></i> Ajouter une propriété
+      </button>
+    </div>
   </div>
 
   <!-- Message d'erreur -->
@@ -21,16 +25,16 @@
     <div class="col" *ngFor="let property of properties">
       <div class="card h-100 shadow-sm">
         <!-- Image de la propriété -->
-        <img [src]="property.images[0] || 'assets/images/placeholder.jpg'" 
+        <img [src]="property.images && property.images.length > 0 ? property.images[0] : 'assets/images/placeholder.jpg'" 
              class="card-img-top" 
              [alt]="property.title"
              style="height: 200px; object-fit: cover;">
         
         <div class="card-body">
           <!-- Titre et statut -->
-          <div class="d-flex justify-content-between align-items-start mb-2">
-            <h5 class="card-title mb-0">{{ property.title }}</h5>
-            <span [class]="getStatusClass(property.status)">
+          <div class="d-flex justify-content-between align-items-start mb-2 flex-wrap">
+            <h5 class="card-title mb-0 text-truncate" style="max-width: 70%;">{{ property.title }}</h5>
+            <span [class]="getStatusClass(property.status)" class="mt-1 mt-md-0">
               {{ property.status }}
             </span>
           </div>
@@ -42,33 +46,33 @@
           <h4 class="text-primary mb-3">{{ property.price | currency:'EUR':'symbol':'1.0-0' }}</h4>
 
           <!-- Caractéristiques -->
-          <div class="d-flex justify-content-between text-muted mb-3">
-            <div>
+          <div class="d-flex justify-content-between text-muted mb-3 flex-wrap">
+            <div class="me-2 mb-1">
               <i class="fas fa-ruler-combined"></i>
               {{ property.surface }}m²
             </div>
-            <div>
+            <div class="me-2 mb-1">
               <i class="fas fa-bed"></i>
               {{ property.bedrooms }} chambres
             </div>
-            <div>
+            <div class="mb-1">
               <i class="fas fa-bath"></i>
               {{ property.bathrooms }} sdb
             </div>
           </div>
 
           <!-- Adresse -->
-          <p class="card-text">
+          <p class="card-text text-truncate">
             <i class="fas fa-map-marker-alt text-danger"></i>
             {{ property.location }}
           </p>
 
           <!-- Actions -->
-          <div class="d-flex justify-content-between mt-3">
-            <button class="btn btn-outline-primary btn-sm" [routerLink]="['/admin/property-form', property.id]">
+          <div class="d-flex justify-content-between mt-3 flex-wrap gap-2">
+            <button class="btn btn-outline-primary btn-sm flex-grow-1" [routerLink]="['/admin/property-form', property.id]">
               <i class="fas fa-edit"></i> Modifier
             </button>
-            <button class="btn btn-outline-danger btn-sm" (click)="deleteProperty(property.id.toString())">
+            <button class="btn btn-outline-danger btn-sm flex-grow-1" (click)="deleteProperty(property.id.toString())">
               <i class="fas fa-trash"></i> Supprimer
             </button>
           </div>
@@ -80,5 +84,23 @@
   <!-- Message si aucune propriété -->
   <div *ngIf="!loading && !error && properties.length === 0" class="text-center my-5">
     <p class="text-muted">Aucune propriété disponible</p>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="propertyModal" tabindex="-1" aria-labelledby="propertyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="propertyModalLabel">Ajouter une propriété</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <app-addproperty *ngIf="showForm" 
+                       (propertyAdded)="onPropertyAdded($event)"
+                       (propertyUpdated)="onPropertyUpdated($event)">
+        </app-addproperty>
+      </div>
+    </div>
   </div>
 </div>

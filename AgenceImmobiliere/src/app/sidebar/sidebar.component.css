@@ -8,6 +8,7 @@
   left: 0;
   top: 0;
   z-index: 1000;
+  transition: all 0.3s ease;
 }
 
 .sidebar-header {
@@ -88,6 +89,79 @@
   background: rgba(255,255,255,0.2);
 }
 
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: #2c3e50;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1200;
+}
+
+@media (max-width: 992px) {
+  .sidebar {
+    width: 220px;
+    padding: 0.8rem;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+
+  .hamburger {
+    display: block;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+  }
+
+  .sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.3);
+    z-index: 1099;
+  }
+
+  .sidebar-backdrop.show {
+    display: block;
+  }
+
+  .sidebar-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .nav-item {
+    padding: 0.6rem 0.8rem;
+    margin: 0.4rem 0;
+  }
+
+  .nav-link {
+    gap: 8px;
+  }
+
+  .nav-link i {
+    font-size: 1.1rem;
+  }
+
+  .sidebar-image img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .logout-button {
+    padding: 0.7rem;
+    font-size: 0.9rem;
+  }
+}
+
 @media (max-width: 768px) {
   .sidebar {
     transform: translateX(-100%);
@@ -129,5 +203,17 @@
   }
   .sidebar-backdrop {
     display: none !important;
+  }
+}
+
+@media (min-width: 993px) {
+  .hamburger {
+    display: none !important;
+  }
+  .sidebar-backdrop {
+    display: none !important;
+  }
+  .sidebar {
+    transform: none !important;
   }
 }

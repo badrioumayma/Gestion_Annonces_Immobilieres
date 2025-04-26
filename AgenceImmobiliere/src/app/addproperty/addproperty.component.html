@@ -8,57 +8,116 @@
         <!-- Title -->
         <div class="mb-3">
           <label for="title" class="form-label">Titre</label>
-          <input type="text" class="form-control" id="title" formControlName="title">
+          <input type="text" 
+                 class="form-control" 
+                 id="title" 
+                 formControlName="title"
+                 [ngClass]="{'is-invalid': propertyForm.get('title')?.invalid && propertyForm.get('title')?.touched}">
+          <div class="invalid-feedback" *ngIf="propertyForm.get('title')?.invalid && propertyForm.get('title')?.touched">
+            <span *ngIf="propertyForm.get('title')?.errors?.['required']">Le titre est requis</span>
+            <span *ngIf="propertyForm.get('title')?.errors?.['minlength']">Le titre doit contenir au moins 3 caractères</span>
+          </div>
         </div>
 
         <!-- Type -->
         <div class="mb-3">
           <label for="type" class="form-label">Type</label>
-          <select class="form-select" id="type" formControlName="type">
+          <select class="form-select" 
+                  id="type" 
+                  formControlName="type"
+                  [ngClass]="{'is-invalid': propertyForm.get('type')?.invalid && propertyForm.get('type')?.touched}">
             <option value="vente">Vente</option>
             <option value="location">Location</option>
           </select>
+          <div class="invalid-feedback" *ngIf="propertyForm.get('type')?.invalid && propertyForm.get('type')?.touched">
+            Le type est requis
+          </div>
         </div>
 
         <!-- Price -->
         <div class="mb-3">
           <label for="price" class="form-label">Prix</label>
-          <input type="number" class="form-control" id="price" formControlName="price">
+          <input type="number" 
+                 class="form-control" 
+                 id="price" 
+                 formControlName="price"
+                 [ngClass]="{'is-invalid': propertyForm.get('price')?.invalid && propertyForm.get('price')?.touched}">
+          <div class="invalid-feedback" *ngIf="propertyForm.get('price')?.invalid && propertyForm.get('price')?.touched">
+            <span *ngIf="propertyForm.get('price')?.errors?.['required']">Le prix est requis</span>
+            <span *ngIf="propertyForm.get('price')?.errors?.['min']">Le prix doit être supérieur à 0</span>
+          </div>
         </div>
 
         <!-- Description -->
         <div class="mb-3">
           <label for="description" class="form-label">Description</label>
-          <textarea class="form-control" id="description" rows="3" formControlName="description"></textarea>
+          <textarea class="form-control" 
+                    id="description" 
+                    rows="3" 
+                    formControlName="description"
+                    [ngClass]="{'is-invalid': propertyForm.get('description')?.invalid && propertyForm.get('description')?.touched}"></textarea>
+          <div class="invalid-feedback" *ngIf="propertyForm.get('description')?.invalid && propertyForm.get('description')?.touched">
+            <span *ngIf="propertyForm.get('description')?.errors?.['required']">La description est requise</span>
+            <span *ngIf="propertyForm.get('description')?.errors?.['minlength']">La description doit contenir au moins 10 caractères</span>
+          </div>
         </div>
 
         <!-- Location -->
         <div class="mb-3">
           <label for="location" class="form-label">Adresse</label>
-          <input type="text" class="form-control" id="location" formControlName="location">
+          <input type="text" 
+                 class="form-control" 
+                 id="location" 
+                 formControlName="location"
+                 [ngClass]="{'is-invalid': propertyForm.get('location')?.invalid && propertyForm.get('location')?.touched}">
+          <div class="invalid-feedback" *ngIf="propertyForm.get('location')?.invalid && propertyForm.get('location')?.touched">
+            L'adresse est requise
+          </div>
         </div>
 
         <!-- Status -->
         <div class="mb-3">
           <label for="status" class="form-label">Statut</label>
-          <select class="form-select" id="status" formControlName="status">
+          <select class="form-select" 
+                  id="status" 
+                  formControlName="status"
+                  [ngClass]="{'is-invalid': propertyForm.get('status')?.invalid && propertyForm.get('status')?.touched}">
             <option value="disponible">Disponible</option>
             <option value="vendu">Vendu</option>
             <option value="loué">Loué</option>
           </select>
+          <div class="invalid-feedback" *ngIf="propertyForm.get('status')?.invalid && propertyForm.get('status')?.touched">
+            Le statut est requis
+          </div>
         </div>
 
         <div class="row">
           <!-- Surface -->
           <div class="col-md-6 mb-3">
             <label for="surface" class="form-label">Surface (m²)</label>
-            <input type="number" class="form-control" id="surface" formControlName="surface">
+            <input type="number" 
+                   class="form-control" 
+                   id="surface" 
+                   formControlName="surface"
+                   [ngClass]="{'is-invalid': propertyForm.get('surface')?.invalid && propertyForm.get('surface')?.touched}">
+            <div class="invalid-feedback" *ngIf="propertyForm.get('surface')?.invalid && propertyForm.get('surface')?.touched">
+              <span *ngIf="propertyForm.get('surface')?.errors?.['required']">La surface est requise</span>
+              <span *ngIf="propertyForm.get('surface')?.errors?.['min']">La surface doit être supérieure à 0</span>
+            </div>
           </div>
 
           <!-- Rooms -->
           <div class="col-md-6 mb-3">
             <label for="rooms" class="form-label">Nombre de pièces</label>
-            <input type="number" class="form-control" id="rooms" formControlName="rooms">
+            <input type="number" 
+                   class="form-control" 
+                   id="rooms" 
+                   formControlName="rooms"
+                   [ngClass]="{'is-invalid': propertyForm.get('rooms')?.invalid && propertyForm.get('rooms')?.touched}">
+            <div class="invalid-feedback" *ngIf="propertyForm.get('rooms')?.invalid && propertyForm.get('rooms')?.touched">
+              <span *ngIf="propertyForm.get('rooms')?.errors?.['required']">Le nombre de pièces est requis</span>
+              <span *ngIf="propertyForm.get('rooms')?.errors?.['min']">Le nombre de pièces doit être supérieur à 0</span>
+            </div>
           </div>
         </div>
 
@@ -66,13 +125,29 @@
           <!-- Bedrooms -->
           <div class="col-md-6 mb-3">
             <label for="bedrooms" class="form-label">Chambres</label>
-            <input type="number" class="form-control" id="bedrooms" formControlName="bedrooms">
+            <input type="number" 
+                   class="form-control" 
+                   id="bedrooms" 
+                   formControlName="bedrooms"
+                   [ngClass]="{'is-invalid': propertyForm.get('bedrooms')?.invalid && propertyForm.get('bedrooms')?.touched}">
+            <div class="invalid-feedback" *ngIf="propertyForm.get('bedrooms')?.invalid && propertyForm.get('bedrooms')?.touched">
+              <span *ngIf="propertyForm.get('bedrooms')?.errors?.['required']">Le nombre de chambres est requis</span>
+              <span *ngIf="propertyForm.get('bedrooms')?.errors?.['min']">Le nombre de chambres doit être supérieur à 0</span>
+            </div>
           </div>
 
           <!-- Bathrooms -->
           <div class="col-md-6 mb-3">
             <label for="bathrooms" class="form-label">Salles de bain</label>
-            <input type="number" class="form-control" id="bathrooms" formControlName="bathrooms">
+            <input type="number" 
+                   class="form-control" 
+                   id="bathrooms" 
+                   formControlName="bathrooms"
+                   [ngClass]="{'is-invalid': propertyForm.get('bathrooms')?.invalid && propertyForm.get('bathrooms')?.touched}">
+            <div class="invalid-feedback" *ngIf="propertyForm.get('bathrooms')?.invalid && propertyForm.get('bathrooms')?.touched">
+              <span *ngIf="propertyForm.get('bathrooms')?.errors?.['required']">Le nombre de salles de bain est requis</span>
+              <span *ngIf="propertyForm.get('bathrooms')?.errors?.['min']">Le nombre de salles de bain doit être supérieur à 0</span>
+            </div>
           </div>
         </div>
 
@@ -114,9 +189,12 @@
 
 <!-- Loading Overlay -->
 <div *ngIf="isLoading" class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" 
-     style="background: rgba(255,255,255,0.8); z-index: 1050;">
-  <div class="spinner-border text-primary" role="status">
-    <span class="visually-hidden">Loading...</span>
+     style="background: rgba(0,0,0,0.5); z-index: 1050;">
+  <div class="card p-4 text-center">
+    <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+    <h5 class="mb-0">{{ isEditMode ? 'Modification en cours...' : 'Ajout en cours...' }}</h5>
   </div>
 </div>
 

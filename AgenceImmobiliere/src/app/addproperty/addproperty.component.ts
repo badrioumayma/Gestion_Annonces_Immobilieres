@@ -43,6 +43,16 @@ export class AddpropertyComponent implements OnInit {
       bathrooms: ['', [Validators.required, Validators.min(0)]],
       status: ['disponible', Validators.required]
     });
+
+    // Marquer tous les champs comme touchés lors de la soumission
+    this.propertyForm.valueChanges.subscribe(() => {
+      Object.keys(this.propertyForm.controls).forEach(key => {
+        const control = this.propertyForm.get(key);
+        if (control?.invalid && control?.touched) {
+          control.markAsTouched();
+        }
+      });
+    });
   }
 
   private mapPropertyToForm(property: Property): any {
@@ -129,44 +139,51 @@ export class AddpropertyComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Form status:', this.propertyForm.valid);
-    console.log('Form errors:', this.propertyForm.errors);
-    console.log('Form values:', this.propertyForm.value);
-    console.log('Is edit mode:', this.isEditMode);
-    console.log('Property ID:', this.propertyId);
-    
     if (this.propertyForm.valid) {
+      // Activer le spinner immédiatement
       this.isLoading = true;
-      const formData = this.propertyForm.value;
-      formData.images = this.previewImages;
+      
+      // Utiliser setTimeout pour s'assurer que le spinner s'affiche avant de commencer l'opération
+      setTimeout(() => {
+        const formData = this.propertyForm.value;
+        formData.images = this.previewImages;
 
-      if (this.isEditMode && this.propertyId) {
-        console.log('Updating property with ID:', this.propertyId);
-        this.propertyService.updateProperty(this.propertyId, formData).subscribe({
-          next: (updatedProperty) => {
-            console.log('Property updated successfully:', updatedProperty);
-            this.propertyUpdated.emit(updatedProperty);
-            this.router.navigate(['/admin/properties']);
-          },
-          error: (error) => {
-            console.error('Erreur lors de la modification de la propriété:', error);
-            this.isLoading = false;
-          }
-        });
-      } else {
-        console.log('Adding new property');
-        this.propertyService.addProperty(formData).subscribe({
-          next: (newProperty) => {
-            console.log('Property added successfully:', newProperty);
-            this.propertyAdded.emit(newProperty);
-            this.router.navigate(['/admin/properties']);
-          },
-          error: (error) => {
-            console.error('Erreur lors de l\'ajout de la propriété:', error);
-            this.isLoading = false;
-          }
-        });
-      }
+        if (this.isEditMode && this.propertyId) {
+          this.propertyService.updateProperty(this.propertyId, formData).subscribe({
+            next: (updatedProperty) => {
+              this.propertyUpdated.emit(updatedProperty);
+              this.isLoading = false; // Désactiver le spinner avant la navigation
+              // Recharger la page au lieu de naviguer
+              window.location.reload();
+            },
+            error: (error) => {
+              console.error('Erreur lors de la modification de la propriété:', error);
+              this.isLoading = false;
+            }
+          });
+        } else {
+          this.propertyService.addProperty(formData).subscribe({
+            next: (newProperty) => {
+              this.propertyAdded.emit(newProperty);
+              this.isLoading = false; // Désactiver le spinner avant la navigation
+              // Recharger la page au lieu de naviguer
+              window.location.reload();
+            },
+            error: (error) => {
+              console.error('Erreur lors de l\'ajout de la propriété:', error);
+              this.isLoading = false;
+            }
+          });
+        }
+      }, 100); // Petit délai pour s'assurer que le spinner s'affiche
+    } else {
+      // Marquer tous les champs comme touchés pour afficher les erreurs
+      Object.keys(this.propertyForm.controls).forEach(key => {
+        const control = this.propertyForm.get(key);
+        if (control?.invalid) {
+          control.markAsTouched();
+        }
+      });
     }
   }
 

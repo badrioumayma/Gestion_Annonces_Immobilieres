@@ -24,6 +24,8 @@ import { PublicLayoutComponent } from './layouts/public-layout/public-layout.com
 import { ProfileComponent } from './profile/profile.component';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PropertyListComponent } from './property-list/property-list.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +46,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     PropertyDetailsComponent,
     ModalComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    PropertyListComponent,
+    
     
   ],
   imports: [

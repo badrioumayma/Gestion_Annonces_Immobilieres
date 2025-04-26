@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Property } from '../models/property.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddpropertyComponent } from '../addproperty/addproperty.component';
@@ -8,7 +8,7 @@ import { AddpropertyComponent } from '../addproperty/addproperty.component';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent {
+export class TableComponent implements OnInit {
   @Input() title: string = ''; // Table title
   @Input() columns: { header: string, field: string, isDate?: boolean }[] = []; // Column definitions
   @Input() data: any[] = []; // Table data
@@ -20,10 +20,15 @@ export class TableComponent {
   @Output() edit = new EventEmitter<Property>();
   @Output() delete = new EventEmitter<number>();
 
-  sortColumn: string = '';
-  sortDirection: 'asc' | 'desc' = 'asc';
+  sortColumn: string = 'createdAt'; // Default sort by creation date
+  sortDirection: 'asc' | 'desc' = 'desc'; // Default sort direction descending (newest first)
 
   constructor(private modalService: NgbModal) {}
+
+  ngOnInit() {
+    // Sort properties by creation date by default (newest first)
+    this.sortProperties();
+  }
 
   sortBy(column: string) {
     if (this.sortColumn === column) {
@@ -33,9 +38,27 @@ export class TableComponent {
       this.sortDirection = 'asc';
     }
 
+    this.sortProperties();
+  }
+
+  private sortProperties() {
     this.properties.sort((a: any, b: any) => {
       const direction = this.sortDirection === 'asc' ? 1 : -1;
-      return a[column] > b[column] ? direction : -direction;
+      
+      // Handle date sorting
+      if (this.sortColumn === 'createdAt') {
+        const dateA = new Date(a.createdAt || 0).getTime();
+        const dateB = new Date(b.createdAt || 0).getTime();
+        return (dateA - dateB) * direction;
+      }
+      
+      // Handle numeric sorting
+      if (typeof a[this.sortColumn] === 'number') {
+        return (a[this.sortColumn] - b[this.sortColumn]) * direction;
+      }
+      
+      // Handle string sorting
+      return String(a[this.sortColumn]).localeCompare(String(b[this.sortColumn])) * direction;
     });
   }
 
@@ -48,7 +71,7 @@ export class TableComponent {
     modalRef.componentInstance.isEditMode = true;
 
     modalRef.closed.subscribe(() => {
-      this.edit.emit(property); // Pour rafraîchir la liste après modification
+      this.edit.emit(property);
     });
   }
 

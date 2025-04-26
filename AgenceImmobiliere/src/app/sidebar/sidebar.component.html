@@ -3,6 +3,9 @@
   <i class="bi bi-list"></i>
 </button>
 
+<!-- Sidebar Backdrop for Mobile -->
+<div class="sidebar-backdrop" *ngIf="isSidebarOpen" (click)="toggleSidebar()"></div>
+
 <!-- Sidebar -->
 <div class="sidebar" [class.sidebar-open]="isSidebarOpen">
   <div class="sidebar-header">
@@ -27,6 +30,12 @@
       <a routerLink="/profile" routerLinkActive="active" class="nav-link">
         <i class="bi bi-person"></i>
         <span>Mon Profil</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/admin/properties" routerLinkActive="active" class="nav-link">
+        <i class="bi bi-house-door"></i>
+        <span>Liste des propriétés</span>
       </a>
     </li>
     <li class="nav-item">

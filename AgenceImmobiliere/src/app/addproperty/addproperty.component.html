@@ -15,9 +15,8 @@
         <div class="mb-3">
           <label for="type" class="form-label">Type</label>
           <select class="form-select" id="type" formControlName="type">
-            <option value="">Sélectionner un type</option>
-            <option value="Achat">Achat</option>
-            <option value="Location">Location</option>
+            <option value="vente">Vente</option>
+            <option value="location">Location</option>
           </select>
         </div>
 
@@ -33,24 +32,20 @@
           <textarea class="form-control" id="description" rows="3" formControlName="description"></textarea>
         </div>
 
-        <!-- Address -->
+        <!-- Location -->
         <div class="mb-3">
-          <label for="address" class="form-label">Adresse</label>
-          <input type="text" class="form-control" id="address" formControlName="address">
+          <label for="location" class="form-label">Adresse</label>
+          <input type="text" class="form-control" id="location" formControlName="location">
         </div>
 
-        <div class="row">
-          <!-- City -->
-          <div class="col-md-6 mb-3">
-            <label for="city" class="form-label">Ville</label>
-            <input type="text" class="form-control" id="city" formControlName="city">
-          </div>
-
-          <!-- Postal Code -->
-          <div class="col-md-6 mb-3">
-            <label for="postalCode" class="form-label">Code Postal</label>
-            <input type="text" class="form-control" id="postalCode" formControlName="postalCode">
-          </div>
+        <!-- Status -->
+        <div class="mb-3">
+          <label for="status" class="form-label">Statut</label>
+          <select class="form-select" id="status" formControlName="status">
+            <option value="disponible">Disponible</option>
+            <option value="vendu">Vendu</option>
+            <option value="loué">Loué</option>
+          </select>
         </div>
 
         <div class="row">
@@ -106,8 +101,7 @@
         </div>
 
         <!-- Submit Button with Spinner -->
-        <div class="d-flex justify-content-between">
-          <button type="button" class="btn btn-secondary" routerLink="/admin/dashboard">Annuler</button>
+        <div class="d-flex justify-content-end">
           <button type="submit" class="btn btn-primary" [disabled]="propertyForm.invalid || isLoading">
             <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
             {{ isEditMode ? 'Modifier' : 'Ajouter' }}
@@ -126,96 +120,89 @@
   </div>
 </div>
 
-
-
-<!-- Modal -->
-<app-modal *ngIf="showModal" 
-           [title]="'Ajouter une nouvelle propriété'" 
+<!-- Modal for Add/Edit Property -->
+<app-modal *ngIf="showModal"
+           [title]="isEditMode ? 'Modifier la propriété' : 'Ajouter une nouvelle propriété'"
            (closed)="closeModal()">
-  <div class="modal-body">
-    <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
       <!-- Title -->
       <div class="mb-3">
-        <label for="title" class="form-label">Titre</label>
-        <input type="text" class="form-control" id="title" formControlName="title">
+        <label for="modal-title" class="form-label">Titre</label>
+        <input type="text" class="form-control" id="modal-title" formControlName="title">
       </div>
 
       <!-- Type -->
       <div class="mb-3">
-        <label for="type" class="form-label">Type</label>
-        <select class="form-select" id="type" formControlName="type">
-          <option value="">Sélectionner un type</option>
-          <option value="Achat">Achat</option>
-          <option value="Location">Location</option>
+        <label for="modal-type" class="form-label">Type</label>
+        <select class="form-select" id="modal-type" formControlName="type">
+          <option value="vente">Vente</option>
+          <option value="location">Location</option>
         </select>
       </div>
 
       <!-- Price -->
       <div class="mb-3">
-        <label for="price" class="form-label">Prix</label>
-        <input type="number" class="form-control" id="price" formControlName="price">
+        <label for="modal-price" class="form-label">Prix</label>
+        <input type="number" class="form-control" id="modal-price" formControlName="price">
       </div>
 
       <!-- Description -->
       <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" id="description" rows="3" formControlName="description"></textarea>
+        <label for="modal-description" class="form-label">Description</label>
+        <textarea class="form-control" id="modal-description" rows="3" formControlName="description"></textarea>
       </div>
 
-      <!-- Address -->
+      <!-- Location -->
       <div class="mb-3">
-        <label for="address" class="form-label">Adresse</label>
-        <input type="text" class="form-control" id="address" formControlName="address">
+        <label for="modal-location" class="form-label">Adresse</label>
+        <input type="text" class="form-control" id="modal-location" formControlName="location">
       </div>
 
-      <div class="row">
-        <!-- City -->
-        <div class="col-md-6 mb-3">
-          <label for="city" class="form-label">Ville</label>
-          <input type="text" class="form-control" id="city" formControlName="city">
-        </div>
-
-        <!-- Postal Code -->
-        <div class="col-md-6 mb-3">
-          <label for="postalCode" class="form-label">Code Postal</label>
-          <input type="text" class="form-control" id="postalCode" formControlName="postalCode">
-        </div>
+      <!-- Status -->
+      <div class="mb-3">
+        <label for="modal-status" class="form-label">Statut</label>
+        <select class="form-select" id="modal-status" formControlName="status">
+          <option value="disponible">Disponible</option>
+          <option value="vendu">Vendu</option>
+          <option value="loué">Loué</option>
+        </select>
       </div>
 
       <div class="row">
         <!-- Surface -->
         <div class="col-md-6 mb-3">
-          <label for="surface" class="form-label">Surface (m²)</label>
-          <input type="number" class="form-control" id="surface" formControlName="surface">
+          <label for="modal-surface" class="form-label">Surface (m²)</label>
+          <input type="number" class="form-control" id="modal-surface" formControlName="surface">
         </div>
 
         <!-- Rooms -->
         <div class="col-md-6 mb-3">
-          <label for="rooms" class="form-label">Nombre de pièces</label>
-          <input type="number" class="form-control" id="rooms" formControlName="rooms">
+          <label for="modal-rooms" class="form-label">Nombre de pièces</label>
+          <input type="number" class="form-control" id="modal-rooms" formControlName="rooms">
         </div>
       </div>
 
       <div class="row">
         <!-- Bedrooms -->
         <div class="col-md-6 mb-3">
-          <label for="bedrooms" class="form-label">Chambres</label>
-          <input type="number" class="form-control" id="bedrooms" formControlName="bedrooms">
+          <label for="modal-bedrooms" class="form-label">Chambres</label>
+          <input type="number" class="form-control" id="modal-bedrooms" formControlName="bedrooms">
         </div>
 
         <!-- Bathrooms -->
         <div class="col-md-6 mb-3">
-          <label for="bathrooms" class="form-label">Salles de bain</label>
-          <input type="number" class="form-control" id="bathrooms" formControlName="bathrooms">
+          <label for="modal-bathrooms" class="form-label">Salles de bain</label>
+          <input type="number" class="form-control" id="modal-bathrooms" formControlName="bathrooms">
         </div>
       </div>
 
       <!-- Images Upload -->
       <div class="mb-3">
-        <label for="images" class="form-label">Images</label>
+        <label for="modal-images" class="form-label">Images</label>
         <input type="file" 
                class="form-control" 
-               id="images" 
+               id="modal-images" 
                multiple 
                accept="image/*"
                (change)="onFileSelected($event)">
@@ -233,16 +220,13 @@
           </div>
         </div>
       </div>
-    </form>
-  </div>
-  
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="closeModal()">Annuler</button>
-    <button type="submit" class="btn btn-primary" 
-            [disabled]="propertyForm.invalid || isLoading"
-            (click)="onSubmit()">
-      <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
-      Ajouter
-    </button>
-  </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary"
+              [disabled]="propertyForm.invalid || isLoading">
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+        {{ isEditMode ? 'Modifier' : 'Ajouter' }}
+      </button>
+    </div>
+  </form>
 </app-modal>

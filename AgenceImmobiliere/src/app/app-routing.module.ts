@@ -10,6 +10,7 @@ import { PropertyDetailsComponent } from './property-details/property-details.co
 import { AddpropertyComponent } from './addproperty/addproperty.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ContactComponent } from './contact/contact.component';
+import { PropertyListComponent } from './property-list/property-list.component';
 
 const routes: Routes = [
   // Routes sans layout (pas de navbar ni footer)
@@ -39,6 +40,8 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'add-property', component: AddpropertyComponent },
+      { path: 'properties', component: PropertyListComponent },
+      { path: 'property-form/:id', component: AddpropertyComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },

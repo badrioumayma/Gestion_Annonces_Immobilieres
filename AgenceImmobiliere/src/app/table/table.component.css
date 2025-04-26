@@ -9,8 +9,11 @@
 }
 
 .table-responsive {
+  display: block;
+  width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  margin-bottom: 1rem;
 }
 
 .table th,
@@ -93,6 +96,7 @@
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 0.5rem;
+  margin-bottom: 0;
 }
 
 .table th {
@@ -157,4 +161,91 @@
   display: flex;
   justify-content: center;
   padding: 2rem;
+}
+
+/* Responsive Table Styles */
+@media (max-width: 768px) {
+  .table-responsive {
+    overflow-x: unset;
+  }
+  table, thead, tbody, th, td, tr {
+    display: block;
+    width: 100%;
+  }
+  thead {
+    display: none;
+  }
+  tr {
+    margin-bottom: 1rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    padding: 1rem;
+  }
+  td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    min-height: 2.5rem;
+    display: block;
+    vertical-align: middle;
+    padding: 0.75rem 0.5rem 0.75rem 40%;
+    position: relative;
+    word-break: break-word;
+    background: transparent;
+  }
+  td:not([data-label="Actions"]):before {
+    content: attr(data-label) ': ';
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    color: #555;
+    width: 38%;
+    min-width: 90px;
+    max-width: 45%;
+    white-space: normal;
+    text-align: left;
+    overflow-wrap: break-word;
+  }
+  td[data-label="Actions"]:before {
+    content: none;
+  }
+  td[data-label="Actions"] {
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.75rem;
+    position: static;
+  }
+  td[data-label="Actions"] button {
+    flex: 1;
+    min-width: 120px;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+}
+
+/* Additional styles for very small screens */
+@media (max-width: 480px) {
+  td {
+    padding-left: 45%;
+  }
+  
+  td:not([data-label="Actions"]):before {
+    width: 42%;
+    max-width: 42%;
+  }
+  
+  td[data-label="Actions"] {
+    flex-direction: column;
+  }
+  
+  td[data-label="Actions"] button {
+    width: 100%;
+  }
 }

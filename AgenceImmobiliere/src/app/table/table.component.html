@@ -39,10 +39,10 @@
             </td>
           </tr>
           <tr *ngFor="let property of properties">
-            <td>{{property.title}}</td>
-            <td>{{property.type}}</td>
-            <td>{{property.price | currency:'EUR'}}</td>
-            <td>
+            <td data-label="Titre">{{property.title}}</td>
+            <td data-label="Type">{{property.type}}</td>
+            <td data-label="Prix">{{property.price | currency:'EUR'}}</td>
+            <td data-label="Statut">
               <span class="badge" [ngClass]="{
                 'bg-success': property.status === 'disponible',
                 'bg-warning': property.status === 'loué',
@@ -51,7 +51,7 @@
                 {{property.status}}
               </span>
             </td>
-            <td>
+            <td data-label="Actions">
               <button class="btn btn-sm btn-warning me-2" (click)="onEdit(property)">
                 <i class="bi bi-pencil"></i> Modifier
               </button>

@@ -1,0 +1,84 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Liste des Propriétés</h1>
+   
+  </div>
+
+  <!-- Message d'erreur -->
+  <div *ngIf="error" class="alert alert-danger" role="alert">
+    {{ error }}
+  </div>
+
+  <!-- Spinner de chargement -->
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+  </div>
+
+  <!-- Liste des propriétés -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" *ngIf="!loading && !error">
+    <div class="col" *ngFor="let property of properties">
+      <div class="card h-100 shadow-sm">
+        <!-- Image de la propriété -->
+        <img [src]="property.images[0] || 'assets/images/placeholder.jpg'" 
+             class="card-img-top" 
+             [alt]="property.title"
+             style="height: 200px; object-fit: cover;">
+        
+        <div class="card-body">
+          <!-- Titre et statut -->
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <h5 class="card-title mb-0">{{ property.title }}</h5>
+            <span [class]="getStatusClass(property.status)">
+              {{ property.status }}
+            </span>
+          </div>
+
+          <!-- Type et prix -->
+          <p class="card-text">
+            <small class="text-muted">{{ property.type }}</small>
+          </p>
+          <h4 class="text-primary mb-3">{{ property.price | currency:'EUR':'symbol':'1.0-0' }}</h4>
+
+          <!-- Caractéristiques -->
+          <div class="d-flex justify-content-between text-muted mb-3">
+            <div>
+              <i class="fas fa-ruler-combined"></i>
+              {{ property.surface }}m²
+            </div>
+            <div>
+              <i class="fas fa-bed"></i>
+              {{ property.bedrooms }} chambres
+            </div>
+            <div>
+              <i class="fas fa-bath"></i>
+              {{ property.bathrooms }} sdb
+            </div>
+          </div>
+
+          <!-- Adresse -->
+          <p class="card-text">
+            <i class="fas fa-map-marker-alt text-danger"></i>
+            {{ property.location }}
+          </p>
+
+          <!-- Actions -->
+          <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-outline-primary btn-sm" [routerLink]="['/admin/property-form', property.id]">
+              <i class="fas fa-edit"></i> Modifier
+            </button>
+            <button class="btn btn-outline-danger btn-sm" (click)="deleteProperty(property.id.toString())">
+              <i class="fas fa-trash"></i> Supprimer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message si aucune propriété -->
+  <div *ngIf="!loading && !error && properties.length === 0" class="text-center my-5">
+    <p class="text-muted">Aucune propriété disponible</p>
+  </div>
+</div>

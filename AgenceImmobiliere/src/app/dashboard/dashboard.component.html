@@ -70,10 +70,11 @@
       </div>
       
       <app-table 
+        [title]="'Liste des propriétés'"
         [properties]="properties"
         [isLoading]="isLoading"
-        (edit)="navigateToEdit($event)"
-        (delete)="deleteProperty($event)">
+        (edit)="onPropertyUpdated($event)"
+        (delete)="onPropertyDeleted($event)">
       </app-table>
     </div>
   </div>
@@ -88,7 +89,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <app-addproperty></app-addproperty>
+        <app-addproperty *ngIf="showForm" 
+                         (propertyAdded)="onPropertyAdded($event)"
+                         (propertyUpdated)="onPropertyUpdated($event)">
+        </app-addproperty>
       </div>
     </div>
   </div>

@@ -16,16 +16,7 @@ export class AuthService {
   private readonly ADMIN_PASSWORD = 'admin123';
 
   constructor(private http: HttpClient, private router: Router) {
-    // Ajouter un utilisateur admin par défaut pour le développement
-    if (!localStorage.getItem('currentUser')) {
-      const defaultAdmin = {
-        id: 1,
-        email: 'admin@admin.com',
-        role: 'admin',
-        token: 'fake-token'
-      };
-      localStorage.setItem('currentUser', JSON.stringify(defaultAdmin));
-    }
+    // Initialize the currentUserSubject with null (no user logged in)
     this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser') || 'null'));
     this.currentUser = this.currentUserSubject.asObservable();
   }

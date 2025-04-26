@@ -13,7 +13,7 @@
 
 @media (max-width: 768px) {
   .main-content {
-    margin-left: 0; /* No sidebar margin on small screens */
+    padding: 1rem;
   }
 }
 
@@ -26,8 +26,8 @@
 /* Main Content */
 .main-content {
   flex: 1;
-  margin-left: 250px;
   padding: 2rem;
+  width: 100%;
 }
 
 /* Header */
@@ -165,8 +165,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .main-content {
-    margin-left: 0;
-    width: 100%;
+    padding: 1rem;
   }
 }
 
@@ -211,4 +210,67 @@
 
 .container-fluid {
   padding: 1rem;
+}
+
+/* Responsive Design Enhancements */
+@media (max-width: 992px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .stats-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  .main-content {
+    padding: 1rem;
+    width: 100%;
+  }
+  .stats-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .stat-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .search-box {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  .table-container {
+    padding: 0.5rem;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 0.5rem;
+  }
+  .stat-card {
+    padding: 0.5rem;
+  }
+  .table-header h3 {
+    font-size: 1rem;
+  }
+  .stat-details h3, .stat-number {
+    font-size: 0.9rem;
+  }
+  .btn {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.7rem;
+  }
 }

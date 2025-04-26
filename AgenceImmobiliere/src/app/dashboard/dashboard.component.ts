@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
       .subscribe({
         next: (properties) => {
           this.properties = properties;
-          this.recentProperties = properties.slice(0, 5); // Get latest 5, adjust as needed
+          this.recentProperties = properties.slice(0, 5);
         },
         error: (error) => {
           console.error('Error loading properties:', error);
@@ -79,6 +79,33 @@ export class DashboardComponent implements OnInit {
         // Handle error (show message, etc.)
       }
     });
+  }
+
+  onPropertyAdded(newProperty: Property) {
+    // Ensure the property has a creation date
+    if (!newProperty.createdAt) {
+      newProperty.createdAt = new Date();
+    }
+    this.properties.unshift(newProperty);
+    this.recentProperties = this.properties.slice(0, 5);
+    this.loadStats();
+  }
+
+  onPropertyUpdated(updatedProperty: Property) {
+    const index = this.properties.findIndex(p => p.id === updatedProperty.id);
+    if (index !== -1) {
+      // Preserve the original creation date
+      updatedProperty.createdAt = this.properties[index].createdAt;
+      this.properties[index] = updatedProperty;
+      this.recentProperties = this.properties.slice(0, 5);
+      this.loadStats();
+    }
+  }
+
+  onPropertyDeleted(id: number) {
+    this.properties = this.properties.filter(p => p.id !== id);
+    this.recentProperties = this.properties.slice(0, 5);
+    this.loadStats();
   }
 
   toggleForm(): void {
@@ -119,6 +146,7 @@ export class DashboardComponent implements OnInit {
   }
 
   openModal() {
+    this.showForm = true;
     if (this.modal) {
       this.modal.show();
     }

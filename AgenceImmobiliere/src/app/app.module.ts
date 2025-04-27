@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { CardComponent } from './card/card.component';
 import { TableComponent } from './table/table.component';
@@ -19,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModalComponent } from './shared/modal/modal.component';
 import { AddpropertyComponent } from './addproperty/addproperty.component';
 import { LoginComponent } from './login/login.component';
+import { RegistryComponent } from './registry/registry.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -33,7 +33,6 @@ import { PropertyListComponent } from './property-list/property-list.component';
     PublicLayoutComponent,
     AddpropertyComponent,
     DashboardComponent,
-    HeaderComponent,
     SidebarComponent,
     CardComponent,
     TableComponent,
@@ -46,6 +45,7 @@ import { PropertyListComponent } from './property-list/property-list.component';
     PropertyDetailsComponent,
     ModalComponent,
     LoginComponent,
+    RegistryComponent,
     ProfileComponent,
     PropertyListComponent,
     

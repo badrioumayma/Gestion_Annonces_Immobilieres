@@ -52,6 +52,15 @@
               <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
               Se connecter
             </button>
+
+            <!-- Registry Link -->
+            <div class="text-center mt-3">
+              <p class="mb-0">Vous n'avez pas de compte ?</p>
+              <a [routerLink]="['/registry']" class="text-primary">
+                Créer un compte
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
           </form>
         </div>
       </div>

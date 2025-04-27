@@ -8,17 +8,16 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  showNavAndFooter: boolean = true;
+  showNavAndFooter = true;
 
   constructor(private router: Router) {
+    // S'abonner aux événements de navigation
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      // Liste des routes où on ne veut pas afficher le navbar et le footer
-      const routesWithoutNavFooter = ['/login', '/profile', '/admin'];
-      this.showNavAndFooter = !routesWithoutNavFooter.some(route => 
-        event.url.startsWith(route)
-      );
+      // Masquer navbar et footer pour les pages d'authentification
+      const authPages = ['/login', '/registry'];
+      this.showNavAndFooter = !authPages.includes(event.url);
     });
   }
 }

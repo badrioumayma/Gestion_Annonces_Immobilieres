@@ -8,11 +8,10 @@ import { Location } from '@angular/common';
 })
 export class ProfileComponent implements OnInit {
   profile = {
-    firstName: '',
-    lastName: '',
+   
     email: '',
-    phone: '',
-    profileImage: ''
+    password: '',
+    
   };
 
   constructor(private location: Location) {}

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PropertyService } from '../services/property.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { Property } from '../models/property.model';
 
 @Component({
@@ -25,7 +26,8 @@ export class AddpropertyComponent implements OnInit {
     private fb: FormBuilder,
     private propertyService: PropertyService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) {
     this.initForm();
   }
@@ -140,10 +142,8 @@ export class AddpropertyComponent implements OnInit {
 
   onSubmit() {
     if (this.propertyForm.valid) {
-      // Activer le spinner immédiatement
       this.isLoading = true;
       
-      // Utiliser setTimeout pour s'assurer que le spinner s'affiche avant de commencer l'opération
       setTimeout(() => {
         const formData = this.propertyForm.value;
         formData.images = this.previewImages;
@@ -152,9 +152,9 @@ export class AddpropertyComponent implements OnInit {
           this.propertyService.updateProperty(this.propertyId, formData).subscribe({
             next: (updatedProperty) => {
               this.propertyUpdated.emit(updatedProperty);
-              this.isLoading = false; // Désactiver le spinner avant la navigation
-              // Recharger la page au lieu de naviguer
-              window.location.reload();
+              this.isLoading = false;
+              // Fermer le formulaire au lieu de recharger la page
+              this.location.back();
             },
             error: (error) => {
               console.error('Erreur lors de la modification de la propriété:', error);
@@ -165,9 +165,9 @@ export class AddpropertyComponent implements OnInit {
           this.propertyService.addProperty(formData).subscribe({
             next: (newProperty) => {
               this.propertyAdded.emit(newProperty);
-              this.isLoading = false; // Désactiver le spinner avant la navigation
-              // Recharger la page au lieu de naviguer
-              window.location.reload();
+              this.isLoading = false;
+              // Fermer le formulaire au lieu de recharger la page
+              this.location.back();
             },
             error: (error) => {
               console.error('Erreur lors de l\'ajout de la propriété:', error);
@@ -175,9 +175,8 @@ export class AddpropertyComponent implements OnInit {
             }
           });
         }
-      }, 100); // Petit délai pour s'assurer que le spinner s'affiche
+      }, 100);
     } else {
-      // Marquer tous les champs comme touchés pour afficher les erreurs
       Object.keys(this.propertyForm.controls).forEach(key => {
         const control = this.propertyForm.get(key);
         if (control?.invalid) {
@@ -198,5 +197,9 @@ export class AddpropertyComponent implements OnInit {
       this.selectedImages = [];
       this.previewImages = [];
     }
+  }
+
+  closeForm() {
+    this.location.back();
   }
 }

@@ -5,6 +5,7 @@ import { PublicLayoutComponent } from './layouts/public-layout/public-layout.com
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { LoginComponent } from './login/login.component';
+import { RegistryComponent } from './registry/registry.component';
 import { AuthGuard } from './guards/auth.guard';
 import { PropertyDetailsComponent } from './property-details/property-details.component';
 import { AddpropertyComponent } from './addproperty/addproperty.component';
@@ -15,6 +16,7 @@ import { PropertyListComponent } from './property-list/property-list.component';
 const routes: Routes = [
   // Routes sans layout (pas de navbar ni footer)
   { path: 'login', component: LoginComponent },
+  { path: 'registry', component: RegistryComponent },
   { 
     path: 'profile', 
     component: ProfileComponent,

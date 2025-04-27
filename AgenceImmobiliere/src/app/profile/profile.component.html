@@ -11,28 +11,10 @@
   </div>
 
   <form (ngSubmit)="onSubmit()">
-    <!-- Informations personnelles -->
-    <div class="form-section">
-      <h3>Informations personnelles</h3>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="firstName">Prénom</label>
-            <input type="text" class="form-control" id="firstName" [(ngModel)]="profile.firstName" name="firstName">
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="lastName">Nom</label>
-            <input type="text" class="form-control" id="lastName" [(ngModel)]="profile.lastName" name="lastName">
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Contact -->
+    
     <div class="form-section">
-      <h3>Coordonnées</h3>
+     
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
@@ -40,18 +22,14 @@
             <input type="email" class="form-control" id="email" [(ngModel)]="profile.email" name="email">
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="phone">Téléphone</label>
-            <input type="tel" class="form-control" id="phone" [(ngModel)]="profile.phone" name="phone">
-          </div>
-        </div>
+       
+        
       </div>
     </div>
 
-    <!-- Sécurité -->
+   
     <div class="form-section">
-      <h3>Sécurité</h3>
+  
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">

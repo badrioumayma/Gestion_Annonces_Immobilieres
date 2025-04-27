@@ -1,4 +1,11 @@
 <div class="container mt-4">
+  <!-- Close button -->
+  <div class="d-flex justify-content-end mb-3">
+    <button type="button" class="btn btn-outline-secondary" (click)="closeForm()">
+      <i class="fas fa-times"></i> Fermer
+    </button>
+  </div>
+  
   <div class="card">
     <div class="card-header">
       <h3>{{ isEditMode ? 'Modifier la propriété' : 'Ajouter une nouvelle propriété' }}</h3>

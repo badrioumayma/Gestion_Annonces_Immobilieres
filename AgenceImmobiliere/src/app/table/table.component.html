@@ -1,6 +1,17 @@
 <div class="card mb-4">
   <div class="card-header">
     <h5>{{ title }}</h5>
+    <div class="input-group mb-3">
+      <span class="input-group-text">
+        <i class="bi bi-search"></i>
+      </span>
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Rechercher une propriété..." 
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearch($event)">
+    </div>
   </div>
   <div class="card-body">
     <div class="table-responsive">
@@ -38,7 +49,7 @@
               </div>
             </td>
           </tr>
-          <tr *ngFor="let property of properties">
+          <tr *ngFor="let property of filteredProperties">
             <td data-label="Titre">{{property.title}}</td>
             <td data-label="Type">{{property.type}}</td>
             <td data-label="Prix">{{property.price | currency:'EUR'}}</td>

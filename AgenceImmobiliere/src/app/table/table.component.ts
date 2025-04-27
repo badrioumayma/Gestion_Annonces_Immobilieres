@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Property } from '../models/property.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddpropertyComponent } from '../addproperty/addproperty.component';
+import { PropertyService } from '../services/property.service';
 
 @Component({
   selector: 'app-table',
@@ -22,12 +23,51 @@ export class TableComponent implements OnInit {
 
   sortColumn: string = 'createdAt'; // Default sort by creation date
   sortDirection: 'asc' | 'desc' = 'desc'; // Default sort direction descending (newest first)
+  
+  searchTerm: string = '';
+  filteredProperties: Property[] = [];
 
-  constructor(private modalService: NgbModal) {}
+  constructor(
+    private modalService: NgbModal,
+    private propertyService: PropertyService
+  ) {}
 
   ngOnInit() {
-    // Sort properties by creation date by default (newest first)
-    this.sortProperties();
+    this.loadProperties();
+  }
+
+  private loadProperties() {
+    this.isLoading = true;
+    this.propertyService.getAllProperties().subscribe({
+      next: (properties: Property[]) => {
+        this.filteredProperties = properties;
+        this.sortProperties();
+        this.isLoading = false;
+      },
+      error: (error: any) => {
+        console.error('Erreur lors du chargement des propriétés:', error);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  onSearch(term: string) {
+    this.searchTerm = term.toLowerCase();
+    this.propertyService.getAllProperties().subscribe({
+      next: (properties: Property[]) => {
+        if (!this.searchTerm) {
+          this.filteredProperties = properties;
+        } else {
+          this.filteredProperties = properties.filter((property: Property) => 
+            property.title.toLowerCase().includes(this.searchTerm) ||
+            property.type.toLowerCase().includes(this.searchTerm) ||
+            property.status.toLowerCase().includes(this.searchTerm) ||
+            property.price.toString().includes(this.searchTerm)
+          );
+        }
+        this.sortProperties();
+      }
+    });
   }
 
   sortBy(column: string) {
@@ -42,22 +82,19 @@ export class TableComponent implements OnInit {
   }
 
   private sortProperties() {
-    this.properties.sort((a: any, b: any) => {
+    this.filteredProperties.sort((a: any, b: any) => {
       const direction = this.sortDirection === 'asc' ? 1 : -1;
       
-      // Handle date sorting
       if (this.sortColumn === 'createdAt') {
         const dateA = new Date(a.createdAt || 0).getTime();
         const dateB = new Date(b.createdAt || 0).getTime();
         return (dateA - dateB) * direction;
       }
       
-      // Handle numeric sorting
       if (typeof a[this.sortColumn] === 'number') {
         return (a[this.sortColumn] - b[this.sortColumn]) * direction;
       }
       
-      // Handle string sorting
       return String(a[this.sortColumn]).localeCompare(String(b[this.sortColumn])) * direction;
     });
   }

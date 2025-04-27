@@ -5,6 +5,7 @@ import { Property } from '../models/property.model';
 import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -100,7 +101,18 @@ export class PropertyService {
     rented: number;
     averagePrice: number;
   }> {
-    return this.http.get<any>(`${this.apiUrl}/stats`);
+    return this.getAllProperties().pipe(
+      map(properties => {
+        const stats = {
+          total: properties.length,
+          available: properties.filter(p => p.status === 'disponible').length,
+          sold: properties.filter(p => p.status === 'vendu').length,
+          rented: properties.filter(p => p.status === 'loué').length,
+          averagePrice: properties.reduce((acc, curr) => acc + curr.price, 0) / properties.length || 0
+        };
+        return stats;
+      })
+    );
   }
 
   private handleError(error: any) {

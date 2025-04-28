@@ -57,12 +57,8 @@ export class PropertyService {
   }
 
   // Update a property
-  updateProperty(id: number, property: Property): Observable<Property> {
-    return this.http.put<Property>(`${this.apiUrl}/${id}`, property, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+  updateProperty(id: number, property: FormData): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, property);
   }
 
   // Delete a property

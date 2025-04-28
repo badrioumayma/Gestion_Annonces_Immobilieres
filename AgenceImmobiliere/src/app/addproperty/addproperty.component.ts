@@ -216,4 +216,33 @@ export class AddpropertyComponent implements OnInit {
     this.imagePreview = null;
     this.propertyToEdit = null;
   }
+
+  updateProperty() {
+    if (this.propertyForm.valid && this.propertyId !== null) {
+      const formData = new FormData();
+      const propertyData = this.propertyForm.value;
+      
+      // Ajouter les données de la propriété
+      formData.append('property', new Blob([JSON.stringify(propertyData)], { type: 'application/json' }));
+      
+      // Ajouter les images sélectionnées
+      if (this.selectedImages.length > 0) {
+        this.selectedImages.forEach((image, index) => {
+          formData.append('files', image, `property_${this.propertyId}_${index}`);
+        });
+      }
+
+      this.isLoading = true;
+      this.propertyService.updateProperty(this.propertyId, formData).subscribe({
+        next: (response) => {
+          console.log('Property updated successfully', response);
+          this.router.navigate(['/properties']);
+        },
+        error: (error) => {
+          console.error('Error updating property', error);
+          this.isLoading = false;
+        }
+      });
+    }
+  }
 }

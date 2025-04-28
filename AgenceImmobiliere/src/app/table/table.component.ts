@@ -59,10 +59,9 @@ export class TableComponent implements OnInit {
           this.filteredProperties = properties;
         } else {
           this.filteredProperties = properties.filter((property: Property) => 
-            property.title.toLowerCase().includes(this.searchTerm) ||
-            property.type.toLowerCase().includes(this.searchTerm) ||
-            property.status.toLowerCase().includes(this.searchTerm) ||
-            property.price.toString().includes(this.searchTerm)
+            property.titre.toLowerCase().includes(this.searchTerm) ||
+            property.statut.toLowerCase().includes(this.searchTerm) ||
+            property.prix.toString().includes(this.searchTerm)
           );
         }
         this.sortProperties();
@@ -114,7 +113,17 @@ export class TableComponent implements OnInit {
 
   onDelete(id: number) {
     if (confirm('Êtes-vous sûr de vouloir supprimer cette propriété ?')) {
-      this.delete.emit(id);
+      this.isLoading = true;
+      this.propertyService.deleteProperty(id).subscribe({
+        next: () => {
+          this.delete.emit(id);
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.error('Erreur lors de la suppression:', error);
+          this.isLoading = false;
+        }
+      });
     }
   }
 }

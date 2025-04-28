@@ -45,12 +45,17 @@ export class LoginComponent implements OnInit {
 
     const { email, password } = this.loginForm.value;
 
-    if (this.authService.login(email, password)) {
-      this.router.navigate(['/admin/dashboard']);
-    } else {
-      this.errorMessage = 'Email ou mot de passe incorrect';
-      this.loading = false;
-    }
+    this.authService.login(email, password).subscribe({
+      next: (response) => {
+        this.authService.setCurrentUser(response.user, response.token);
+        this.router.navigate(['/admin/dashboard']);
+        this.loading = false;
+      },
+      error: (err) => {
+        this.errorMessage = 'Email ou mot de passe incorrect';
+        this.loading = false;
+      }
+    });
   }
 
   // Getters pour faciliter l'accès aux champs du formulaire

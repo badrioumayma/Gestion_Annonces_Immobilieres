@@ -77,11 +77,12 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="propertyModalLabel">Ajouter une propriété</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="propertyModalLabel">{{ selectedProperty ? 'Modifier la propriété' : 'Ajouter une propriété' }}</h5>
+        <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <app-addproperty *ngIf="showForm" 
+                         [propertyToEdit]="selectedProperty"
                          (propertyAdded)="onPropertyAdded($event)"
                          (propertyUpdated)="onPropertyUpdated($event)">
         </app-addproperty>

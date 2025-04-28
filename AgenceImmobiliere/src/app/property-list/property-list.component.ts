@@ -15,6 +15,9 @@ export class PropertyListComponent implements OnInit {
   error = '';
   private modal: any;
   showForm = false;
+  isLoading = false;
+  selectedProperty: Property | null = null;
+  showModal = false;
 
   constructor(private propertyService: PropertyService) {}
 
@@ -41,28 +44,20 @@ export class PropertyListComponent implements OnInit {
     });
   }
 
-  deleteProperty(id: string): void {
+  deleteProperty(id: number) {
     if (confirm('Êtes-vous sûr de vouloir supprimer cette propriété ?')) {
-      const propertyId = parseInt(id, 10);
-      
-      if (isNaN(propertyId)) {
-        console.error('ID de propriété invalide:', id);
-        alert('Erreur: ID de propriété invalide');
-        return;
-      }
-      
-      this.loading = true;
-      
-      this.propertyService.deleteProperty(propertyId).subscribe({
+      this.isLoading = true;
+      this.propertyService.deleteProperty(id).subscribe({
         next: () => {
-          this.properties = this.properties.filter(p => p.id !== propertyId);
-          this.loading = false;
-          alert('Propriété supprimée avec succès');
+          this.isLoading = false;
+          setTimeout(() => {
+            this.loadProperties();
+          }, 100);
         },
         error: (error) => {
-          console.error('Erreur lors de la suppression:', error);
-          this.loading = false;
-          alert(`Erreur lors de la suppression de la propriété: ${error.message || 'Erreur inconnue'}`);
+          console.error('Erreur lors de la suppression de la propriété:', error);
+          this.error = 'Erreur lors de la suppression de la propriété';
+          this.isLoading = false;
         }
       });
     }
@@ -107,5 +102,16 @@ export class PropertyListComponent implements OnInit {
       this.modal.hide();
     }
     this.showForm = false;
+  }
+
+  editProperty(property: Property) {
+    this.selectedProperty = property;
+    this.showModal = true;
+  }
+
+  onModalClosed() {
+    this.showModal = false;
+    this.selectedProperty = null;
+    this.loadProperties();
   }
 }

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Property } from '../models/property.model';
 import { environment } from '../../environments/environment';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -17,11 +17,24 @@ export class PropertyService {
 
   // Create a new property
   addProperty(property: Partial<Property>): Observable<Property> {
-    return this.http.post<Property>(this.apiUrl, property);
+    console.log('Sending request to:', this.apiUrl);
+    console.log('Property data:', property);
+    
+    return this.http.post<Property>(this.apiUrl, property, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }).pipe(
+      tap(response => console.log('Response from server:', response)),
+      catchError(error => {
+        console.error('Error in addProperty:', error);
+        return throwError(() => error);
+      })
+    );
   }
 
   // Get all properties with optional filters
-  getAllProperties(filters?: Property): Observable<Property[]> {
+  getAllProperties(filters?: Partial<Property>): Observable<Property[]> {
     let params = new HttpParams();
     
     if (filters) {
@@ -44,8 +57,12 @@ export class PropertyService {
   }
 
   // Update a property
-  updateProperty(id: number, property: Partial<Property>): Observable<Property> {
-    return this.http.put<Property>(`${this.apiUrl}/${id}`, property);
+  updateProperty(id: number, property: Property): Observable<Property> {
+    return this.http.put<Property>(`${this.apiUrl}/${id}`, property, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
   // Delete a property
@@ -54,16 +71,14 @@ export class PropertyService {
   }
 
   // Get properties by type (vente/location)
-  getPropertiesByType(type: 'vente' | 'location'): Observable<Property[]> {
+  getPropertiesByType(type: 'HOUSE' | 'APARTMENT'): Observable<Property[]> {
     return this.http.get<Property[]>(`${this.apiUrl}`, {
       params: new HttpParams().set('type', type)
     });
   }
 
-  
-
   // Search properties with multiple criteria
-  searchProperties(filters: Property): Observable<Property[]> {
+  searchProperties(filters: Partial<Property>): Observable<Property[]> {
     let params = new HttpParams();
     
     Object.keys(filters).forEach(key => {
@@ -105,14 +120,24 @@ export class PropertyService {
       map(properties => {
         const stats = {
           total: properties.length,
-          available: properties.filter(p => p.status === 'disponible').length,
-          sold: properties.filter(p => p.status === 'vendu').length,
-          rented: properties.filter(p => p.status === 'loué').length,
-          averagePrice: properties.reduce((acc, curr) => acc + curr.price, 0) / properties.length || 0
+          available: properties.filter(p => p.statut === 'DISPONIBLE').length,
+          sold: properties.filter(p => p.statut === 'VENDU').length,
+          rented: properties.filter(p => p.statut === 'LOUE').length,
+          averagePrice: properties.reduce((acc, curr) => acc + curr.prix, 0) / properties.length || 0
         };
         return stats;
       })
     );
+  }
+
+  // Create a new property with image (multipart)
+  addPropertyWithImage(property: Partial<Property>, imageFile?: File): Observable<Property> {
+    const formData = new FormData();
+    formData.append('property', new Blob([JSON.stringify(property)], { type: 'application/json' }));
+    if (imageFile) {
+      formData.append('file', imageFile);
+    }
+    return this.http.post<Property>(this.apiUrl, formData);
   }
 
   private handleError(error: any) {

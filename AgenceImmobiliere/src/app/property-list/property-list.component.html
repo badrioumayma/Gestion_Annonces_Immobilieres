@@ -25,17 +25,17 @@
     <div class="col" *ngFor="let property of properties">
       <div class="card h-100 shadow-sm">
         <!-- Image de la propriété -->
-        <img [src]="property.images && property.images.length > 0 ? property.images[0] : 'assets/images/placeholder.jpg'" 
+        <img [src]="property.images && property.images.length > 0 ? 'http://localhost:8081' + property.images[0] : 'assets/images/placeholder.jpg'" 
              class="card-img-top" 
-             [alt]="property.title"
+             [alt]="property.titre"
              style="height: 200px; object-fit: cover;">
         
         <div class="card-body">
           <!-- Titre et statut -->
           <div class="d-flex justify-content-between align-items-start mb-2 flex-wrap">
-            <h5 class="card-title mb-0 text-truncate" style="max-width: 70%;">{{ property.title }}</h5>
-            <span [class]="getStatusClass(property.status)" class="mt-1 mt-md-0">
-              {{ property.status }}
+            <h5 class="card-title mb-0 text-truncate" style="max-width: 70%;">{{ property.titre }}</h5>
+            <span [class]="getStatusClass(property.statut)" class="mt-1 mt-md-0">
+              {{ property.statut }}
             </span>
           </div>
 
@@ -43,7 +43,7 @@
           <p class="card-text">
             <small class="text-muted">{{ property.type }}</small>
           </p>
-          <h4 class="text-primary mb-3">{{ property.price | currency:'EUR':'symbol':'1.0-0' }}</h4>
+          <h4 class="text-primary mb-3">{{ property.prix | currency:'EUR':'symbol':'1.0-0' }}</h4>
 
           <!-- Caractéristiques -->
           <div class="d-flex justify-content-between text-muted mb-3 flex-wrap">
@@ -53,26 +53,26 @@
             </div>
             <div class="me-2 mb-1">
               <i class="fas fa-bed"></i>
-              {{ property.bedrooms }} chambres
+              {{ property.chambres }} chambres
             </div>
             <div class="mb-1">
               <i class="fas fa-bath"></i>
-              {{ property.bathrooms }} sdb
+              {{ property.sallesDeBain }} sdb
             </div>
           </div>
 
           <!-- Adresse -->
           <p class="card-text text-truncate">
             <i class="fas fa-map-marker-alt text-danger"></i>
-            {{ property.location }}
+            {{ property.localisation }}
           </p>
 
           <!-- Actions -->
           <div class="d-flex justify-content-between mt-3 flex-wrap gap-2">
-            <button class="btn btn-outline-primary btn-sm flex-grow-1" [routerLink]="['/admin/property-form', property.id]">
+            <button class="btn btn-outline-primary btn-sm flex-grow-1" (click)="editProperty(property)">
               <i class="fas fa-edit"></i> Modifier
             </button>
-            <button class="btn btn-outline-danger btn-sm flex-grow-1" (click)="deleteProperty(property.id.toString())">
+            <button class="btn btn-outline-danger btn-sm flex-grow-1" (click)="deleteProperty(property.id)">
               <i class="fas fa-trash"></i> Supprimer
             </button>
           </div>
@@ -88,15 +88,16 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="propertyModal" tabindex="-1" aria-labelledby="propertyModalLabel" aria-hidden="true">
+<div class="modal fade" id="propertyModal" tabindex="-1" aria-labelledby="propertyModalLabel" aria-hidden="true" [class.show]="showModal" [style.display]="showModal ? 'block' : 'none'">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="propertyModalLabel">Ajouter une propriété</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="propertyModalLabel">{{ selectedProperty ? 'Modifier la propriété' : 'Ajouter une propriété' }}</h5>
+        <button type="button" class="btn-close" (click)="onModalClosed()" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <app-addproperty *ngIf="showForm" 
+        <app-addproperty *ngIf="showModal" 
+                       [propertyToEdit]="selectedProperty"
                        (propertyAdded)="onPropertyAdded($event)"
                        (propertyUpdated)="onPropertyUpdated($event)">
         </app-addproperty>

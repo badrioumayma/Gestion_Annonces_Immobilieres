@@ -12,182 +12,115 @@
     </div>
     <div class="card-body">
       <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
-        <!-- Title -->
-        <div class="mb-3">
-          <label for="title" class="form-label">Titre</label>
-          <input type="text" 
-                 class="form-control" 
-                 id="title" 
-                 formControlName="title"
-                 [ngClass]="{'is-invalid': propertyForm.get('title')?.invalid && propertyForm.get('title')?.touched}">
-          <div class="invalid-feedback" *ngIf="propertyForm.get('title')?.invalid && propertyForm.get('title')?.touched">
-            <span *ngIf="propertyForm.get('title')?.errors?.['required']">Le titre est requis</span>
-            <span *ngIf="propertyForm.get('title')?.errors?.['minlength']">Le titre doit contenir au moins 3 caractères</span>
-          </div>
-        </div>
-
-        <!-- Type -->
-        <div class="mb-3">
-          <label for="type" class="form-label">Type</label>
-          <select class="form-select" 
-                  id="type" 
-                  formControlName="type"
-                  [ngClass]="{'is-invalid': propertyForm.get('type')?.invalid && propertyForm.get('type')?.touched}">
-            <option value="vente">Vente</option>
-            <option value="location">Location</option>
-          </select>
-          <div class="invalid-feedback" *ngIf="propertyForm.get('type')?.invalid && propertyForm.get('type')?.touched">
-            Le type est requis
-          </div>
-        </div>
-
-        <!-- Price -->
-        <div class="mb-3">
-          <label for="price" class="form-label">Prix</label>
-          <input type="number" 
-                 class="form-control" 
-                 id="price" 
-                 formControlName="price"
-                 [ngClass]="{'is-invalid': propertyForm.get('price')?.invalid && propertyForm.get('price')?.touched}">
-          <div class="invalid-feedback" *ngIf="propertyForm.get('price')?.invalid && propertyForm.get('price')?.touched">
-            <span *ngIf="propertyForm.get('price')?.errors?.['required']">Le prix est requis</span>
-            <span *ngIf="propertyForm.get('price')?.errors?.['min']">Le prix doit être supérieur à 0</span>
-          </div>
-        </div>
-
-        <!-- Description -->
-        <div class="mb-3">
-          <label for="description" class="form-label">Description</label>
-          <textarea class="form-control" 
-                    id="description" 
-                    rows="3" 
-                    formControlName="description"
-                    [ngClass]="{'is-invalid': propertyForm.get('description')?.invalid && propertyForm.get('description')?.touched}"></textarea>
-          <div class="invalid-feedback" *ngIf="propertyForm.get('description')?.invalid && propertyForm.get('description')?.touched">
-            <span *ngIf="propertyForm.get('description')?.errors?.['required']">La description est requise</span>
-            <span *ngIf="propertyForm.get('description')?.errors?.['minlength']">La description doit contenir au moins 10 caractères</span>
-          </div>
-        </div>
-
-        <!-- Location -->
-        <div class="mb-3">
-          <label for="location" class="form-label">Adresse</label>
-          <input type="text" 
-                 class="form-control" 
-                 id="location" 
-                 formControlName="location"
-                 [ngClass]="{'is-invalid': propertyForm.get('location')?.invalid && propertyForm.get('location')?.touched}">
-          <div class="invalid-feedback" *ngIf="propertyForm.get('location')?.invalid && propertyForm.get('location')?.touched">
-            L'adresse est requise
-          </div>
-        </div>
-
-        <!-- Status -->
-        <div class="mb-3">
-          <label for="status" class="form-label">Statut</label>
-          <select class="form-select" 
-                  id="status" 
-                  formControlName="status"
-                  [ngClass]="{'is-invalid': propertyForm.get('status')?.invalid && propertyForm.get('status')?.touched}">
-            <option value="disponible">Disponible</option>
-            <option value="vendu">Vendu</option>
-            <option value="loué">Loué</option>
-          </select>
-          <div class="invalid-feedback" *ngIf="propertyForm.get('status')?.invalid && propertyForm.get('status')?.touched">
-            Le statut est requis
-          </div>
-        </div>
-
         <div class="row">
-          <!-- Surface -->
-          <div class="col-md-6 mb-3">
-            <label for="surface" class="form-label">Surface (m²)</label>
-            <input type="number" 
-                   class="form-control" 
-                   id="surface" 
-                   formControlName="surface"
-                   [ngClass]="{'is-invalid': propertyForm.get('surface')?.invalid && propertyForm.get('surface')?.touched}">
-            <div class="invalid-feedback" *ngIf="propertyForm.get('surface')?.invalid && propertyForm.get('surface')?.touched">
-              <span *ngIf="propertyForm.get('surface')?.errors?.['required']">La surface est requise</span>
-              <span *ngIf="propertyForm.get('surface')?.errors?.['min']">La surface doit être supérieure à 0</span>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="titre" class="form-label">Titre</label>
+              <input type="text" class="form-control" id="titre" formControlName="titre">
+            </div>
+
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea class="form-control" id="description" formControlName="description" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label for="prix" class="form-label">Prix</label>
+              <input type="number" class="form-control" id="prix" formControlName="prix">
+            </div>
+
+            <div class="mb-3">
+              <label for="adresse" class="form-label">Adresse</label>
+              <input type="text" class="form-control" id="adresse" formControlName="adresse">
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="ville" class="form-label">Ville</label>
+                  <input type="text" class="form-control" id="ville" formControlName="ville">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="pays" class="form-label">Pays</label>
+                  <input type="text" class="form-control" id="pays" formControlName="pays">
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Rooms -->
-          <div class="col-md-6 mb-3">
-            <label for="rooms" class="form-label">Nombre de pièces</label>
-            <input type="number" 
-                   class="form-control" 
-                   id="rooms" 
-                   formControlName="rooms"
-                   [ngClass]="{'is-invalid': propertyForm.get('rooms')?.invalid && propertyForm.get('rooms')?.touched}">
-            <div class="invalid-feedback" *ngIf="propertyForm.get('rooms')?.invalid && propertyForm.get('rooms')?.touched">
-              <span *ngIf="propertyForm.get('rooms')?.errors?.['required']">Le nombre de pièces est requis</span>
-              <span *ngIf="propertyForm.get('rooms')?.errors?.['min']">Le nombre de pièces doit être supérieur à 0</span>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="chambres" class="form-label">Chambres</label>
+                  <input type="number" class="form-control" id="chambres" formControlName="chambres">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="sallesDeBain" class="form-label">Salles de bain</label>
+                  <input type="number" class="form-control" id="sallesDeBain" formControlName="sallesDeBain">
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="surface" class="form-label">Surface (m²)</label>
+              <input type="number" class="form-control" id="surface" formControlName="surface">
+            </div>
+
+            <div class="mb-3">
+              <label for="pieces" class="form-label">Pièces</label>
+              <input type="number" class="form-control" id="pieces" formControlName="pieces">
+            </div>
+
+            <div class="mb-3">
+              <label for="type" class="form-label">Type</label>
+              <select class="form-select" id="type" formControlName="type">
+                <option value="">Sélectionner un type</option>
+                <option value="MAISON">Maison</option>
+                <option value="APPARTEMENT">Appartement</option>
+                <option value="VILLA">Villa</option>
+                <option value="TERRAIN">Terrain</option>
+                <option value="COMMERCIAL">Local commercial</option>
+                <option value="BUREAU">Bureau</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="statut" class="form-label">Statut</label>
+              <select class="form-select" id="statut" formControlName="statut">
+                <option value="">Sélectionner un statut</option>
+                <option value="DISPONIBLE">Disponible</option>
+                <option value="VENDU">Vendu</option>
+                <option value="LOUE">Loué</option>
+                <option value="SOUS_CONTRAT">Sous contrat</option>
+                <option value="EN_ATTENTE">En attente</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="localisation" class="form-label">Localisation</label>
+              <input type="text" class="form-control" id="localisation" formControlName="localisation">
+            </div>
+
+            <div class="mb-3">
+              <label for="image" class="form-label">Image</label>
+              <input type="file" class="form-control" id="image" (change)="onImageSelected($event)" accept="image/*">
+              <div *ngIf="imagePreview" class="mt-2">
+                <img [src]="imagePreview" alt="Aperçu" class="img-thumbnail" style="max-height: 200px;">
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="row">
-          <!-- Bedrooms -->
-          <div class="col-md-6 mb-3">
-            <label for="bedrooms" class="form-label">Chambres</label>
-            <input type="number" 
-                   class="form-control" 
-                   id="bedrooms" 
-                   formControlName="bedrooms"
-                   [ngClass]="{'is-invalid': propertyForm.get('bedrooms')?.invalid && propertyForm.get('bedrooms')?.touched}">
-            <div class="invalid-feedback" *ngIf="propertyForm.get('bedrooms')?.invalid && propertyForm.get('bedrooms')?.touched">
-              <span *ngIf="propertyForm.get('bedrooms')?.errors?.['required']">Le nombre de chambres est requis</span>
-              <span *ngIf="propertyForm.get('bedrooms')?.errors?.['min']">Le nombre de chambres doit être supérieur à 0</span>
-            </div>
-          </div>
-
-          <!-- Bathrooms -->
-          <div class="col-md-6 mb-3">
-            <label for="bathrooms" class="form-label">Salles de bain</label>
-            <input type="number" 
-                   class="form-control" 
-                   id="bathrooms" 
-                   formControlName="bathrooms"
-                   [ngClass]="{'is-invalid': propertyForm.get('bathrooms')?.invalid && propertyForm.get('bathrooms')?.touched}">
-            <div class="invalid-feedback" *ngIf="propertyForm.get('bathrooms')?.invalid && propertyForm.get('bathrooms')?.touched">
-              <span *ngIf="propertyForm.get('bathrooms')?.errors?.['required']">Le nombre de salles de bain est requis</span>
-              <span *ngIf="propertyForm.get('bathrooms')?.errors?.['min']">Le nombre de salles de bain doit être supérieur à 0</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Images Upload -->
-        <div class="mb-3">
-          <label for="images" class="form-label">Images</label>
-          <input type="file" 
-                 class="form-control" 
-                 id="images" 
-                 multiple 
-                 accept="image/*"
-                 (change)="onFileSelected($event)">
-        </div>
-
-        <!-- Image Previews -->
-        <div class="row mb-3" *ngIf="previewImages.length > 0">
-          <div class="col-md-4 mb-2" *ngFor="let preview of previewImages; let i = index">
-            <div class="position-relative">
-              <img [src]="preview" class="img-thumbnail w-100" style="height: 150px; object-fit: cover;">
-              <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0" 
-                      (click)="removeImage(i)">
-                <i class="bi bi-x"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Submit Button with Spinner -->
-        <div class="d-flex justify-content-end">
-          <button type="submit" class="btn btn-primary" [disabled]="propertyForm.invalid || isLoading">
-            <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-            {{ isEditMode ? 'Modifier' : 'Ajouter' }}
+        <div class="mt-3">
+          <button type="submit" class="btn btn-primary" [disabled]="!propertyForm.valid">
+            {{ isEditMode ? 'Mettre à jour' : 'Ajouter' }}
           </button>
+          <button type="button" class="btn btn-secondary ms-2" (click)="resetForm()">Annuler</button>
         </div>
       </form>
     </div>
@@ -211,97 +144,106 @@
            (closed)="closeModal()">
   <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
     <div class="modal-body">
-      <!-- Title -->
-      <div class="mb-3">
-        <label for="modal-title" class="form-label">Titre</label>
-        <input type="text" class="form-control" id="modal-title" formControlName="title">
-      </div>
-
-      <!-- Type -->
-      <div class="mb-3">
-        <label for="modal-type" class="form-label">Type</label>
-        <select class="form-select" id="modal-type" formControlName="type">
-          <option value="vente">Vente</option>
-          <option value="location">Location</option>
-        </select>
-      </div>
-
-      <!-- Price -->
-      <div class="mb-3">
-        <label for="modal-price" class="form-label">Prix</label>
-        <input type="number" class="form-control" id="modal-price" formControlName="price">
-      </div>
-
-      <!-- Description -->
-      <div class="mb-3">
-        <label for="modal-description" class="form-label">Description</label>
-        <textarea class="form-control" id="modal-description" rows="3" formControlName="description"></textarea>
-      </div>
-
-      <!-- Location -->
-      <div class="mb-3">
-        <label for="modal-location" class="form-label">Adresse</label>
-        <input type="text" class="form-control" id="modal-location" formControlName="location">
-      </div>
-
-      <!-- Status -->
-      <div class="mb-3">
-        <label for="modal-status" class="form-label">Statut</label>
-        <select class="form-select" id="modal-status" formControlName="status">
-          <option value="disponible">Disponible</option>
-          <option value="vendu">Vendu</option>
-          <option value="loué">Loué</option>
-        </select>
-      </div>
-
       <div class="row">
-        <!-- Surface -->
-        <div class="col-md-6 mb-3">
-          <label for="modal-surface" class="form-label">Surface (m²)</label>
-          <input type="number" class="form-control" id="modal-surface" formControlName="surface">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="modal-title" class="form-label">Titre</label>
+            <input type="text" class="form-control" id="modal-title" formControlName="titre">
+          </div>
+
+          <div class="mb-3">
+            <label for="modal-description" class="form-label">Description</label>
+            <textarea class="form-control" id="modal-description" rows="3" formControlName="description"></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="modal-price" class="form-label">Prix</label>
+            <input type="number" class="form-control" id="modal-price" formControlName="prix">
+          </div>
+
+          <div class="mb-3">
+            <label for="modal-address" class="form-label">Adresse</label>
+            <input type="text" class="form-control" id="modal-address" formControlName="adresse">
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="modal-city" class="form-label">Ville</label>
+                <input type="text" class="form-control" id="modal-city" formControlName="ville">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="modal-country" class="form-label">Pays</label>
+                <input type="text" class="form-control" id="modal-country" formControlName="pays">
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Rooms -->
-        <div class="col-md-6 mb-3">
-          <label for="modal-rooms" class="form-label">Nombre de pièces</label>
-          <input type="number" class="form-control" id="modal-rooms" formControlName="rooms">
-        </div>
-      </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="modal-bedrooms" class="form-label">Chambres</label>
+                <input type="number" class="form-control" id="modal-bedrooms" formControlName="chambres">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="modal-bathrooms" class="form-label">Salles de bain</label>
+                <input type="number" class="form-control" id="modal-bathrooms" formControlName="sallesDeBain">
+              </div>
+            </div>
+          </div>
 
-      <div class="row">
-        <!-- Bedrooms -->
-        <div class="col-md-6 mb-3">
-          <label for="modal-bedrooms" class="form-label">Chambres</label>
-          <input type="number" class="form-control" id="modal-bedrooms" formControlName="bedrooms">
-        </div>
+          <div class="mb-3">
+            <label for="modal-area" class="form-label">Surface (m²)</label>
+            <input type="number" class="form-control" id="modal-area" formControlName="surface">
+          </div>
 
-        <!-- Bathrooms -->
-        <div class="col-md-6 mb-3">
-          <label for="modal-bathrooms" class="form-label">Salles de bain</label>
-          <input type="number" class="form-control" id="modal-bathrooms" formControlName="bathrooms">
-        </div>
-      </div>
+          <div class="mb-3">
+            <label for="modal-pieces" class="form-label">Pièces</label>
+            <input type="number" class="form-control" id="modal-pieces" formControlName="pieces">
+          </div>
 
-      <!-- Images Upload -->
-      <div class="mb-3">
-        <label for="modal-images" class="form-label">Images</label>
-        <input type="file" 
-               class="form-control" 
-               id="modal-images" 
-               multiple 
-               accept="image/*"
-               (change)="onFileSelected($event)">
-      </div>
+          <div class="mb-3">
+            <label for="modal-type" class="form-label">Type</label>
+            <select class="form-select" id="modal-type" formControlName="type">
+              <option value="">Sélectionner un type</option>
+              <option value="MAISON">Maison</option>
+              <option value="APPARTEMENT">Appartement</option>
+              <option value="VILLA">Villa</option>
+              <option value="TERRAIN">Terrain</option>
+              <option value="COMMERCIAL">Local commercial</option>
+              <option value="BUREAU">Bureau</option>
+            </select>
+          </div>
 
-      <!-- Image Previews -->
-      <div class="row mb-3" *ngIf="previewImages.length > 0">
-        <div class="col-md-4 mb-2" *ngFor="let preview of previewImages; let i = index">
-          <div class="position-relative">
-            <img [src]="preview" class="img-thumbnail w-100" style="height: 150px; object-fit: cover;">
-            <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0" 
-                    (click)="removeImage(i)">
-              <i class="bi bi-x"></i>
-            </button>
+          <div class="mb-3">
+            <label for="modal-status" class="form-label">Statut</label>
+            <select class="form-select" id="modal-status" formControlName="statut">
+              <option value="">Sélectionner un statut</option>
+              <option value="DISPONIBLE">Disponible</option>
+              <option value="VENDU">Vendu</option>
+              <option value="LOUE">Loué</option>
+              <option value="SOUS_CONTRAT">Sous contrat</option>
+              <option value="EN_ATTENTE">En attente</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="modal-localisation" class="form-label">Localisation</label>
+            <input type="text" class="form-control" id="modal-localisation" formControlName="localisation">
+          </div>
+
+          <div class="mb-3">
+            <label for="modal-image" class="form-label">Image</label>
+            <input type="file" class="form-control" id="modal-image" (change)="onImageSelected($event)" accept="image/*">
+            <div *ngIf="imagePreview" class="mt-2">
+              <img [src]="imagePreview" alt="Aperçu" class="img-thumbnail" style="max-height: 200px;">
+            </div>
           </div>
         </div>
       </div>

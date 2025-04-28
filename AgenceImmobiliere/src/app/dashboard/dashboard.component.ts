@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
   properties: Property[] = [];
   isLoading = false;
   private modal: any;
+  selectedProperty: Property | null = null;
 
   actions = [
     {
@@ -83,8 +84,8 @@ export class DashboardComponent implements OnInit {
 
   onPropertyAdded(newProperty: Property) {
     // Ensure the property has a creation date
-    if (!newProperty.createdAt) {
-      newProperty.createdAt = new Date();
+    if (!newProperty.dateCreation) {
+      newProperty.dateCreation = new Date();
     }
     this.properties.unshift(newProperty);
     this.recentProperties = this.properties.slice(0, 5);
@@ -95,7 +96,7 @@ export class DashboardComponent implements OnInit {
     const index = this.properties.findIndex(p => p.id === updatedProperty.id);
     if (index !== -1) {
       // Preserve the original creation date
-      updatedProperty.createdAt = this.properties[index].createdAt;
+      updatedProperty.dateCreation = this.properties[index].dateCreation;
       this.properties[index] = updatedProperty;
       this.recentProperties = this.properties.slice(0, 5);
       this.loadStats();
@@ -103,9 +104,19 @@ export class DashboardComponent implements OnInit {
   }
 
   onPropertyDeleted(id: number) {
-    this.properties = this.properties.filter(p => p.id !== id);
-    this.recentProperties = this.properties.slice(0, 5);
-    this.loadStats();
+    this.isLoading = true;
+    this.propertyService.deleteProperty(id)
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe({
+        next: () => {
+          this.properties = this.properties.filter(p => p.id !== id);
+          this.recentProperties = this.properties.slice(0, 5);
+          this.loadStats();
+        },
+        error: (error) => {
+          console.error('Erreur lors de la suppression:', error);
+        }
+      });
   }
 
   toggleForm(): void {
@@ -113,16 +124,45 @@ export class DashboardComponent implements OnInit {
   }
 
   handlePropertySubmitted(property: Partial<Property>): void {
-    this.propertyService.addProperty(property).subscribe((createdProperty) => {
-      this.properties.unshift(createdProperty);
-      this.recentProperties = this.properties.slice(0, 5);
-      this.toggleForm();
+    const propertyData: Property = {
+      id: 0,
+      titre: property.titre || '',
+      description: property.description || '',
+      prix: property.prix || 0,
+      type: property.type || 'MAISON',
+      statut: property.statut || 'DISPONIBLE',
+      surface: property.surface || 0,
+      pieces: property.pieces || 0,
+      chambres: property.chambres || 0,
+      sallesDeBain: property.sallesDeBain || 0,
+      adresse: property.adresse || '',
+      ville: property.ville || '',
+      pays: property.pays || '',
+      localisation: property.localisation || '',
+      images: [],
+      dateCreation: new Date(),
+      dateModification: new Date()
+    };
+
+    this.propertyService.addProperty(propertyData).subscribe({
+      next: (createdProperty) => {
+        this.properties.unshift(createdProperty);
+        this.recentProperties = this.properties.slice(0, 5);
+        this.toggleForm();
+      },
+      error: (error) => {
+        console.error('Erreur lors de l\'ajout de la propriété:', error);
+      }
     });
   }
   
 
   editProperty(property: Property): void {
-    this.router.navigate(['/admin/edit-property', property.id]);
+    this.selectedProperty = property;
+    this.showForm = true;
+    if (this.modal) {
+      this.modal.show();
+    }
   }
 
   deleteProperty(id: number) {
@@ -147,8 +187,17 @@ export class DashboardComponent implements OnInit {
 
   openModal() {
     this.showForm = true;
+    this.selectedProperty = null;
     if (this.modal) {
       this.modal.show();
+    }
+  }
+
+  closeModal() {
+    this.showForm = false;
+    this.selectedProperty = null;
+    if (this.modal) {
+      this.modal.hide();
     }
   }
 }

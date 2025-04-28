@@ -50,16 +50,16 @@
             </td>
           </tr>
           <tr *ngFor="let property of filteredProperties">
-            <td data-label="Titre">{{property.title}}</td>
+            <td data-label="Titre">{{property.titre}}</td>
             <td data-label="Type">{{property.type}}</td>
-            <td data-label="Prix">{{property.price | currency:'EUR'}}</td>
+            <td data-label="Prix">{{property.prix | currency:'EUR'}}</td>
             <td data-label="Statut">
               <span class="badge" [ngClass]="{
-                'bg-success': property.status === 'disponible',
-                'bg-warning': property.status === 'loué',
-                'bg-danger': property.status === 'vendu'
+                'bg-success': property.statut === 'DISPONIBLE',
+                'bg-warning': property.statut === 'LOUE',
+                'bg-danger': property.statut === 'VENDU'
               }">
-                {{property.status}}
+                {{property.statut}}
               </span>
             </td>
             <td data-label="Actions">

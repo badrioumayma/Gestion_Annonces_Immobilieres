@@ -55,12 +55,28 @@ export class WelcomePageComponent implements OnInit {
     });
   }
 
-  showPropertiesByType(type: 'vente' | 'location') {
-    this.loading = true;
-    setTimeout(() => {
-      this.displayedProperties = this.properties.filter(property => property.type === type);
-      this.loading = false;
-    }, 500);
+  filterByType(type: string) {
+    this.displayedProperties = this.properties.filter(property => property.type === type);
+  }
+
+  filterProperties() {
+    this.displayedProperties = this.properties.filter(p => 
+        p.titre.toLowerCase().includes(this.filters.propertyType.toLowerCase())
+    );
+  }
+
+  filterByBedrooms(bedrooms: number) {
+    this.displayedProperties = this.properties.filter(p => 
+        bedrooms === 5 
+            ? p.chambres >= 5
+            : p.chambres === bedrooms
+    );
+  }
+
+  filterByLocation() {
+    this.displayedProperties = this.properties.filter(p => 
+        p.localisation.toLowerCase().includes(this.filters.location.toLowerCase())
+    );
   }
 
   navigateToDetails(propertyId: number) {
@@ -79,7 +95,7 @@ export class WelcomePageComponent implements OnInit {
     // Filtre par type de propriété
     if (this.filters.propertyType) {
       filteredProperties = filteredProperties.filter(p => 
-        p.title.toLowerCase().includes(this.filters.propertyType.toLowerCase())
+        p.titre.toLowerCase().includes(this.filters.propertyType.toLowerCase())
       );
     }
 
@@ -91,8 +107,8 @@ export class WelcomePageComponent implements OnInit {
       
       filteredProperties = filteredProperties.filter(p => 
         this.filters.bedrooms === '5+' 
-          ? p.bedrooms >= 5 
-          : p.bedrooms === bedrooms
+          ? p.chambres >= 5 
+          : p.chambres === bedrooms
       );
     }
 
@@ -111,7 +127,7 @@ export class WelcomePageComponent implements OnInit {
     // Filtre par localisation
     if (this.filters.location) {
       filteredProperties = filteredProperties.filter(p => 
-        p.location.toLowerCase().includes(this.filters.location.toLowerCase())
+        p.localisation.toLowerCase().includes(this.filters.location.toLowerCase())
       );
     }
 

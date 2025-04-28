@@ -1,16 +1,19 @@
 export interface Property {
   id: number;
-  title: string;
+  titre: string;
   description: string;
-  price: number;
-  location: string;
-  type: 'vente' | 'location';
+  prix: number;
+  adresse: string;
+  ville: string;
+  pays: string;
+  chambres: number;
+  sallesDeBain: number;
   surface: number;
-  rooms: number;
-  bedrooms: number;
-  bathrooms: number;
+  type: 'MAISON' | 'APPARTEMENT' | 'VILLA' | 'TERRAIN' | 'COMMERCIAL' | 'BUREAU';
+  statut: 'DISPONIBLE' | 'VENDU' | 'LOUE' | 'SOUS_CONTRAT' | 'EN_ATTENTE';
   images: string[];
-  createdAt: Date;
-  status: 'disponible' | 'vendu' | 'loué';
- 
+  localisation: string;
+  pieces: number;
+  dateCreation: Date;
+  dateModification: Date;
 } 

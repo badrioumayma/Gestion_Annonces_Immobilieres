@@ -10,14 +10,14 @@
     <div class="row">
       <div class="col-md-5">
         <a class="search-card achat-card d-flex align-items-center justify-content-center text-center"
-           (click)="showPropertiesByType('vente')" style="cursor: pointer;">
-          <h3 class="search-card-title">Achat</h3>
+           (click)="filterByType('MAISON')" style="cursor: pointer;">
+          <h3 class="search-card-title">Maison</h3>
         </a>
       </div>
       <div class="col-md-5">
         <a class="search-card location-card d-flex align-items-center justify-content-center text-center"
-           (click)="showPropertiesByType('location')" style="cursor: pointer;">
-          <h3 class="search-card-title">Location</h3>
+           (click)="filterByType('APPARTEMENT')" style="cursor: pointer;">
+          <h3 class="search-card-title">Appartement</h3>
         </a>
       </div>
     </div>
@@ -95,16 +95,16 @@
     <div class="row g-4" *ngIf="!loading">
       <div class="col-md-4" *ngFor="let property of displayedProperties">
         <div class="card h-100" (click)="navigateToDetails(property.id)" style="cursor: pointer;">
-          <img [src]="property.images[0]" class="card-img-top" [alt]="property.title">
+          <img [src]="property.images[0]" class="card-img-top" [alt]="property.titre">
           <div class="card-body">
-            <h5 class="card-title">{{property.title}}</h5>
+            <h5 class="card-title">{{property.titre}}</h5>
             <p class="card-text">
-              {{property.bedrooms}} chambres • {{property.bathrooms}} sdb • {{property.surface}}m²
+              {{property.chambres}} chambres • {{property.sallesDeBain}} sdb • {{property.surface}}m²
             </p>
             <p class="card-text">
               <strong>Prix: </strong>
-              <span *ngIf="property.type === 'vente'">{{property.price | currency:'EUR':'symbol'}} €</span>
-              <span *ngIf="property.type === 'location'">{{property.price | currency:'EUR':'symbol'}} € /mois</span>
+              <span *ngIf="property.type === 'MAISON'">{{property.prix | currency:'EUR':'symbol'}} €</span>
+              <span *ngIf="property.type === 'APPARTEMENT'">{{property.prix | currency:'EUR':'symbol'}} € /mois</span>
             </p>
           </div>
         </div>

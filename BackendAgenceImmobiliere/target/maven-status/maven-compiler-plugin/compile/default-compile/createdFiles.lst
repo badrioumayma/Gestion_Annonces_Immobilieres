@@ -1,0 +1,16 @@
+com\agence\repository\PropertyRepository.class
+com\agence\controller\PropertyController.class
+com\agence\service\AuthService.class
+com\agence\entity\PropertyStatus.class
+com\agence\security\SecurityConfig.class
+com\agence\security\JwtUtils.class
+com\agence\service\FileStorageService.class
+com\agence\config\WebConfig.class
+com\agence\entity\Property.class
+com\agence\service\impl\PropertyServiceImpl.class
+com\agence\entity\PropertyType.class
+com\agence\repository\UserRepository.class
+com\agence\BackendAgenceImmobiliereApplication.class
+com\agence\controller\AuthController.class
+com\agence\service\PropertyService.class
+com\agence\entity\User.class

@@ -1,13 +1,13 @@
 <div class="property-details-container" *ngIf="!loading && property; else loadingTemplate">
   <!-- En-tête avec titre et prix -->
   <div class="property-header">
-    <h1>{{property.title}}</h1>
-    <div class="price">{{property.price | currency:'EUR':'symbol'}} €</div>
+    <h1>{{property.titre}}</h1>
+    <div class="price">{{property.prix | currency:'EUR':'symbol'}} €</div>
   </div>
 
   <!-- Carousel d'images -->
   <div class="property-images" *ngIf="property.images && property.images.length > 0">
-    <img [src]="getImageUrl(property.images[currentImageIndex])" [alt]="property.title" class="main-image">
+    <img [src]="getImageUrl(property.images[currentImageIndex])" [alt]="property.titre" class="main-image">
     <div class="image-counter">
       {{currentImageIndex + 1}} / {{property.images.length}}
     </div>
@@ -30,12 +30,12 @@
   <div class="property-features">
     <div class="feature">
       <i class="bi bi-house-door"></i>
-      <span class="feature-value">{{property.bedrooms}}</span>
+      <span class="feature-value">{{property.chambres}}</span>
       <span class="feature-label">Chambres</span>
     </div>
     <div class="feature">
       <i class="bi bi-droplet"></i>
-      <span class="feature-value">{{property.bathrooms}}</span>
+      <span class="feature-value">{{property.sallesDeBain}}</span>
       <span class="feature-label">Salles de bain</span>
     </div>
     <div class="feature">
@@ -45,7 +45,7 @@
     </div>
     <div class="feature">
       <i class="bi bi-door-open"></i>
-      <span class="feature-value">{{property.rooms}}</span>
+      <span class="feature-value">{{property.pieces}}</span>
       <span class="feature-label">Pièces</span>
     </div>
   </div>
@@ -54,15 +54,15 @@
   <div class="property-info">
     <div class="info-item">
       <i class="bi bi-tag"></i>
-      <span>Type: {{property.type === 'vente' ? 'Vente' : 'Location'}}</span>
+      <span>Type: {{property.type === 'MAISON' ? 'Maison' : 'Appartement'}}</span>
     </div>
     <div class="info-item">
       <i class="bi bi-geo-alt"></i>
-      <span>{{property.location}}</span>
+      <span>{{property.localisation}}</span>
     </div>
     <div class="info-item">
-      <i class="bi bi-circle-fill" [ngClass]="{'text-success': property.status === 'disponible'}"></i>
-      <span>Statut: {{property.status | titlecase}}</span>
+      <i class="bi bi-circle-fill" [ngClass]="{'text-success': property.statut === 'DISPONIBLE'}"></i>
+      <span>Statut: {{property.statut | titlecase}}</span>
     </div>
   </div>
 </div>

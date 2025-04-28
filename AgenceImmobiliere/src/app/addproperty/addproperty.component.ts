@@ -21,6 +21,9 @@ export class AddpropertyComponent implements OnInit {
   showModal = false;
   isEditMode = false;
   propertyId: number | null = null;
+  selectedImage: File | null = null;
+  imagePreview: string | null = null;
+  errorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -34,16 +37,19 @@ export class AddpropertyComponent implements OnInit {
 
   private initForm() {
     this.propertyForm = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(3)]],
-      type: ['vente', Validators.required],
-      price: ['', [Validators.required, Validators.min(0)]],
+      titre: ['', [Validators.required, Validators.minLength(3)]],
+      type: ['MAISON', Validators.required],
+      prix: ['', [Validators.required, Validators.min(0)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
-      location: ['', [Validators.required]],
+      localisation: ['', [Validators.required]],
       surface: ['', [Validators.required, Validators.min(0)]],
-      rooms: ['', [Validators.required, Validators.min(0)]],
-      bedrooms: ['', [Validators.required, Validators.min(0)]],
-      bathrooms: ['', [Validators.required, Validators.min(0)]],
-      status: ['disponible', Validators.required]
+      pieces: ['', [Validators.required, Validators.min(0)]],
+      chambres: ['', [Validators.required, Validators.min(0)]],
+      sallesDeBain: ['', [Validators.required, Validators.min(0)]],
+      statut: ['DISPONIBLE', Validators.required],
+      adresse: ['', Validators.required],
+      ville: ['', Validators.required],
+      pays: ['', Validators.required]
     });
 
     // Marquer tous les champs comme touchés lors de la soumission
@@ -59,16 +65,19 @@ export class AddpropertyComponent implements OnInit {
 
   private mapPropertyToForm(property: Property): any {
     return {
-      title: property.title,
+      titre: property.titre,
       type: property.type,
-      price: property.price,
+      prix: property.prix,
       description: property.description,
-      location: property.location,
+      localisation: property.localisation,
       surface: property.surface,
-      rooms: property.rooms,
-      bedrooms: property.bedrooms,
-      bathrooms: property.bathrooms,
-      status: property.status
+      pieces: property.pieces,
+      chambres: property.chambres,
+      sallesDeBain: property.sallesDeBain,
+      statut: property.statut,
+      adresse: property.adresse,
+      ville: property.ville,
+      pays: property.pays
     };
   }
 
@@ -142,45 +151,31 @@ export class AddpropertyComponent implements OnInit {
 
   onSubmit() {
     if (this.propertyForm.valid) {
+      const propertyData: Partial<Property> = {
+        titre: this.propertyForm.get('titre')?.value,
+        description: this.propertyForm.get('description')?.value,
+        prix: Number(this.propertyForm.get('prix')?.value),
+        adresse: this.propertyForm.get('adresse')?.value,
+        ville: this.propertyForm.get('ville')?.value,
+        pays: this.propertyForm.get('pays')?.value,
+        chambres: Number(this.propertyForm.get('chambres')?.value),
+        sallesDeBain: Number(this.propertyForm.get('sallesDeBain')?.value),
+        surface: Number(this.propertyForm.get('surface')?.value),
+        pieces: Number(this.propertyForm.get('pieces')?.value),
+        type: this.propertyForm.get('type')?.value,
+        statut: this.propertyForm.get('statut')?.value,
+        localisation: this.propertyForm.get('localisation')?.value
+      };
       this.isLoading = true;
-      
-      setTimeout(() => {
-        const formData = this.propertyForm.value;
-        formData.images = this.previewImages;
-
-        if (this.isEditMode && this.propertyId) {
-          this.propertyService.updateProperty(this.propertyId, formData).subscribe({
-            next: (updatedProperty) => {
-              this.propertyUpdated.emit(updatedProperty);
-              this.isLoading = false;
-              // Fermer le formulaire au lieu de recharger la page
-              this.location.back();
-            },
-            error: (error) => {
-              console.error('Erreur lors de la modification de la propriété:', error);
-              this.isLoading = false;
-            }
-          });
-        } else {
-          this.propertyService.addProperty(formData).subscribe({
-            next: (newProperty) => {
-              this.propertyAdded.emit(newProperty);
-              this.isLoading = false;
-              // Fermer le formulaire au lieu de recharger la page
-              this.location.back();
-            },
-            error: (error) => {
-              console.error('Erreur lors de l\'ajout de la propriété:', error);
-              this.isLoading = false;
-            }
-          });
-        }
-      }, 100);
-    } else {
-      Object.keys(this.propertyForm.controls).forEach(key => {
-        const control = this.propertyForm.get(key);
-        if (control?.invalid) {
-          control.markAsTouched();
+      this.propertyService.addPropertyWithImage(propertyData, this.selectedImage || undefined).subscribe({
+        next: (response) => {
+          this.propertyAdded.emit(response);
+          this.resetForm();
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          this.errorMessage = "Erreur lors de l'ajout de la propriété.";
+          this.isLoading = false;
         }
       });
     }
@@ -201,5 +196,24 @@ export class AddpropertyComponent implements OnInit {
 
   closeForm() {
     this.location.back();
+  }
+
+  onImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.selectedImage = input.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imagePreview = e.target?.result as string;
+      };
+      reader.readAsDataURL(this.selectedImage);
+    }
+  }
+
+  resetForm(): void {
+    this.propertyForm.reset();
+    this.selectedImage = null;
+    this.imagePreview = null;
+    this.propertyToEdit = null;
   }
 }

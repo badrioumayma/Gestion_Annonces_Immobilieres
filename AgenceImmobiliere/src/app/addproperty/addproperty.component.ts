@@ -37,19 +37,19 @@ export class AddpropertyComponent implements OnInit {
 
   private initForm() {
     this.propertyForm = this.fb.group({
-      titre: ['', [Validators.required, Validators.minLength(3)]],
-      type: ['MAISON', Validators.required],
-      prix: ['', [Validators.required, Validators.min(0)]],
-      description: ['', [Validators.required, Validators.minLength(10)]],
+      titre: ['', [Validators.required]],
+      type: ['MAISON', [Validators.required]],
+      prix: ['', [Validators.required]],
+      description: ['', [Validators.required]],
       localisation: ['', [Validators.required]],
-      surface: ['', [Validators.required, Validators.min(0)]],
-      pieces: ['', [Validators.required, Validators.min(0)]],
-      chambres: ['', [Validators.required, Validators.min(0)]],
-      sallesDeBain: ['', [Validators.required, Validators.min(0)]],
-      statut: ['DISPONIBLE', Validators.required],
-      adresse: ['', Validators.required],
-      ville: ['', Validators.required],
-      pays: ['', Validators.required]
+      surface: ['', [Validators.required]],
+      pieces: ['', [Validators.required]],
+      chambres: ['', [Validators.required]],
+      sallesDeBain: ['', [Validators.required]],
+      statut: ['DISPONIBLE', [Validators.required]],
+      adresse: ['', [Validators.required]],
+      ville: ['', [Validators.required]],
+      pays: ['', [Validators.required]]
     });
 
     // Marquer tous les champs comme touchés lors de la soumission
@@ -156,46 +156,65 @@ export class AddpropertyComponent implements OnInit {
         description: this.propertyForm.get('description')?.value,
         prix: Number(this.propertyForm.get('prix')?.value),
         adresse: this.propertyForm.get('adresse')?.value,
-        ville: this.propertyForm.get('ville')?.value,
-        pays: this.propertyForm.get('pays')?.value,
         chambres: Number(this.propertyForm.get('chambres')?.value),
         sallesDeBain: Number(this.propertyForm.get('sallesDeBain')?.value),
         surface: Number(this.propertyForm.get('surface')?.value),
         pieces: Number(this.propertyForm.get('pieces')?.value),
         type: this.propertyForm.get('type')?.value,
         statut: this.propertyForm.get('statut')?.value,
+        pays: this.propertyForm.get('pays')?.value,
+        ville: this.propertyForm.get('ville')?.value,
         localisation: this.propertyForm.get('localisation')?.value
       };
+
       this.isLoading = true;
-      this.propertyService.addPropertyWithImage(propertyData, this.selectedImage || undefined).subscribe({
-        next: (response) => {
-          this.propertyAdded.emit(response);
-          this.resetForm();
-          this.router.navigate(['/dashboard']);
-        },
-        error: (error) => {
-          this.errorMessage = "Erreur lors de l'ajout de la propriété.";
-          this.isLoading = false;
-        }
-      });
+
+      if (this.isEditMode && this.propertyId) {
+        // Mode modification
+        this.propertyService.updateProperty(this.propertyId, propertyData, this.selectedImage || undefined).subscribe({
+          next: (response) => {
+            this.propertyUpdated.emit(response);
+            this.resetForm();
+            this.closeModal();
+            this.isLoading = false;
+            setTimeout(() => {
+              window.location.reload();
+            }, 500);
+          },
+          error: (error) => {
+            console.error('Erreur lors de la modification:', error);
+            this.errorMessage = "Erreur lors de la modification de la propriété.";
+            this.isLoading = false;
+          }
+        });
+      } else {
+        // Mode ajout
+        this.propertyService.addPropertyWithImage(propertyData, this.selectedImage || undefined).subscribe({
+          next: (response) => {
+            this.propertyAdded.emit(response);
+            this.resetForm();
+            this.closeModal();
+            this.isLoading = false;
+            setTimeout(() => {
+              window.location.reload();
+            }, 500);
+          },
+          error: (error) => {
+            console.error('Erreur lors de l\'ajout:', error);
+            this.errorMessage = "Erreur lors de l'ajout de la propriété.";
+            this.isLoading = false;
+          }
+        });
+      }
     }
   }
 
-  openModal() {
-    this.showModal = true;
-  }
+ 
+ 
+
 
   closeModal() {
     this.showModal = false;
-    if (!this.isEditMode) {
-      this.propertyForm.reset();
-      this.selectedImages = [];
-      this.previewImages = [];
-    }
-  }
-
-  closeForm() {
-    this.location.back();
   }
 
   onImageSelected(event: Event): void {
@@ -210,39 +229,53 @@ export class AddpropertyComponent implements OnInit {
     }
   }
 
-  resetForm(): void {
+  resetForm() {
     this.propertyForm.reset();
     this.selectedImage = null;
     this.imagePreview = null;
-    this.propertyToEdit = null;
+    this.previewImages = [];
+    this.selectedImages = [];
   }
 
   updateProperty() {
     if (this.propertyForm.valid && this.propertyId !== null) {
-      const formData = new FormData();
-      const propertyData = this.propertyForm.value;
-      
-      // Ajouter les données de la propriété
-      formData.append('property', new Blob([JSON.stringify(propertyData)], { type: 'application/json' }));
-      
-      // Ajouter les images sélectionnées
-      if (this.selectedImages.length > 0) {
-        this.selectedImages.forEach((image, index) => {
-          formData.append('files', image, `property_${this.propertyId}_${index}`);
-        });
-      }
+      const propertyData: Partial<Property> = {
+        titre: this.propertyForm.get('titre')?.value,
+        description: this.propertyForm.get('description')?.value,
+        prix: Number(this.propertyForm.get('prix')?.value),
+        adresse: this.propertyForm.get('adresse')?.value,
+        chambres: Number(this.propertyForm.get('chambres')?.value),
+        sallesDeBain: Number(this.propertyForm.get('sallesDeBain')?.value),
+        surface: Number(this.propertyForm.get('surface')?.value),
+        pieces: Number(this.propertyForm.get('pieces')?.value),
+        type: this.propertyForm.get('type')?.value,
+        statut: this.propertyForm.get('statut')?.value,
+        pays: this.propertyForm.get('pays')?.value,
+        ville: this.propertyForm.get('ville')?.value,
+        localisation: this.propertyForm.get('localisation')?.value
+      };
 
       this.isLoading = true;
-      this.propertyService.updateProperty(this.propertyId, formData).subscribe({
+      this.propertyService.updateProperty(this.propertyId, propertyData, this.selectedImage || undefined).subscribe({
         next: (response) => {
-          console.log('Property updated successfully', response);
-          this.router.navigate(['/properties']);
+          this.propertyUpdated.emit(response);
+          this.resetForm();
+          this.closeModal();
+          this.isLoading = false;
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
         },
         error: (error) => {
-          console.error('Error updating property', error);
+          console.error('Erreur lors de la modification:', error);
+          this.errorMessage = "Erreur lors de la modification de la propriété.";
           this.isLoading = false;
         }
       });
     }
+  }
+
+  isFormValid(): boolean {
+    return this.propertyForm.valid;
   }
 }

@@ -1,69 +1,78 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="text-center">Connexion</h3>
-        </div>
-        <div class="card-body">
-          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <!-- Email Field -->
-            <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input 
-                type="email" 
-                class="form-control" 
-                id="email" 
-                formControlName="email"
-                [class.is-invalid]="email?.invalid && (email?.dirty || email?.touched)"
-              >
-              <div class="invalid-feedback" *ngIf="email?.invalid && (email?.dirty || email?.touched)">
-                <div *ngIf="email?.errors?.['required']">L'email est requis</div>
-                <div *ngIf="email?.errors?.['email']">Veuillez entrer une adresse email valide</div>
-              </div>
-            </div>
-
-            <!-- Password Field -->
-            <div class="mb-3">
-              <label for="password" class="form-label">Mot de passe</label>
-              <input 
-                type="password" 
-                class="form-control" 
-                id="password" 
-                formControlName="password"
-                [class.is-invalid]="password?.invalid && (password?.dirty || password?.touched)"
-              >
-              <div class="invalid-feedback" *ngIf="password?.invalid && (password?.dirty || password?.touched)">
-                <div *ngIf="password?.errors?.['required']">Le mot de passe est requis</div>
-                <div *ngIf="password?.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères</div>
-              </div>
-            </div>
-
-            <!-- Error Message -->
-            <div *ngIf="errorMessage" class="alert alert-danger">
-              {{ errorMessage }}
-            </div>
-
-            <!-- Submit Button -->
-            <button 
-              type="submit" 
-              class="btn btn-primary w-100"
-              [disabled]="loginForm.invalid || loading">
-              <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
-              Se connecter
-            </button>
-
-            <!-- Registry Link -->
-            <div class="text-center mt-3">
-              <p class="mb-0">Vous n'avez pas de compte ?</p>
-              <a [routerLink]="['/registry']" class="text-primary">
-                Créer un compte
-                <i class="bi bi-arrow-right"></i>
-              </a>
-            </div>
-          </form>
-        </div>
+<div class="login-container">
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="login-header">
+       
+        <h2>Bienvenue</h2>
+        <p>Connectez-vous pour accéder à votre espace</p>
       </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="bi bi-envelope"></i>
+            </span>
+            <input 
+              type="email" 
+              class="form-control" 
+              id="email" 
+              formControlName="email"
+              placeholder="Entrez votre email"
+              [class.is-invalid]="email?.invalid && (email?.dirty || email?.touched)"
+            >
+          </div>
+          <div class="invalid-feedback" *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+            <div *ngIf="email?.errors?.['required']">L'email est requis</div>
+            <div *ngIf="email?.errors?.['email']">Veuillez entrer une adresse email valide</div>
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="bi bi-lock"></i>
+            </span>
+            <input 
+              type="password" 
+              class="form-control" 
+              id="password" 
+              formControlName="password"
+              placeholder="Entrez votre mot de passe"
+              [class.is-invalid]="password?.invalid && (password?.dirty || password?.touched)"
+            >
+            <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
+              <i class="bi" [class.bi-eye]="!showPassword" [class.bi-eye-slash]="showPassword"></i>
+            </button>
+          </div>
+          <div class="invalid-feedback" *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+            <div *ngIf="password?.errors?.['required']">Le mot de passe est requis</div>
+            <div *ngIf="password?.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères</div>
+          </div>
+        </div>
+
+        
+
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          <i class="bi bi-exclamation-circle me-2"></i>
+          {{ errorMessage }}
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          class="btn btn-primary w-100"
+          [disabled]="loginForm.invalid || loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+          <i class="bi bi-box-arrow-in-right me-2"></i>
+          Se connecter
+        </button>
+      </form>
     </div>
   </div>
 </div>

@@ -37,14 +37,14 @@ export class PropertyService {
   getAllProperties(filters?: Partial<Property>): Observable<Property[]> {
     let params = new HttpParams();
     
-    if (filters) {
+    /*if (filters) {
       Object.keys(filters).forEach(key => {
         const value = filters[key as keyof Property];
         if (value !== undefined && value !== null && value !== '') {
           params = params.set(key, value.toString());
         }
       });
-    }
+    }*/
 
     return this.http.get<Property[]>(this.apiUrl, { params });
   }
@@ -57,8 +57,19 @@ export class PropertyService {
   }
 
   // Update a property
-  updateProperty(id: number, property: FormData): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, property);
+  updateProperty(id: number, property: Partial<Property>, imageFile?: File): Observable<Property> {
+    if (imageFile) {
+      const formData = new FormData();
+      formData.append('property', new Blob([JSON.stringify(property)], { type: 'application/json' }));
+      formData.append('file', imageFile);
+      return this.http.put<Property>(`${this.apiUrl}/${id}`, formData);
+    } else {
+      return this.http.put<Property>(`${this.apiUrl}/${id}`, property, {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      });
+    }
   }
 
   // Delete a property
@@ -128,12 +139,19 @@ export class PropertyService {
 
   // Create a new property with image (multipart)
   addPropertyWithImage(property: Partial<Property>, imageFile?: File): Observable<Property> {
-    const formData = new FormData();
-    formData.append('property', new Blob([JSON.stringify(property)], { type: 'application/json' }));
     if (imageFile) {
+      const formData = new FormData();
+      formData.append('property', new Blob([JSON.stringify(property)], { type: 'application/json' }));
       formData.append('file', imageFile);
+      return this.http.post<Property>(`${this.apiUrl}/with-image`, formData);
+    } else {
+      // If no image, send as JSON
+      return this.http.post<Property>(this.apiUrl, property, {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      });
     }
-    return this.http.post<Property>(this.apiUrl, formData);
   }
 
   private handleError(error: any) {

@@ -1,83 +1,57 @@
 <div class="container mt-4">
-  <!-- Close button -->
-  <div class="d-flex justify-content-end mb-3">
-    <button type="button" class="btn btn-outline-secondary" (click)="closeForm()">
+  <!-- En-tête avec bouton de fermeture -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">{{ isEditMode ? 'Modifier la propriété' : 'Ajouter une nouvelle propriété' }}</h2>
+    <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">
       <i class="fas fa-times"></i> Fermer
     </button>
   </div>
   
   <div class="card">
     <div class="card-header">
-      <h3>{{ isEditMode ? 'Modifier la propriété' : 'Ajouter une nouvelle propriété' }}</h3>
+      <h3>Informations de la propriété</h3>
     </div>
     <div class="card-body">
       <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+        <!-- Informations principales -->
         <div class="row">
           <div class="col-md-6">
             <div class="mb-3">
-              <label for="titre" class="form-label">Titre</label>
-              <input type="text" class="form-control" id="titre" formControlName="titre">
+              <label for="titre" class="form-label">Titre de la propriété</label>
+              <input type="text" class="form-control" id="titre" formControlName="titre" 
+                     placeholder="Ex: Villa moderne avec piscine">
+              <div class="invalid-feedback" *ngIf="propertyForm.get('titre')?.invalid && propertyForm.get('titre')?.touched">
+                Le titre est requis
+              </div>
             </div>
 
             <div class="mb-3">
-              <label for="description" class="form-label">Description</label>
-              <textarea class="form-control" id="description" formControlName="description" rows="3"></textarea>
-            </div>
-
-            <div class="mb-3">
-              <label for="prix" class="form-label">Prix</label>
-              <input type="number" class="form-control" id="prix" formControlName="prix">
-            </div>
-
-            <div class="mb-3">
-              <label for="adresse" class="form-label">Adresse</label>
-              <input type="text" class="form-control" id="adresse" formControlName="adresse">
+              <label for="description" class="form-label">Description détaillée</label>
+              <textarea class="form-control" id="description" formControlName="description" rows="4"
+                        placeholder="Décrivez les caractéristiques principales de la propriété..."></textarea>
             </div>
 
             <div class="row">
               <div class="col-md-6">
                 <div class="mb-3">
-                  <label for="ville" class="form-label">Ville</label>
-                  <input type="text" class="form-control" id="ville" formControlName="ville">
+                  <label for="prix" class="form-label">Prix (€)</label>
+                  <input type="number" class="form-control" id="prix" formControlName="prix"
+                         placeholder="Ex: 250000">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="mb-3">
-                  <label for="pays" class="form-label">Pays</label>
-                  <input type="text" class="form-control" id="pays" formControlName="pays">
+                  <label for="surface" class="form-label">Surface (m²)</label>
+                  <input type="number" class="form-control" id="surface" formControlName="surface"
+                         placeholder="Ex: 120">
                 </div>
               </div>
             </div>
           </div>
 
           <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="mb-3">
-                  <label for="chambres" class="form-label">Chambres</label>
-                  <input type="number" class="form-control" id="chambres" formControlName="chambres">
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="mb-3">
-                  <label for="sallesDeBain" class="form-label">Salles de bain</label>
-                  <input type="number" class="form-control" id="sallesDeBain" formControlName="sallesDeBain">
-                </div>
-              </div>
-            </div>
-
             <div class="mb-3">
-              <label for="surface" class="form-label">Surface (m²)</label>
-              <input type="number" class="form-control" id="surface" formControlName="surface">
-            </div>
-
-            <div class="mb-3">
-              <label for="pieces" class="form-label">Pièces</label>
-              <input type="number" class="form-control" id="pieces" formControlName="pieces">
-            </div>
-
-            <div class="mb-3">
-              <label for="type" class="form-label">Type</label>
+              <label for="type" class="form-label">Type de bien</label>
               <select class="form-select" id="type" formControlName="type">
                 <option value="">Sélectionner un type</option>
                 <option value="MAISON">Maison</option>
@@ -90,7 +64,7 @@
             </div>
 
             <div class="mb-3">
-              <label for="statut" class="form-label">Statut</label>
+              <label for="statut" class="form-label">Statut du bien</label>
               <select class="form-select" id="statut" formControlName="statut">
                 <option value="">Sélectionner un statut</option>
                 <option value="DISPONIBLE">Disponible</option>
@@ -101,26 +75,100 @@
               </select>
             </div>
 
-            <div class="mb-3">
-              <label for="localisation" class="form-label">Localisation</label>
-              <input type="text" class="form-control" id="localisation" formControlName="localisation">
-            </div>
-
-            <div class="mb-3">
-              <label for="image" class="form-label">Image</label>
-              <input type="file" class="form-control" id="image" (change)="onImageSelected($event)" accept="image/*">
-              <div *ngIf="imagePreview" class="mt-2">
-                <img [src]="imagePreview" alt="Aperçu" class="img-thumbnail" style="max-height: 200px;">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="pieces" class="form-label">Pièces</label>
+                  <input type="number" class="form-control" id="pieces" formControlName="pieces"
+                         placeholder="Ex: 5">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="chambres" class="form-label">Chambres</label>
+                  <input type="number" class="form-control" id="chambres" formControlName="chambres"
+                         placeholder="Ex: 3">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="sallesDeBain" class="form-label">SDB</label>
+                  <input type="number" class="form-control" id="sallesDeBain" formControlName="sallesDeBain"
+                         placeholder="Ex: 2">
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="mt-3">
-          <button type="submit" class="btn btn-primary" [disabled]="!propertyForm.valid">
-            {{ isEditMode ? 'Mettre à jour' : 'Ajouter' }}
+        <!-- Localisation -->
+        <div class="card mt-4">
+          <div class="card-header">
+            <h3>Localisation</h3>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="mb-3">
+                  <label for="adresse" class="form-label">Adresse complète</label>
+                  <input type="text" class="form-control" id="adresse" formControlName="adresse"
+                         placeholder="Numéro, rue">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="ville" class="form-label">Ville</label>
+                  <input type="text" class="form-control" id="ville" formControlName="ville"
+                         placeholder="Ex: Paris">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="pays" class="form-label">Pays</label>
+                  <input type="text" class="form-control" id="pays" formControlName="pays"
+                         placeholder="Ex: France">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="localisation" class="form-label">Quartier</label>
+                  <input type="text" class="form-control" id="localisation" formControlName="localisation"
+                         placeholder="Ex: Centre-ville">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Images -->
+        <div class="card mt-4">
+          <div class="card-header">
+            <h3>Images</h3>
+          </div>
+          <div class="card-body">
+            <div class="image-upload-container" (click)="fileInput.click()">
+              <input #fileInput type="file" class="d-none" (change)="onImageSelected($event)" accept="image/*">
+              <i class="fas fa-cloud-upload-alt fa-3x mb-3"></i>
+              <p class="mb-0">Cliquez ou glissez une image ici</p>
+              <small class="text-muted">Format accepté : JPG, PNG (Max 5MB)</small>
+            </div>
+            
+            <div *ngIf="imagePreview" class="image-preview mt-3 text-center">
+              <img [src]="imagePreview" alt="Aperçu" class="img-fluid">
+            </div>
+          </div>
+        </div>
+
+        <!-- Boutons d'action -->
+        <div class="d-flex justify-content-end gap-2 mt-4">
+          <button type="button" class="btn btn-secondary" (click)="resetForm()">
+            <i class="fas fa-undo"></i> Réinitialiser
           </button>
-          <button type="button" class="btn btn-secondary ms-2" (click)="resetForm()">Annuler</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!isFormValid() || isLoading">
+            <i class="fas" [ngClass]="isEditMode ? 'fa-save' : 'fa-plus'"></i>
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm ms-2"></span>
+            {{ isEditMode ? 'Enregistrer les modifications' : 'Ajouter la propriété' }}
+          </button>
         </div>
       </form>
     </div>
@@ -128,10 +176,9 @@
 </div>
 
 <!-- Loading Overlay -->
-<div *ngIf="isLoading" class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" 
-     style="background: rgba(0,0,0,0.5); z-index: 1050;">
-  <div class="card p-4 text-center">
-    <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+<div *ngIf="isLoading" class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center loading-overlay">
+  <div class="card p-4 text-center loading-card">
+    <div class="spinner-border text-primary mb-3" role="status">
       <span class="visually-hidden">Chargement...</span>
     </div>
     <h5 class="mb-0">{{ isEditMode ? 'Modification en cours...' : 'Ajout en cours...' }}</h5>
@@ -140,8 +187,8 @@
 
 <!-- Modal for Add/Edit Property -->
 <app-modal *ngIf="showModal"
-           [title]="isEditMode ? 'Modifier la propriété' : 'Ajouter une nouvelle propriété'"
-           (closed)="closeModal()">
+           [title]="isEditMode ? 'Modifier la propriété' : 'Ajouter une nouvelle propriété'" (click)="closeModal()">
+          
   <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
     <div class="modal-body">
       <div class="row">

@@ -16,7 +16,7 @@ export class AppComponent {
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
       // Masquer navbar et footer pour les pages d'authentification
-      const authPages = ['/login', '/registry'];
+      const authPages = ['/login', '/admin/dashboard','/admin/properties','/admin/visite-requests'];
       this.showNavAndFooter = !authPages.includes(event.url);
     });
   }

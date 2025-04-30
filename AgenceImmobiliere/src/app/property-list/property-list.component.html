@@ -1,10 +1,143 @@
 <div class="container mt-4">
+  <!-- En-tête avec boutons -->
   <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
     <h1 class="mb-2 mb-md-0">Liste des Propriétés</h1>
     <div class="d-flex gap-2">
-      <button class="btn btn-primary" (click)="openModal()">
-        <i class="fas fa-plus"></i> Ajouter une propriété
+      <button class="btn btn-outline-primary" (click)="toggleFilters()">
+        <i class="fas" [ngClass]="showFilters ? 'fa-filter-slash' : 'fa-filter'"></i>
+        {{ showFilters ? 'Masquer les filtres' : 'Afficher les filtres' }}
       </button>
+      
+    </div>
+  </div>
+
+  <!-- Section des filtres -->
+  <div class="card mb-4" [@slideInOut]="showFilters ? 'in' : 'out'" *ngIf="showFilters">
+    <div class="card-header bg-light">
+      <div class="d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Filtres</h5>
+        <button class="btn btn-outline-secondary btn-sm" (click)="resetFilters()">
+          <i class="fas fa-undo"></i> Réinitialiser
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="filterForm" (ngSubmit)="applyFilters()">
+        <div class="row g-3">
+          <!-- Titre -->
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="titre">Titre</label>
+              <input type="text" class="form-control" id="titre" formControlName="titre" placeholder="Rechercher par titre">
+            </div>
+          </div>
+
+          <!-- Type -->
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="type">Type</label>
+              <select class="form-control" id="type" formControlName="type">
+                <option value="">Tous les types</option>
+                <option *ngFor="let type of propertyTypes" [value]="type.value">
+                  {{ type.label }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Statut -->
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="statut">Statut</label>
+              <select class="form-control" id="statut" formControlName="statut">
+                <option value="">Tous les statuts</option>
+                <option *ngFor="let status of propertyStatuses" [value]="status.value">
+                  {{ status.label }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Prix -->
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label>Prix</label>
+              <div class="d-flex gap-2">
+                <input type="number" class="form-control" formControlName="prixMin" placeholder="Min">
+                <input type="number" class="form-control" formControlName="prixMax" placeholder="Max">
+              </div>
+            </div>
+          </div>
+
+          <!-- Surface -->
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label>Surface (m²)</label>
+              <div class="d-flex gap-2">
+                <input type="number" class="form-control" formControlName="surfaceMin" placeholder="Min">
+                <input type="number" class="form-control" formControlName="surfaceMax" placeholder="Max">
+              </div>
+            </div>
+          </div>
+
+          <!-- Pièces -->
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="pieces">Nombre de pièces</label>
+              <select class="form-control" id="pieces" formControlName="pieces">
+                <option value="">Toutes les pièces</option>
+                <option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]" [value]="i">{{ i }}+ pièces</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Chambres -->
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="chambres">Nombre de chambres</label>
+              <select class="form-control" id="chambres" formControlName="chambres">
+                <option value="">Toutes les chambres</option>
+                <option *ngFor="let i of [1,2,3,4,5,6,7,8]" [value]="i">{{ i }}+ chambres</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Salles de bain -->
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="sallesDeBain">Salles de bain</label>
+              <select class="form-control" id="sallesDeBain" formControlName="sallesDeBain">
+                <option value="">Toutes les salles de bain</option>
+                <option *ngFor="let i of [1,2,3,4,5]" [value]="i">{{ i }}+ salles de bain</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Ville -->
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="ville">Ville</label>
+              <input type="text" class="form-control" id="ville" formControlName="ville" placeholder="Rechercher par ville">
+            </div>
+          </div>
+
+          <!-- Pays -->
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="pays">Pays</label>
+              <input type="text" class="form-control" id="pays" formControlName="pays" placeholder="Rechercher par pays">
+            </div>
+          </div>
+
+          <!-- Localisation/Quartier -->
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="localisation">Quartier</label>
+              <input type="text" class="form-control" id="localisation" formControlName="localisation" placeholder="Rechercher par quartier">
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -22,7 +155,7 @@
 
   <!-- Liste des propriétés -->
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" *ngIf="!loading && !error">
-    <div class="col" *ngFor="let property of properties">
+    <div class="col" *ngFor="let property of filteredProperties">
       <div class="card h-100 shadow-sm">
         <!-- Image de la propriété -->
         <img [src]="property.images && property.images.length > 0 ? 'http://localhost:8081' + property.images[0] : 'assets/images/placeholder.jpg'" 
@@ -32,43 +165,58 @@
         
         <div class="card-body">
           <!-- Titre et statut -->
-          <div class="d-flex justify-content-between align-items-start mb-2 flex-wrap">
+          <div class="d-flex justify-content-between align-items-start mb-2">
             <h5 class="card-title mb-0 text-truncate" style="max-width: 70%;">{{ property.titre }}</h5>
-            <span [class]="getStatusClass(property.statut)" class="mt-1 mt-md-0">
+            <span [class]="getStatusClass(property.statut)" class="badge">
               {{ property.statut }}
             </span>
           </div>
 
-          <!-- Type et prix -->
-          <p class="card-text">
-            <small class="text-muted">{{ property.type }}</small>
-          </p>
-          <h4 class="text-primary mb-3">{{ property.prix | currency:'EUR':'symbol':'1.0-0' }}</h4>
+          <!-- Prix et Type -->
+          <div class="mb-3">
+            <h4 class="text-primary mb-1">{{ property.prix | currency:'EUR':'symbol':'1.0-0' }}</h4>
+            <p class="mb-0"><strong>Type:</strong> {{ property.type }}</p>
+          </div>
+
+          <!-- Localisation -->
+          <div class="mb-3">
+            <p class="mb-1"><i class="fas fa-map-marker-alt"></i> <strong>Adresse:</strong> {{ property.adresse }}</p>
+            <p class="mb-1"><strong>Ville:</strong> {{ property.ville }}</p>
+            <p class="mb-1"><strong>Pays:</strong> {{ property.pays }}</p>
+            <p class="mb-0"><strong>Quartier:</strong> {{ property.localisation }}</p>
+          </div>
 
           <!-- Caractéristiques -->
-          <div class="d-flex justify-content-between text-muted mb-3 flex-wrap">
-            <div class="me-2 mb-1">
-              <i class="fas fa-ruler-combined"></i>
-              {{ property.surface }}m²
-            </div>
-            <div class="me-2 mb-1">
-              <i class="fas fa-bed"></i>
-              {{ property.chambres }} chambres
-            </div>
-            <div class="mb-1">
-              <i class="fas fa-bath"></i>
-              {{ property.sallesDeBain }} sdb
+          <div class="mb-3">
+            <h6 class="mb-2">Caractéristiques:</h6>
+            <div class="d-flex flex-wrap gap-3">
+              <div>
+                <i class="fas fa-ruler-combined"></i>
+                {{ property.surface }}m²
+              </div>
+              <div>
+                <i class="fas fa-door-open"></i>
+                {{ property.pieces }} pièces
+              </div>
+              <div>
+                <i class="fas fa-bed"></i>
+                {{ property.chambres }} chambres
+              </div>
+              <div>
+                <i class="fas fa-bath"></i>
+                {{ property.sallesDeBain }} sdb
+              </div>
             </div>
           </div>
 
-          <!-- Adresse -->
-          <p class="card-text text-truncate">
-            <i class="fas fa-map-marker-alt text-danger"></i>
-            {{ property.localisation }}
-          </p>
+          <!-- Description -->
+          <div class="mb-3">
+            <h6>Description:</h6>
+            <p class="text-muted small">{{ property.description | slice:0:150 }}{{ property.description.length > 150 ? '...' : '' }}</p>
+          </div>
 
           <!-- Actions -->
-          <div class="d-flex justify-content-between mt-3 flex-wrap gap-2">
+          <div class="d-flex justify-content-between mt-3 gap-2">
             <button class="btn btn-outline-primary btn-sm flex-grow-1" (click)="editProperty(property)">
               <i class="fas fa-edit"></i> Modifier
             </button>
@@ -82,8 +230,8 @@
   </div>
 
   <!-- Message si aucune propriété -->
-  <div *ngIf="!loading && !error && properties.length === 0" class="text-center my-5">
-    <p class="text-muted">Aucune propriété disponible</p>
+  <div *ngIf="!loading && !error && filteredProperties.length === 0" class="text-center my-5">
+    <p class="text-muted">Aucune propriété ne correspond à vos critères</p>
   </div>
 </div>
 
@@ -91,10 +239,7 @@
 <div class="modal fade" id="propertyModal" tabindex="-1" aria-labelledby="propertyModalLabel" aria-hidden="true" [class.show]="showModal" [style.display]="showModal ? 'block' : 'none'">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="propertyModalLabel">{{ selectedProperty ? 'Modifier la propriété' : 'Ajouter une propriété' }}</h5>
-        <button type="button" class="btn-close" (click)="onModalClosed()" aria-label="Close"></button>
-      </div>
+      
       <div class="modal-body">
         <app-addproperty *ngIf="showModal" 
                        [propertyToEdit]="selectedProperty"

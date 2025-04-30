@@ -12,33 +12,26 @@
     <h3>Admin Dashboard</h3>
   </div>
 
-  <!-- Profile Image -->
-  <div class="sidebar-image">
-    <img src="assets/logo.png" alt="Profile Image">
-  </div>
-
   <!-- Navigation Links -->
   <ul class="nav flex-column">
     <li class="nav-item">
-      <a routerLink="/admin/dashboard" routerLinkActive="active" class="nav-link">
+      <a class="nav-link" [routerLink]="['/admin/dashboard']" routerLinkActive="active">
         <i class="bi bi-speedometer2"></i>
-        <span>Tableau de bord</span>
-      </a>
-    </li>
-   
-    <li class="nav-item">
-      <a routerLink="/profile" routerLinkActive="active" class="nav-link">
-        <i class="bi bi-person"></i>
-        <span>Mon Profil</span>
+        <span>Dashboard</span>
       </a>
     </li>
     <li class="nav-item">
-      <a routerLink="/admin/properties" routerLinkActive="active" class="nav-link">
-        <i class="bi bi-house-door"></i>
-        <span>Liste des propriétés</span>
+      <a class="nav-link" [routerLink]="['/admin/properties']" routerLinkActive="active">
+        <i class="bi bi-house"></i>
+        <span>Propriétés</span>
       </a>
     </li>
-    
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/admin/visite-requests']" routerLinkActive="active">
+        <i class="bi bi-calendar-check"></i>
+        <span>Demandes de visite</span>
+      </a>
+    </li>
   </ul>
 
   <!-- Logout Button -->

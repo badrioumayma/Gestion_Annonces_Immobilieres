@@ -1,0 +1,70 @@
+<div class="visite-requests-container">
+  <div class="header">
+    <h1>Demandes de visite</h1>
+    <p>Gérez les demandes de visite pour vos propriétés</p>
+  </div>
+
+  <div class="requests-table" *ngIf="!loading && !error; else loadingOrError">
+    <table>
+      <thead>
+        <tr>
+          <th>Propriété</th>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Téléphone</th>
+          <th>Date souhaitée</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let request of visiteRequests">
+          <td>
+            <a [routerLink]="['/property', request.propertyId]">
+              {{ request.propertyTitle }}
+            </a>
+          </td>
+          <td>{{ request.nom }}</td>
+          <td>{{ request.email }}</td>
+          <td>{{ request.telephone }}</td>
+          <td>{{ request.dateSouhaitee | date:'dd/MM/yyyy' }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="getStatusClass(request.status)">
+              {{ request.status | titlecase }}
+            </span>
+          </td>
+          <td class="actions">
+            <div class="status-actions" *ngIf="request.status === 'EN_ATTENTE'">
+              <button class="btn-confirm" (click)="updateStatus(request, 'CONFIRMEE')">
+                <i class="bi bi-check-circle"></i>
+              </button>
+              <button class="btn-cancel" (click)="updateStatus(request, 'ANNULEE')">
+                <i class="bi bi-x-circle"></i>
+              </button>
+            </div>
+            <button class="btn-delete" (click)="deleteRequest(request.id!)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #loadingOrError>
+    <div class="loading-error-container">
+      <div *ngIf="loading" class="loading">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Chargement...</span>
+        </div>
+        <p>Chargement des demandes...</p>
+      </div>
+      <div *ngIf="error" class="error">
+        <div class="alert alert-danger" role="alert">
+          Une erreur est survenue lors du chargement des demandes.
+          <button class="btn-retry" (click)="loadVisiteRequests()">Réessayer</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div> 

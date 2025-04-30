@@ -73,11 +73,7 @@ export class WelcomePageComponent implements OnInit {
     );
   }
 
-  filterByLocation() {
-    this.displayedProperties = this.properties.filter(p => 
-        p.localisation.toLowerCase().includes(this.filters.location.toLowerCase())
-    );
-  }
+  
 
   navigateToDetails(propertyId: number) {
     this.router.navigate(['/property', propertyId]);
@@ -124,12 +120,7 @@ export class WelcomePageComponent implements OnInit {
       );
     }
 
-    // Filtre par localisation
-    if (this.filters.location) {
-      filteredProperties = filteredProperties.filter(p => 
-        p.localisation.toLowerCase().includes(this.filters.location.toLowerCase())
-      );
-    }
+    
 
     setTimeout(() => {
       this.displayedProperties = filteredProperties;

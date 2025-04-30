@@ -1,50 +1,57 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private currentUserSubject: BehaviorSubject<any>;
-  public currentUser: Observable<any>;
-  private apiUrl = environment.apiUrl;
+  private apiUrl = 'http://localhost:8080/api/auth';
+  private user: any = null;
 
-  constructor(private http: HttpClient, private router: Router) {
-    // Initialize the currentUserSubject with null (no user logged in)
-    this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser') || 'null'));
-    this.currentUser = this.currentUserSubject.asObservable();
+  constructor(private http: HttpClient) {
+    const stored = localStorage.getItem('currentUser');
+    if (stored) {
+      try {
+        this.user = JSON.parse(stored);
+      } catch {
+        localStorage.removeItem('currentUser');
+      }
+    }
   }
 
-  public get currentUserValue() {
-    return this.currentUserSubject.value;
-  }
-
-  // Nouvelle méthode de login qui appelle le backend
   login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/auth/signin`, { email, password });
+    return this.http.post(`${this.apiUrl}/signin`, { email, password })
+      .pipe(
+        tap(response => {
+          this.user = response;
+          localStorage.setItem('currentUser', JSON.stringify(response));
+        })
+      );
   }
 
   register(userData: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/auth/register`, userData);
+    return this.http.post(`${this.apiUrl}/register`, userData)
+      .pipe(
+        tap(user => {
+          this.user = user;
+          localStorage.setItem('currentUser', JSON.stringify(user));
+        })
+      );
   }
 
-  logout() {
+  logout(): void {
+    this.user = null;
     localStorage.removeItem('currentUser');
-    localStorage.removeItem('token');
-    this.currentUserSubject.next(null);
-    this.router.navigate(['/login']);
+    window.location.href = '/login';
   }
 
-  setCurrentUser(user: any, token: string) {
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    localStorage.setItem('token', token);
-    this.currentUserSubject.next(user);
+  getCurrentUser(): any {
+    return this.user;
   }
 
   isAuthenticated(): boolean {
-    return !!this.currentUserValue;
+    return !!this.user;
   }
 }

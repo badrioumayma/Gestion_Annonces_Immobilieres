@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
@@ -15,27 +15,44 @@ interface User {
 })
 export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false;
+  isMenuOpen: boolean = false;
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private elementRef: ElementRef
   ) {}
 
   ngOnInit() {
-    // Subscribe to auth state changes using the correct observable
-    this.authService.currentUser.subscribe(
-      (user: User | null) => {
-        this.isLoggedIn = !!user;
-      }
-    );
+    this.updateLoginStatus();
+  }
+
+  private updateLoginStatus() {
+    this.isLoggedIn = this.authService.isAuthenticated();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.isMenuOpen = false;
+    }
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
   }
 
   onLogin() {
+    this.closeMenu();
     this.router.navigate(['/login']);
   }
 
   onLogout() {
+    this.closeMenu();
     this.authService.logout();
-    this.router.navigate(['/']);
   }
 }

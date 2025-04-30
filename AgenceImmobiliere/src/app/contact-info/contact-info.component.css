@@ -1,70 +1,152 @@
 /* Contact Info Section */
 .contact-info-section {
-background-color: #f0faff; /* Light grayish-blue background */
-padding: 4rem 0; /* Vertical padding */
-text-align: center; /* Center all content */
+    background: linear-gradient(135deg, #0C0950, #1790c9);
+    padding: 4rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-info-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/assets/pattern.png') repeat;
+    opacity: 0.1;
+    pointer-events: none;
 }
 
 /* Section Heading */
 .section-heading {
-font-size: 1.5rem;
-font-weight: 500;
-color: #3f3f3f; /* Gray color for heading */
-text-transform: uppercase;
-margin-bottom: 3rem; /* Space below heading */
-font-family: 'Roboto', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+    font-family: 'Playfair Display', serif;
+    position: relative;
+    display: inline-block;
+}
+
+.section-heading::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, #ffffff, #86d6fb);
+    border-radius: 2px;
 }
 
 /* Contact Info Container */
 .contact-info-container {
-display: flex;
-justify-content: center;
-gap: 2rem; /* Space between items */
-max-width: 1200px; /* Max width of the container */
-margin: 0 auto; /* Center the container */
-flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
 }
 
 /* Contact Item */
 .contact-item {
-flex: 1;
-min-width: 250px; /* Minimum width for each item */
-padding: 1.5rem;
+    flex: 1;
+    min-width: 250px;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 /* Contact Icon */
 .contact-icon {
-width: 2.5rem;
-height: 2.5rem;
-fill: #86d6fb; /* Red color for icons */
-margin-bottom: 1.5rem;
+    width: 3rem;
+    height: 3rem;
+    fill: #ffffff;
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.contact-item:hover .contact-icon {
+    transform: scale(1.1);
 }
 
 /* Contact Title */
 .contact-title {
-font-size: 1.5rem;
-font-weight: 800;
-color: #333;
-margin-bottom: 0.75rem;
-font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Contact Text */
 .contact-text {
-font-size: 1rem;
-color: #6c757d;
-margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.contact-item:hover .contact-text {
+    color: #ffffff;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-.contact-info-container {
-    flex-direction: column; /* Stack items vertically on smaller screens */
-    align-items: center;
+    .contact-info-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        padding: 0 1rem;
+    }
+
+    .contact-item {
+        min-width: 100%;
+        padding: 1.5rem;
+    }
+
+    .section-heading {
+        font-size: 1.75rem;
+        padding: 0 1rem;
+    }
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .contact-item {
-    min-width: 100%; /* Full width on smaller screens */
-    padding: 1rem;
+    animation: fadeIn 0.5s ease forwards;
 }
+
+.contact-item:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.contact-item:nth-child(3) {
+    animation-delay: 0.4s;
 }

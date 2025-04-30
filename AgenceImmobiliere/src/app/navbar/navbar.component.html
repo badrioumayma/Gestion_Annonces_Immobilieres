@@ -1,10 +1,9 @@
 <nav class="navbar navbar-expand-lg custom-navbar fixed-top">
     <!-- Left Side: Logo and Social Media -->
     <div class="navbar-brand-container d-flex align-items-center">
-      <!-- Logo -->
-      <a class="navbar-brand d-flex align-items-center" routerLink="/">
-        <i class="bi  me-2"></i>
-        <img src="assets/logo.png" alt="Sidebar Image" class="navbar-logo img-fluid rounded-circle">
+      <!-- Brand Name -->
+      <a class="navbar-brand" routerLink="/">
+        <span class="brand-name">Prestige Immobilier</span>
       </a>
   
       <!-- Social Media Icons -->
@@ -25,17 +24,13 @@
     </div>
   
     <!-- Toggler for small screens -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" (click)="toggleMenu()" [attr.aria-expanded]="isMenuOpen">
       <span class="navbar-toggler-icon"></span>
     </button>
   
     <!-- Right Side: Navigation Links -->
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="collapse navbar-collapse" [class.show]="isMenuOpen" id="navbarNav">
       <ul class="navbar-nav ms-auto align-items-center">
-     
-        
-       
-        
         <!-- Authentication Buttons -->
         <li class="nav-item ms-lg-3">
           <ng-container *ngIf="!isLoggedIn; else loggedInTemplate">

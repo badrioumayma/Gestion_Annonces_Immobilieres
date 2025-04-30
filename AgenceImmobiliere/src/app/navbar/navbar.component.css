@@ -1,33 +1,88 @@
 /* Navbar styles */
 .custom-navbar {
-    background-color: #0C0950;
+    background: linear-gradient(135deg, #0C0950, #1790c9);
     padding: 1rem 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Logo image styles */
+/* Brand Name */
+.navbar-brand {
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    padding: 0.5rem 0;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.02);
+}
+
 .navbar-logo {
-    height: 40px;
+    height: 60px;
     width: auto;
+    margin-right: 15px;
+    transition: transform 0.3s ease;
+}
+
+.navbar-logo:hover {
+    transform: scale(1.05);
+}
+
+.brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #ffffff, #86d6fb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: inline-block;
 }
 
 /* Social media icons */
 .social-icons i {
-    font-size: 1.2rem; /* Size of the icons */
-    transition: color 0.3s ease; /* Smooth hover transition */
+    font-size: 1.3rem;
+    transition: all 0.3s ease;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .social-icons a:hover i {
-    color: #ff4d4f; /* Red hover effect */
+    color: #ffffff;
+    transform: translateY(-2px);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 /* Navigation links */
 .nav-link {
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    color: rgba(255, 255, 255, 0.8) !important;
+    position: relative;
+    padding: 0.5rem 1rem;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #ffffff, #86d6fb);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
 }
 
 .nav-link:hover {
-    color: rgba(255, 255, 255, 0.8) !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
 }
 
 .nav-link.active {
@@ -41,27 +96,37 @@
     font-weight: 500;
     padding: 0.5rem 1.5rem;
     transition: all 0.3s ease;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
 }
 
 .btn-outline-light:hover {
-    background-color: #ffffff;
-    color: #1790c9;
-    transform: translateY(-1px);
+    background: linear-gradient(135deg, #ffffff, #86d6fb);
+    color: #0C0950;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Social Icons */
 .social-icons a {
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
+    margin: 0 0.5rem;
 }
 
 .social-icons a:hover {
-    opacity: 0.8;
+    transform: translateY(-3px);
 }
 
 /* Responsive Adjustments */
 @media (max-width: 991.98px) {
     .custom-navbar {
-        padding: 0.5rem 1rem;
+        padding: 0.75rem 1.5rem;
+    }
+
+    .brand-name {
+        font-size: 1.8rem;
+        letter-spacing: 1.5px;
     }
 
     .social-icons {
@@ -71,9 +136,36 @@
     .nav-item {
         margin: 0.5rem 0;
     }
+
+    .btn-outline-light {
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .brand-name {
+        font-size: 1.5rem;
+        letter-spacing: 1px;
+    }
+
+    .navbar-logo {
+        height: 40px;
+    }
 }
 
 /* Ensure the toggler icon is visible */
+.navbar-toggler {
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    transition: transform 0.3s ease;
+}
+
+.navbar-toggler:hover .navbar-toggler-icon {
+    transform: scale(1.1);
 }
